@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import {
     Flame,
@@ -86,22 +86,12 @@ export default function ChauffageRadiateurs() {
 
     return (
         <>
-            <Helmet>
-                <title>Chauffage Central & Radiateurs Normandie : Départements & Villes | GUEDES</title>
-                <meta
-                    name="description"
-                    content="Chauffagiste en Normandie : pose et remplacement de radiateurs, désembouage de réseau de chauffage central, purge et équilibrage. J'interviens dans toutes les préfectures et sous-préfectures."
-                />
-                <link rel="canonical" href="https://www.plomberie-guedes.fr/chauffage-central-radiateurs" />
-                {/* Open Graph */}
-                <meta property="og:title" content="Chauffage Central & Radiateurs Normandie : Départements & Villes | GUEDES" />
-                <meta property="og:description" content="Chauffagiste en Normandie : pose et remplacement de radiateurs, désembouage de réseau de chauffage central, purge et équilibrage. J'interviens dans toutes les préfectures et sous-préfectures." />
-                <meta property="og:url" content="https://www.plomberie-guedes.fr/chauffage-central-radiateurs" />
-                <meta property="og:type" content="website" />
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
-            </Helmet>
+            <SEO 
+                title="Chauffage Central & Radiateurs Normandie : Départements & Villes"
+                description="Chauffagiste en Normandie : pose et remplacement de radiateurs, désembouage de réseau de chauffage central, purge et équilibrage. J'interviens dans toutes les préfectures et sous-préfectures."
+                canonicalUrl="https://www.plomberie-guedes.fr/chauffage-central-radiateurs"
+                schema={schemaData}
+            />
 
             <div className="bg-slate-950 text-slate-100 min-h-screen">
                 {/* HERO SECTION */}
@@ -116,7 +106,7 @@ export default function ChauffageRadiateurs() {
                                     Installation & Entretien de <span className="text-accent">Chauffage Central </span>en Normandie
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Des radiateurs froids en bas ? Un réseau emboué ou un projet d'extension ? Je prends en charge l'installation, le remplacement de radiateurs (eau chaude et acier/fonte) ainsi que le désembouage complet de votre circuit de chauffage central  .
+                                    Des radiateurs froids en bas ? Un réseau emboué ou un projet d'extension ? Je prends en charge l'installation, le remplacement de radiateurs (eau chaude et acier/fonte) ainsi que le désembouage complet de votre circuit de chauffage central[cite: 47].
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -143,15 +133,15 @@ export default function ChauffageRadiateurs() {
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Thermometer className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Confort thermique optimal :</strong> Dimensionnement précis de la puissance de chaque radiateur pièce par pièce  .</span>
+                                        <span><strong>Confort thermique optimal :</strong> Dimensionnement précis de la puissance de chaque radiateur pièce par pièce[cite: 47].</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Zap className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Économies d'énergie :</strong> Un circuit propre et équilibré réduit votre consommation jusqu'à 15 %  .</span>
+                                        <span><strong>Économies d'énergie :</strong> Un circuit propre et équilibré réduit votre consommation jusqu'à 15 %[cite: 47].</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ShieldCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Intervention toutes énergies :</strong> Raccordement sur pompe à chaleur, chaudière gaz, fioul ou granulés  .</span>
+                                        <span><strong>Intervention toutes énergies :</strong> Raccordement sur pompe à chaleur, chaudière gaz, fioul ou granulés[cite: 47].</span>
                                     </li>
                                 </ul>
                             </div>
@@ -165,7 +155,7 @@ export default function ChauffageRadiateurs() {
                         <div className="text-center space-y-4">
                             <h2 className="text-3xl font-bold text-white">Mes travaux de chauffage central</h2>
                             <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
-                                Intervention sur tout le réseau de distribution de chaleur dans votre logement  .
+                                Intervention sur tout le réseau de distribution de chaleur dans votre logement[cite: 47].
                             </p>
                         </div>
 
@@ -176,7 +166,7 @@ export default function ChauffageRadiateurs() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Désembouage de Réseau</h3>
                                 <p className="text-sm text-slate-400">
-                                    Nettoyage hydrodynamique du circuit pour éliminer la boue et le tartre. Indispensable avant la pose d'une pompe à chaleur  .
+                                    Nettoyage hydrodynamique du circuit pour éliminer la boue et le tartre. Indispensable avant la pose d'une pompe à chaleur[cite: 47].
                                 </p>
                             </div>
 
@@ -186,7 +176,7 @@ export default function ChauffageRadiateurs() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Remplacement de Radiateurs</h3>
                                 <p className="text-sm text-slate-400">
-                                    Installation de radiateurs eau chaude basse température, sèche-serviettes ou remplacement de vannes thermostatiques  .
+                                    Installation de radiateurs eau chaude basse température, sèche-serviettes ou remplacement de vannes thermostatiques[cite: 47].
                                 </p>
                             </div>
 
@@ -196,7 +186,7 @@ export default function ChauffageRadiateurs() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Modification de Tuyauterie</h3>
                                 <p className="text-sm text-slate-400">
-                                    Déplacement de radiateurs, ajout d'émetteurs pour agrandissement ou réfection complète des réseaux cuivre/PEX  .
+                                    Déplacement de radiateurs, ajout d'émetteurs pour agrandissement ou réfection complète des réseaux cuivre/PEX[cite: 47].
                                 </p>
                             </div>
                         </div>
@@ -210,7 +200,7 @@ export default function ChauffageRadiateurs() {
                             Secteur d'intervention Chauffage en Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens dans l'ensemble des départements normands, préfectures et sous-préfectures pour vos projets de chauffage   :
+                            J'interviens dans l'ensemble des départements normands, préfectures et sous-préfectures pour vos projets de chauffage[cite: 47] :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
@@ -244,21 +234,21 @@ export default function ChauffageRadiateurs() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Pourquoi et quand faut-il désembouer son circuit de chauffage central ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Le désembouage permet d'éliminer les boues (oxydes métalliques et tartre) qui s'accumulent dans les tuyaux et radiateurs. Il est recommandé de le réaliser tous les 5 à 10 ans, ou impérativement avant l'installation d'une nouvelle chaudière ou d'une pompe à chaleur pour garantir un rendement optimal  .
+                                    Le désembouage permet d'éliminer les boues (oxydes métalliques et tartre) qui s'accumulent dans les tuyaux et radiateurs. Il est recommandé de le réaliser tous les 5 à 10 ans, ou impérativement avant l'installation d'une nouvelle chaudière ou d'une pompe à chaleur pour garantir un rendement optimal[cite: 47].
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Comment savoir si un radiateur a besoin d'être purgé ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Si votre radiateur chauffe en bas mais reste froid ou tiède sur le dessus, cela signifie que de l'air s'est infiltré dans le circuit. Une simple purge à l'aide d'une clé de purge permet de chasser l'air et de retrouver une diffusion homogène de la chaleur  .
+                                    Si votre radiateur chauffe en bas mais reste froid ou tiède sur le dessus, cela signifie que de l'air s'est infiltré dans le circuit. Une simple purge à l'aide d'une clé de purge permet de chasser l'air et de retrouver une diffusion homogène de la chaleur[cite: 47].
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Est-il possible de remplacer un vieux radiateur par un modèle moderne ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Tout à fait. Je peux remplacer vos radiateurs existants (fonte, acier ou aluminium) par des modèles plus récents, plus performants et mieux adaptés à la configuration de vos pièces, tout en adaptant la tuyauterie si nécessaire  .
+                                    Tout à fait. Je peux remplacer vos radiateurs existants (fonte, acier ou aluminium) par des modèles plus récents, plus performants et mieux adaptés à la configuration de vos pièces, tout en adaptant la tuyauterie si nécessaire[cite: 47].
                                 </p>
                             </div>
                         </div>
@@ -269,7 +259,7 @@ export default function ChauffageRadiateurs() {
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Un projet de chauffage central ou des radiateurs à changer ?</h2>
-                        <p className="text-slate-100">Contactez-moi pour une étude personnalisée et un devis rapide partout en Normandie  .</p>
+                        <p className="text-slate-100">Contactez-moi pour une étude personnalisée et un devis rapide partout en Normandie[cite: 47].</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:+33617921004" className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg">06 17 92 10 04</a>
                             <Link to="/" className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg">Retour à l'accueil</Link>

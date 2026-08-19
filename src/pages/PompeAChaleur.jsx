@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import {
     Flame,
@@ -97,25 +97,12 @@ export default function PompeAChaleur() {
 
     return (
         <>
-            <Helmet>
-                <title>Pompe à Chaleur Normandie : Départements & Villes | GUEDES</title>
-                <meta
-                    name="description"
-                    content="Artisan RGE QualiPAC spécialisé en installation de pompe à chaleur Air/Eau & Air/Air en Normandie. J'interviens dans toutes les préfectures et sous-préfectures."
-                />
-                <link rel="canonical" href="https://www.plomberie-guedes.fr/installation-pompe-a-chaleur" />
-
-                {/* Open Graph */}
-                <meta property="og:title" content="Installateur Pompe à Chaleur RGE QualiPAC en Normandie" />
-                <meta property="og:description" content="Passez à la pompe à chaleur et réduisez vos factures de chauffage. Devis gratuit avec la SARL Anthony GUEDES." />
-                <meta property="og:url" content="https://www.plomberie-guedes.fr/installation-pompe-a-chaleur" />
-                <meta property="og:type" content="article" />
-
-                {/* Script Données Structurées Schema.org */}
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
-            </Helmet>
+            <SEO 
+                title="Pompe à Chaleur Normandie : Départements & Villes | GUEDES"
+                description="Artisan RGE QualiPAC spécialisé en installation de pompe à chaleur Air/Eau & Air/Air en Normandie. J'interviens dans toutes les préfectures et sous-préfectures."
+                canonicalUrl="https://www.plomberie-guedes.fr/installation-pompe-a-chaleur"
+                schema={schemaData}
+            />
 
             <div className="bg-primary text-slate-100">
 
@@ -134,7 +121,7 @@ export default function PompeAChaleur() {
                                 </h1>
 
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Remplacez votre ancienne chaudière fioul ou gaz par une solution économique et écologique. Je vous accompagne de l'étude thermique jusqu'à la mise en service partout en Normandie  .
+                                    Remplacez votre ancienne chaudière fioul ou gaz par une solution économique et écologique. Je vous accompagne de l'étude thermique jusqu'à la mise en service partout en Normandie[cite: 19].
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
@@ -170,15 +157,15 @@ export default function PompeAChaleur() {
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Euro className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Jusqu'à 70% d'économies</strong> sur votre facture annuelle de chauffage  .</span>
+                                        <span><strong>Jusqu'à 70% d'économies</strong> sur votre facture annuelle de chauffage[cite: 19].</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ShieldCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Installation certifiée</strong> dans le respect des normes en vigueur  .</span>
+                                        <span><strong>Installation certifiée</strong> dans le respect des normes en vigueur[cite: 19].</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Flame className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Confort thermique optimal</strong> toute l'année (chauffage + eau chaude sanitaire)  .</span>
+                                        <span><strong>Confort thermique optimal</strong> toute l'année (chauffage + eau chaude sanitaire)[cite: 19].</span>
                                     </li>
                                 </ul>
                             </div>
@@ -195,7 +182,7 @@ export default function PompeAChaleur() {
                                 Mes solutions de <span className="text-accent">Pompe à Chaleur haute performance</span>
                             </h2>
                             <p className="text-slate-400">
-                                Chaque logement a ses spécificités. Je sélectionne le matériel le plus adapté à votre réseau existant  .
+                                Chaque logement a ses spécificités. Je sélectionne le matériel le plus adapté à votre réseau existant[cite: 19].
                             </p>
                         </div>
 
@@ -207,7 +194,7 @@ export default function PompeAChaleur() {
                                 </div>
                                 <h3 className="text-2xl font-bold text-white">Pompe à Chaleur Air / Eau</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Idéale en remplacement d'une chaudière fioul ou gaz. La PAC Air/Eau capte les calories de l'air extérieur pour chauffer l'eau de vos radiateurs ou de votre plancher chauffant, tout en produisant votre eau chaude sanitaire  .
+                                    Idéale en remplacement d'une chaudière fioul ou gaz. La PAC Air/Eau capte les calories de l'air extérieur pour chauffer l'eau de vos radiateurs ou de votre plancher chauffant, tout en produisant votre eau chaude sanitaire[cite: 19].
                                 </p>
                                 <ul className="space-y-2 text-xs text-slate-400">
                                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Raccordement direct sur le réseau de chauffage central</li>
@@ -223,7 +210,7 @@ export default function PompeAChaleur() {
                                 </div>
                                 <h3 className="text-2xl font-bold text-white">PAC Air / Air (Climatisation Réversible)</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Parfaite pour chauffer rapidement en hiver et rafraîchir en été. Elle insuffle de l'air chaud ou frais directement dans vos pièces de vie via des consoles murales ou un système gainable discret  .
+                                    Parfaite pour chauffer rapidement en hiver et rafraîchir en été. Elle insuffle de l'air chaud ou frais directement dans vos pièces de vie via des consoles murales ou un système gainable discret[cite: 19].
                                 </p>
                                 <ul className="space-y-2 text-xs text-slate-400">
                                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Montée en température très rapide</li>
@@ -242,7 +229,7 @@ export default function PompeAChaleur() {
                             Votre installateur PAC en Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements, préfectures et sous-préfectures de la région Normandie   :
+                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements, préfectures et sous-préfectures de la région Normandie[cite: 19] :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-4">
                             {[
@@ -277,21 +264,21 @@ export default function PompeAChaleur() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Combien de temps prend l'installation d'une PAC en remplacement d'une chaudière fioul ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    L'installation complète d'une pompe à chaleur Air/Eau prend généralement entre 2 et 4 jours, incluant le démontage de l'ancienne chaudière, le désembouage du réseau et la mise en service  .
+                                    L'installation complète d'une pompe à chaleur Air/Eau prend généralement entre 2 et 4 jours, incluant le démontage de l'ancienne chaudière, le désembouage du réseau et la mise en service[cite: 19].
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Faut-il conserver ses anciens radiateurs ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Dans la majorité des cas, oui ! Les pompes à chaleur Haute Température récentes s'adaptent parfaitement sur les réseaux de radiateurs en fonte ou en acier existants, sans avoir besoin de modifier toute votre tuyauterie  .
+                                    Dans la majorité des cas, oui ! Les pompes à chaleur Haute Température récentes s'adaptent parfaitement sur les réseaux de radiateurs en fonte ou en acier existants, sans avoir besoin de modifier toute votre tuyauterie[cite: 19].
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Quelle est la durée de vie d'une pompe à chaleur ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Une PAC bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité  .
+                                    Une PAC bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité[cite: 19].
                                 </p>
                             </div>
                         </div>
@@ -305,7 +292,7 @@ export default function PompeAChaleur() {
                             Prêt à réduire vos factures de chauffage ?
                         </h2>
                         <p className="text-slate-100 text-base">
-                            Contactez-moi pour obtenir une étude thermique personnalisée et un devis gratuit sous 48h partout en Normandie  .
+                            Contactez-moi pour obtenir une étude thermique personnalisée et un devis gratuit sous 48h partout en Normandie[cite: 19].
                         </p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a

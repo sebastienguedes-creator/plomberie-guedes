@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import {
     Wrench,
@@ -90,22 +90,12 @@ export default function PlombierEvreux() {
 
     return (
         <>
-            <Helmet>
-                <title>Plombier Chauffagiste Évreux & Normandie (27000) | SARL Anthony GUEDES</title>
-                <meta
-                    name="description"
-                    content="Besoin d'un plombier chauffagiste à Évreux et en Normandie ? Dépannage rapide, installation de pompe à chaleur, rénovation de salle de bain. Artisan certifié RGE."
-                />
-                <link rel="canonical" href="https://www.plomberie-guedes.fr/plombier-chauffagiste-evreux" />
-                {/* Open Graph */}
-                <meta property="og:title" content="Plombier Chauffagiste Évreux & Normandie (27000) | SARL Anthony GUEDES" />
-                <meta property="og:description" content="Besoin d'un plombier chauffagiste à Évreux et en Normandie ? Dépannage rapide, installation de pompe à chaleur, rénovation de salle de bain. Artisan certifié RGE." />
-                <meta property="og:url" content="https://www.plomberie-guedes.fr/plombier-chauffagiste-evreux" />
-                <meta property="og:type" content="website" />
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
-            </Helmet>
+            <SEO 
+                title="Plombier Chauffagiste Évreux & Normandie (27000)"
+                description="Besoin d'un plombier chauffagiste à Évreux et en Normandie ? Dépannage rapide, installation de pompe à chaleur, rénovation de salle de bain. Artisan certifié RGE."
+                canonicalUrl="https://www.plomberie-guedes.fr/plombier-chauffagiste-evreux"
+                schema={schemaData}
+            />
 
             <div className="bg-slate-950 text-slate-100 min-h-screen">
                 {/* HERO SECTION */}
@@ -120,7 +110,7 @@ export default function PlombierEvreux() {
                                     Plombier Chauffagiste à <span className="text-accent">Évreux (27000)</span> & en Normandie
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Vous cherchez un artisan de confiance pour vos travaux ou urgences à Évreux et dans toute la région ? J'interviens rapidement pour la plomberie, le chauffage (pompe à chaleur, chaudière) et la création de salles de bain  .
+                                    Vous cherchez un artisan de confiance pour vos travaux ou urgences à Évreux et dans toute la région ? J'interviens rapidement pour la plomberie, le chauffage (pompe à chaleur, chaudière) et la création de salles de bain[cite: 18].
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -147,15 +137,15 @@ export default function PlombierEvreux() {
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Clock className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Intervention Rapide :</strong> Déplacements réguliers sur Évreux et partout en Normandie  .</span>
+                                        <span><strong>Intervention Rapide :</strong> Déplacements réguliers sur Évreux et partout en Normandie[cite: 18].</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ShieldCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Artisan Certifié RGE :</strong> Garanties de qualité pour vos installations de chauffage  .</span>
+                                        <span><strong>Artisan Certifié RGE :</strong> Garanties de qualité pour vos installations de chauffage[cite: 18].</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Wrench className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Travail Clé en Main :</strong> Un seul interlocuteur du diagnostic aux finitions  .</span>
+                                        <span><strong>Travail Clé en Main :</strong> Un seul interlocuteur du diagnostic aux finitions[cite: 18].</span>
                                     </li>
                                 </ul>
                             </div>
@@ -169,7 +159,7 @@ export default function PlombierEvreux() {
                         <div className="text-center space-y-4">
                             <h2 className="text-3xl font-bold text-white">Mes services de plomberie et chauffage à Évreux</h2>
                             <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
-                                Une gamme complète de prestations pour les particuliers et professionnels  .
+                                Une gamme complète de prestations pour les particuliers et professionnels[cite: 18].
                             </p>
                         </div>
 
@@ -180,7 +170,7 @@ export default function PlombierEvreux() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Plomberie & Dépannage</h3>
                                 <p className="text-sm text-slate-400">
-                                    Recherche et réparation de fuites d'eau, remplacement de robinetterie, débouchage, mise aux normes des tuyauteries  .
+                                    Recherche et réparation de fuites d'eau, remplacement de robinetterie, débouchage, mise aux normes des tuyauteries[cite: 18].
                                 </p>
                             </div>
 
@@ -190,7 +180,7 @@ export default function PlombierEvreux() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Chauffage & PAC</h3>
                                 <p className="text-sm text-slate-400">
-                                    Installation et entretien de pompes à chaleur (air/eau), remplacement de chaudières, désembouage de radiateurs  .
+                                    Installation et entretien de pompes à chaleur (air/eau), remplacement de chaudières, désembouage de radiateurs[cite: 18].
                                 </p>
                             </div>
 
@@ -200,7 +190,7 @@ export default function PlombierEvreux() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Rénovation de Bain</h3>
                                 <p className="text-sm text-slate-400">
-                                    Transformation de baignoire en douche à l'italienne, aménagement PMR, installation de sanitaires modernes  .
+                                    Transformation de baignoire en douche à l'italienne, aménagement PMR, installation de sanitaires modernes[cite: 18].
                                 </p>
                             </div>
                         </div>
@@ -214,7 +204,7 @@ export default function PlombierEvreux() {
                             Secteurs d'intervention en Normandie
                         </h2>
                         <p className="text-slate-400 text-sm max-w-2xl mx-auto">
-                            J'interviens à Évreux, ses alentours et dans l'ensemble des départements, préfectures et sous-préfectures de la région   :
+                            J'interviens à Évreux, ses alentours et dans l'ensemble des départements, préfectures et sous-préfectures de la région[cite: 18] :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
@@ -248,21 +238,21 @@ export default function PlombierEvreux() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Quel est le délai d'intervention pour un dépannage en urgence à Évreux ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Basé à proximité, j'interviens rapidement à Évreux et dans toute la Normandie pour les urgences de plomberie et de chauffage afin de sécuriser votre installation  .
+                                    Basé à proximité, j'interviens rapidement à Évreux et dans toute la Normandie pour les urgences de plomberie et de chauffage afin de sécuriser votre installation[cite: 18].
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Quelles prestations réalisez-vous pour les particuliers à Évreux ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Je couvre l'ensemble des travaux de plomberie (recherche de fuite, dépannage), de chauffage (installation de pompes à chaleur, radiateurs) et la rénovation complète de salles de bain (douche à l'italienne, PMR)  .
+                                    Je couvre l'ensemble des travaux de plomberie (recherche de fuite, dépannage), de chauffage (installation de pompes à chaleur, radiateurs) et la rénovation complète de salles de bain (douche à l'italienne, PMR)[cite: 18].
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Comment demander un devis pour un chantier à Évreux ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Vous pouvez me joindre directement par téléphone au 06 17 92 10 04 ou via mon formulaire de contact pour obtenir un devis gratuit et personnalisé sous 48h  .
+                                    Vous pouvez me joindre directement par téléphone au 06 17 92 10 04 ou via mon formulaire de contact pour obtenir un devis gratuit et personnalisé sous 48h[cite: 18].
                                 </p>
                             </div>
                         </div>
@@ -273,7 +263,7 @@ export default function PlombierEvreux() {
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Besoin d'un plombier à Évreux ou en Normandie ?</h2>
-                        <p className="text-slate-100">Contactez-moi pour une intervention rapide ou un devis gratuit sans engagement  .</p>
+                        <p className="text-slate-100">Contactez-moi pour une intervention rapide ou un devis gratuit sans engagement[cite: 18].</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:+33617921004" className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg">06 17 92 10 04</a>
                             <Link to="/" className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg">Retour à l'accueil</Link>
