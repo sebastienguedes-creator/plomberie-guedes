@@ -7,6 +7,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - name: 📥 Récupération du code
         uses: actions/checkout@v4
@@ -22,8 +25,11 @@ jobs:
       - name: 🚀 Lancement du Build et du Pré-rendu SEO
         run: npm run build
 
-      - name: 🔗 Liaison officielle avec Vercel
-        run: npx vercel link --yes --project sarl-anthony-guedes --scope sebastien-guedess-projects --token ${{ secrets.VERCEL_TOKEN }}
+      - name: 🔗 Liaison automatique du projet
+        run: npx vercel link --yes --token ${{ secrets.VERCEL_TOKEN }}
+
+      - name: 📥 Récupération des configurations Vercel
+        run: npx vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }}
 
       - name: 🏗️ Préparation du build Vercel
         run: npx vercel build --prod --token ${{ secrets.VERCEL_TOKEN }}
