@@ -56,7 +56,10 @@ const server = http.createServer((req, res) => {
 
 server.listen(4567, async () => {
   console.log('🤖 Démarrage du robot de pré-rendu...');
-  const browser = await puppeteer.launch({ headless: 'new' });
+  const browser = await puppeteer.launch({ 
+  headless: 'new',
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
 
   for (const route of routes) {
     const page = await browser.newPage();
