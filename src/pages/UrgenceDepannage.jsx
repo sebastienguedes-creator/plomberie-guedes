@@ -18,13 +18,13 @@ export default function UrgenceDepannage() {
         "@graph": [
             {
                 "@type": "EmergencyService",
-                "@id": "https://www.plomberie-guedes.fr/urgence-depannage-plomberie#service",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#service",
                 "name": "Urgence et Dépannage Plomberie Chauffage - SARL Anthony GUEDES",
                 "provider": {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.plomberie-guedes.fr"
+                    "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
                     { "@type": "AdministrativeArea", "name": "Eure" },
@@ -48,7 +48,7 @@ export default function UrgenceDepannage() {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://www.plomberie-guedes.fr/urgence-depannage-plomberie#faq",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -81,10 +81,10 @@ export default function UrgenceDepannage() {
 
     return (
         <>
-            <SEO 
+            <SEO
                 title="Urgence Plombier Chauffagiste : Dépannage Rapide | GUEDES"
                 description="Fuite d'eau ? Panne de chauffage ? Dépannage urgent en plomberie et chauffage. Intervention rapide de la SARL Anthony GUEDES."
-                canonicalUrl="https://www.plomberie-guedes.fr/urgence-depannage-plomberie"
+                canonicalUrl="https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie"
                 schema={schemaData}
             />
 
@@ -102,7 +102,7 @@ export default function UrgenceDepannage() {
                                     <span className="text-red-500">Plomberie Chauffage</span>
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Une fuite importante, un dégât des eaux imminent ou un chauffage qui tombe en panne en plein hiver ? J'interviens rapidement pour sécuriser votre installation et réparer la panne  .
+                                    Une fuite importante, un dégât des eaux imminent ou un chauffage qui tombe en panne en plein hiver ? La <strong>SARL Anthony GUEDES</strong> intervient rapidement pour sécuriser votre installation et réparer la panne.
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -203,8 +203,8 @@ export default function UrgenceDepannage() {
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
-                                "Bernay", "Évreux", "Brionne", "Beaumont-le-Roger", 
-                                "Conches-en-Ouche", "Le Neubourg", "Elbeuf", "Louviers", 
+                                "Bernay", "Évreux", "Brionne", "Beaumont-le-Roger",
+                                "Conches-en-Ouche", "Le Neubourg", "Elbeuf", "Louviers",
                                 "Lisieux", "Pont-Audemer", "Rouen", "L'Aigle"
                             ].map((ville, i) => (
                                 <span key={i} className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2">

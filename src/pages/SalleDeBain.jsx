@@ -17,13 +17,13 @@ export default function SalleDeBain() {
         "@graph": [
             {
                 "@type": "Service",
-                "@id": "https://www.plomberie-guedes.fr/renovation-salle-de-bain#service",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#service",
                 "name": "Rénovation et Aménagement de Salle de Bain Clé en Main",
                 "provider": {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.plomberie-guedes.fr"
+                    "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
                     { "@type": "AdministrativeArea", "name": "Normandie" },
@@ -62,7 +62,7 @@ export default function SalleDeBain() {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://www.plomberie-guedes.fr/renovation-salle-de-bain#faq",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -98,7 +98,7 @@ export default function SalleDeBain() {
             <SEO 
                 title="Rénovation Salle de Bain Normandie : Clé en main | GUEDES"
                 description="Artisan spécialiste en rénovation de salle de bain en Normandie. J'interviens dans toutes les préfectures et sous-préfectures. Douche à l'italienne, aménagement PMR."
-                canonicalUrl="https://www.plomberie-guedes.fr/renovation-salle-de-bain"
+                canonicalUrl="https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain"
                 schema={schemaData}
             />
 
@@ -165,7 +165,7 @@ export default function SalleDeBain() {
                             Votre artisan salle de bain en Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements, préfectures et sous-préfectures de la région Normandie   :
+                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements de la région Normandie :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[

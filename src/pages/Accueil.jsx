@@ -13,7 +13,7 @@ export default function Accueil() {
             <SEO 
                 title="Plombier Chauffagiste Eure (27) | SARL Anthony GUEDES"
                 description="Artisan plombier chauffagiste dans l'Eure (Bernay, Évreux). Installation, dépannage, pompe à chaleur, rénovation salle de bain."
-                canonicalUrl="https://www.plomberie-guedes.fr/"
+                canonicalUrl="https://www.guedes-plomberie-chauffage.fr/"
             />
 
             <Hero />

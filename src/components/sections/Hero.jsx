@@ -30,7 +30,7 @@ export default function Hero() {
 
             {/* Titre principal percutant optimisé SEO Local */}
             <h1 id="hero-heading" className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-              Expert <span className="text-accent">Pompe à Chaleur</span> & Plombier en Normandie
+              <span className="text-accent">Plombier-chauffagiste</span> en Normandie
             </h1>
 
             {/* Description orientée bénéfice client */}
@@ -86,7 +86,7 @@ export default function Hero() {
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                   <div className="flex items-center gap-3">
                     <span className="w-3 h-3 bg-emerald-500 rounded-full animate-ping" aria-hidden="true"></span>
-                    <span className="text-sm font-semibold text-slate-200">Disponibilité Locale</span>
+                    <span className="text-sm font-semibold text-slate-200">Intervention Normandie</span>
                   </div>
                   <span className="text-xs bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-full border border-accent/20">Certifié RGE QualiPAC</span>
                 </div>

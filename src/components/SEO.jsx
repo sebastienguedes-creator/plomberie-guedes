@@ -4,7 +4,7 @@ export default function SEO({ title, description, canonicalUrl, ogImage, schema 
     const siteName = "SARL Anthony GUEDES";
     const defaultTitle = `Plombier Chauffagiste en Normandie | ${siteName}`;
     const defaultDescription = "Expert en pompes à chaleur, VMC double flux et dépannage plomberie. Devis gratuit et accompagnement aux aides MaPrimeRénov'.";
-    const siteUrl = "https://www.plomberie-guedes.fr";
+    const siteUrl = "https://www.guedes-plomberie-chauffage.fr";
     const defaultImage = `${siteUrl}/hero.png`;
 
     // Gestion du titre (Page | Site)

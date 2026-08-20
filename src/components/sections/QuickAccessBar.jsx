@@ -11,7 +11,7 @@ export default function QuickAccessBar() {
   return (
     <section 
       aria-label="Accès rapide aux sections" 
-      className="bg-slate-50 border-b border-slate-200 py-4 sm:py-6"
+      className="sticky top-20 z-40 bg-slate-50/95 backdrop-blur-md border-b border-slate-200 py-3 sm:py-4 shadow-sm transition-all"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
@@ -23,7 +23,7 @@ export default function QuickAccessBar() {
               <a
                 key={link.name}
                 href={link.href}
-                className={`flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1 ${
+                className={`flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 ${
                   link.isPrimary 
                     ? 'bg-accent text-white border-2 border-accent hover:bg-accent/90' 
                     : 'bg-white text-slate-700 border border-slate-200 hover:border-accent hover:text-accent'

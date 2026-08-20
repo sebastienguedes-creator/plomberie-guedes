@@ -19,13 +19,13 @@ export default function PompeAChaleur() {
         "@graph": [
             {
                 "@type": "Service",
-                "@id": "https://www.plomberie-guedes.fr/installation-pompe-a-chaleur#service",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#service",
                 "name": "Installation et Entretien de Pompe à Chaleur (PAC)",
                 "provider": {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.plomberie-guedes.fr"
+                    "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
                     { "@type": "AdministrativeArea", "name": "Normandie" },
@@ -64,7 +64,7 @@ export default function PompeAChaleur() {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://www.plomberie-guedes.fr/installation-pompe-a-chaleur#faq",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -97,10 +97,10 @@ export default function PompeAChaleur() {
 
     return (
         <>
-            <SEO 
+            <SEO
                 title="Pompe à Chaleur Normandie : Départements & Villes | GUEDES"
                 description="Artisan RGE QualiPAC spécialisé en installation de pompe à chaleur Air/Eau & Air/Air en Normandie. J'interviens dans toutes les préfectures et sous-préfectures."
-                canonicalUrl="https://www.plomberie-guedes.fr/installation-pompe-a-chaleur"
+                canonicalUrl="https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur"
                 schema={schemaData}
             />
 
@@ -121,7 +121,7 @@ export default function PompeAChaleur() {
                                 </h1>
 
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Remplacez votre ancienne chaudière fioul ou gaz par une solution économique et écologique. Je vous accompagne de l'étude thermique jusqu'à la mise en service partout en Normandie  .
+                                    Remplacez votre ancienne chaudière fioul ou gaz par une solution économique et écologique. La <strong>SARL Anthony GUEDES</strong> vous accompagne de l'étude thermique jusqu'à la mise en service partout en Normandie.
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
@@ -229,7 +229,7 @@ export default function PompeAChaleur() {
                             Votre installateur PAC en Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements, préfectures et sous-préfectures de la région Normandie   :
+                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements de la région Normandie :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-4">
                             {[

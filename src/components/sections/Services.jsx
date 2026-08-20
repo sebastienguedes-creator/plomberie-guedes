@@ -8,7 +8,7 @@ export default function Services() {
       title: "Pompes à Chaleur (PAC)",
       description: "Installation, mise en service et maintenance de pompes à chaleur air/eau et air/air haute performance pour réduire vos factures énergétiques.",
       tag: "Spécialité Principale",
-      features: ["Éligible MaPrimeRénov'", "Étude thermique sur-mesure", "Marques certifiées"],
+      features: ["Installation clé en main", "Étude thermique sur-mesure", "Marques certifiées"],
       link: "/installation-pompe-a-chaleur",
       linkText: "Découvrir les PAC"
     },

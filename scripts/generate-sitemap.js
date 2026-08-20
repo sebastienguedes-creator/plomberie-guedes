@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DOMAIN = 'https://www.plomberie-guedes.fr';
+const DOMAIN = 'https://www.guedes-plomberie-chauffage.fr';
 const today = new Date().toISOString().split('T')[0];
 
 // Liste de toutes les routes actuelles du site

@@ -1,6 +1,6 @@
-import qualipacLogo from '../../assets/logo-qualipac.png';
-import frigorigenesLogo from '../../assets/frigorigenes.png';
-import garantieLogo from '../../assets/Garantie10.png';
+import qualipacLogo from '../../assets/logo-qualipac.webp';
+import frigorigenesLogo from '../../assets/frigorigenes.webp';
+import garantieLogo from '../../assets/Garantie10.webp';
 
 export default function CertificationsBanner() {
     const certifications = [

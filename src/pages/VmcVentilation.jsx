@@ -17,13 +17,13 @@ export default function VmcVentilation() {
         "@graph": [
             {
                 "@type": "Service",
-                "@id": "https://www.plomberie-guedes.fr/vmc-ventilation#service",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation#service",
                 "name": "Installation et Entretien VMC Ventilation - SARL Anthony GUEDES",
                 "provider": {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.plomberie-guedes.fr"
+                    "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
                     { "@type": "AdministrativeArea", "name": "Eure" },
@@ -51,7 +51,7 @@ export default function VmcVentilation() {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://www.plomberie-guedes.fr/vmc-ventilation#faq",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -87,7 +87,7 @@ export default function VmcVentilation() {
             <SEO 
                 title="Installation & Entretien VMC Ventilation | GUEDES"
                 description="Améliorez la qualité de votre air intérieur. Installation et entretien de VMC simple flux et double flux par la SARL Anthony GUEDES."
-                canonicalUrl="https://www.plomberie-guedes.fr/vmc-ventilation"
+                canonicalUrl="https://www.guedes-plomberie-chauffage.fr/vmc-ventilation"
                 schema={schemaData}
             />
 

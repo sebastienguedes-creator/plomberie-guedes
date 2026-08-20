@@ -18,13 +18,13 @@ export default function ChauffageRadiateurs() {
         "@graph": [
             {
                 "@type": "Service",
-                "@id": "https://www.plomberie-guedes.fr/chauffage-central-radiateurs#service",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/chauffage-central-radiateurs#service",
                 "name": "Installation, Remplacement de Radiateurs et Dépannage Chauffage Central",
                 "provider": {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.plomberie-guedes.fr"
+                    "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
                     { "@type": "AdministrativeArea", "name": "Normandie" },
@@ -53,7 +53,7 @@ export default function ChauffageRadiateurs() {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://www.plomberie-guedes.fr/chauffage-central-radiateurs#faq",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/chauffage-central-radiateurs#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -86,10 +86,10 @@ export default function ChauffageRadiateurs() {
 
     return (
         <>
-            <SEO 
+            <SEO
                 title="Chauffage Central & Radiateurs Normandie : Départements & Villes"
                 description="Chauffagiste en Normandie : pose et remplacement de radiateurs, désembouage de réseau de chauffage central, purge et équilibrage. J'interviens dans toutes les préfectures et sous-préfectures."
-                canonicalUrl="https://www.plomberie-guedes.fr/chauffage-central-radiateurs"
+                canonicalUrl="https://www.guedes-plomberie-chauffage.fr/chauffage-central-radiateurs"
                 schema={schemaData}
             />
 
@@ -106,7 +106,7 @@ export default function ChauffageRadiateurs() {
                                     Installation & Entretien de <span className="text-accent">Chauffage Central </span>en Normandie
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Des radiateurs froids en bas ? Un réseau emboué ou un projet d'extension ? Je prends en charge l'installation, le remplacement de radiateurs (eau chaude et acier/fonte) ainsi que le désembouage complet de votre circuit de chauffage central  .
+                                    Des radiateurs froids en bas ? Un réseau emboué ou un projet d'extension ? La <strong>SARL Anthony GUEDES</strong> prend en charge l'installation, le remplacement de radiateurs (eau chaude et acier/fonte) ainsi que le désembouage complet de votre circuit de chauffage central.
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -200,7 +200,7 @@ export default function ChauffageRadiateurs() {
                             Secteur d'intervention Chauffage en Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens dans l'ensemble des départements normands, préfectures et sous-préfectures pour vos projets de chauffage   :
+                            J'interviens dans l'ensemble des départements normands pour vos projets de chauffage   :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[

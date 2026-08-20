@@ -17,13 +17,13 @@ export default function AdoucisseurEau() {
         "@graph": [
             {
                 "@type": "Service",
-                "@id": "https://www.plomberie-guedes.fr/installation-adoucisseur-eau#service",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#service",
                 "name": "Installation et Entretien d'Adoucisseur d'Eau",
                 "provider": {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.plomberie-guedes.fr"
+                    "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
                     { "@type": "AdministrativeArea", "name": "Normandie" },
@@ -52,7 +52,7 @@ export default function AdoucisseurEau() {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://www.plomberie-guedes.fr/installation-adoucisseur-eau#faq",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#faq",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -85,10 +85,10 @@ export default function AdoucisseurEau() {
 
     return (
         <>
-            <SEO 
+            <SEO
                 title="Installation Adoucisseur d'Eau Normandie : Départements & Villes"
                 description="Pose et entretien d'adoucisseur d'eau partout en Normandie (Eure, Seine-Maritime, Calvados, Manche, Orne). J'interviens dans toutes les préfectures et sous-préfectures."
-                canonicalUrl="https://www.plomberie-guedes.fr/installation-adoucisseur-eau"
+                canonicalUrl="https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau"
                 schema={schemaData}
             />
 
@@ -105,7 +105,7 @@ export default function AdoucisseurEau() {
                                     Installation d'<span className="text-accent">Adoucisseur d'Eau</span> en Normandie
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    L'eau en Normandie est particulièrement dure et calcaire  . Je protège vos tuyauteries, votre chauffe-eau et vos appareils ménagers grâce à la pose d'un <strong>adoucisseur d'eau individuel</strong>  .
+                                    L'eau en Normandie est particulièrement dure et calcaire. La <strong>SARL Anthony GUEDES</strong> protège vos tuyauteries, votre chauffe-eau et vos appareils ménagers grâce à la pose d'un <strong>adoucisseur d'eau individuel</strong>.
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -155,7 +155,7 @@ export default function AdoucisseurEau() {
                             Intervention dans toute la région Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens dans l'ensemble des départements normands, préfectures et sous-préfectures   :
+                            J'interviens dans l'ensemble des départements normands   :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
