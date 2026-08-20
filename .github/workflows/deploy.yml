@@ -25,11 +25,10 @@ jobs:
       - name: 🚀 Lancement du Build et du Pré-rendu SEO
         run: npm run build
 
-      - name: 🔗 Liaison automatique du projet
-        run: npx vercel link --yes --token ${{ secrets.VERCEL_TOKEN }}
-
-      - name: 📥 Récupération des configurations Vercel
-        run: npx vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }}
+      - name: 🔗 Récupération de la configuration Vercel
+        run: |
+          rm -rf .vercel
+          npx vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }}
 
       - name: 🏗️ Préparation du build Vercel
         run: npx vercel build --prod --token ${{ secrets.VERCEL_TOKEN }}
