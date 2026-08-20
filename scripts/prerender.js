@@ -17,7 +17,6 @@ const routes = [
   '/installation-adoucisseur-eau',
   '/installation-vmc-ventilation',
   '/chauffage-central-radiateurs',
-  '/plombier-chauffagiste-evreux',
 ];
 
 // 🟢 ÉTAPE CLÉ : On sauvegarde une copie propre du template initial de Vite

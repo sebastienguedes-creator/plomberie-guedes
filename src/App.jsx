@@ -11,7 +11,6 @@ import MentionsLegales from './components/MentionsLegales';
 import PolitiqueConfidentialite from './components/PolitiqueConfidentialite';
 import PompeAChaleur from './pages/PompeAChaleur';
 import SalleDeBain from './pages/SalleDeBain';
-import PlombierEvreux from './pages/PlombierEvreux';
 import AdoucisseurEau from './pages/AdoucisseurEau';
 import VmcVentilation from './pages/VmcVentilation';
 import ChauffageRadiateurs from './pages/ChauffageRadiateurs';
@@ -34,7 +33,6 @@ export default function App() {
           <Route path="/installation-vmc-ventilation" element={<VmcVentilation />} />
           <Route path="/chauffage-central-radiateurs" element={<ChauffageRadiateurs />} />
           <Route path="/urgence-depannage-plomberie" element={<UrgenceDepannage />} />
-          <Route path="/plombier-chauffagiste-evreux" element={<PlombierEvreux />} />
           
           {/* Pages légales */}
           <Route path="/mentions-legales" element={<MentionsLegales />} />

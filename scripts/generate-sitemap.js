@@ -18,7 +18,6 @@ const routes = [
   { url: '/installation-adoucisseur-eau', priority: '0.8', changefreq: 'monthly' },
   { url: '/installation-vmc-ventilation', priority: '0.8', changefreq: 'monthly' },
   { url: '/chauffage-central-radiateurs', priority: '0.8', changefreq: 'monthly' },
-  { url: '/plombier-chauffagiste-evreux', priority: '0.85', changefreq: 'monthly' },
 ];
 
 function generateSitemap() {

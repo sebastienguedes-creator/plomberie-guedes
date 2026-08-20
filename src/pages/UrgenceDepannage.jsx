@@ -102,7 +102,7 @@ export default function UrgenceDepannage() {
                                     <span className="text-red-500">Plomberie Chauffage</span>
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Une fuite importante, un dégât des eaux imminent ou un chauffage qui tombe en panne en plein hiver ? J'interviens rapidement pour sécuriser votre installation et réparer la panne[cite: 14].
+                                    Une fuite importante, un dégât des eaux imminent ou un chauffage qui tombe en panne en plein hiver ? J'interviens rapidement pour sécuriser votre installation et réparer la panne  .
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -122,15 +122,15 @@ export default function UrgenceDepannage() {
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Clock className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                                        <span><strong>Réactivité :</strong> Prise en charge prioritaire de votre appel d'urgence pour limiter les dégâts[cite: 14].</span>
+                                        <span><strong>Réactivité :</strong> Prise en charge prioritaire de votre appel d'urgence pour limiter les dégâts  .</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Wrench className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                                        <span><strong>Diagnostic précis :</strong> Recherche de panne ou de fuite experte avant toute intervention[cite: 14].</span>
+                                        <span><strong>Diagnostic précis :</strong> Recherche de panne ou de fuite experte avant toute intervention  .</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ShieldCheck className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                                        <span><strong>Transparence :</strong> Explication du problème et validation des réparations sans mauvaise surprise[cite: 14].</span>
+                                        <span><strong>Transparence :</strong> Explication du problème et validation des réparations sans mauvaise surprise  .</span>
                                     </li>
                                 </ul>
                             </div>
@@ -144,7 +144,7 @@ export default function UrgenceDepannage() {
                         <div className="text-center space-y-4">
                             <h2 className="text-3xl font-bold text-white">Vos problèmes, mes solutions immédiates</h2>
                             <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
-                                Expertise multi-marques pour la réparation de toutes vos installations sanitaires et thermiques[cite: 14].
+                                Expertise multi-marques pour la réparation de toutes vos installations sanitaires et thermiques  .
                             </p>
                         </div>
 
@@ -155,7 +155,7 @@ export default function UrgenceDepannage() {
                                 </div>
                                 <h3 className="text-lg font-bold text-white">Recherche et réparation de fuites</h3>
                                 <p className="text-sm text-slate-400">
-                                    Fuite sur tuyauterie (cuivre, PER, multicouche), joints défectueux, robinetterie qui fuit, chasse d'eau qui coule[cite: 14].
+                                    Fuite sur tuyauterie (cuivre, PER, multicouche), joints défectueux, robinetterie qui fuit, chasse d'eau qui coule  .
                                 </p>
                             </div>
 
@@ -165,7 +165,7 @@ export default function UrgenceDepannage() {
                                 </div>
                                 <h3 className="text-lg font-bold text-white">Panne de Chauffage / PAC</h3>
                                 <p className="text-sm text-slate-400">
-                                    Pompe à chaleur en défaut, chaudière qui ne démarre plus, radiateurs froids, perte de pression du réseau[cite: 14].
+                                    Pompe à chaleur en défaut, chaudière qui ne démarre plus, radiateurs froids, perte de pression du réseau  .
                                 </p>
                             </div>
 
@@ -175,7 +175,7 @@ export default function UrgenceDepannage() {
                                 </div>
                                 <h3 className="text-lg font-bold text-white">Débouchage & Engorgement</h3>
                                 <p className="text-sm text-slate-400">
-                                    WC bouchés, évier, lavabo ou douche bloqués. Intervention rapide pour restaurer un écoulement normal[cite: 14].
+                                    WC bouchés, évier, lavabo ou douche bloqués. Intervention rapide pour restaurer un écoulement normal  .
                                 </p>
                             </div>
 
@@ -185,7 +185,7 @@ export default function UrgenceDepannage() {
                                 </div>
                                 <h3 className="text-lg font-bold text-white">Panne d'Eau Chaude</h3>
                                 <p className="text-sm text-slate-400">
-                                    Ballon d'eau chaude (cumulus) percé, chauffe-eau thermodynamique en panne, résistance HS ou disjonction[cite: 14].
+                                    Ballon d'eau chaude (cumulus) percé, chauffe-eau thermodynamique en panne, résistance HS ou disjonction  .
                                 </p>
                             </div>
                         </div>
@@ -199,7 +199,7 @@ export default function UrgenceDepannage() {
                             Secteur d'intervention en Dépannage
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens rapidement pour vos urgences en plomberie et chauffage sur les communes suivantes[cite: 14] :
+                            J'interviens rapidement pour vos urgences en plomberie et chauffage sur les communes suivantes   :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
@@ -231,21 +231,21 @@ export default function UrgenceDepannage() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Que faire en cas de fuite d'eau importante avant l'arrivée du plombier ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Coupez immédiatement l'alimentation générale en eau (généralement située près du compteur) pour limiter les dégâts, puis contactez-moi en urgence[cite: 14].
+                                    Coupez immédiatement l'alimentation générale en eau (généralement située près du compteur) pour limiter les dégâts, puis contactez-moi en urgence  .
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Comment réagir face à une panne totale de chauffage en hiver ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Vérifiez l'alimentation électrique de votre équipement et la pression du circuit. Si le problème persiste, contactez-moi pour un diagnostic rapide[cite: 14].
+                                    Vérifiez l'alimentation électrique de votre équipement et la pression du circuit. Si le problème persiste, contactez-moi pour un diagnostic rapide  .
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Intervenez-vous rapidement pour les dépannages urgents ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Oui, j'assure une prise en charge prioritaire pour les dépannages urgents (Bernay, Évreux, Rouen, Lisieux, Louviers, Pont-Audemer, etc.)[cite: 14].
+                                    Oui, j'assure une prise en charge prioritaire pour les dépannages urgents (Bernay, Évreux, Rouen, Lisieux, Louviers, Pont-Audemer, etc.)  .
                                 </p>
                             </div>
                         </div>
@@ -256,7 +256,7 @@ export default function UrgenceDepannage() {
                 <section className="py-16 bg-red-600 text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Une urgence ? Ne laissez pas la situation s'aggraver.</h2>
-                        <p className="text-red-100 text-lg">Contactez-moi immédiatement pour une mise en sécurité et un dépannage rapide[cite: 14].</p>
+                        <p className="text-red-100 text-lg">Contactez-moi immédiatement pour une mise en sécurité et un dépannage rapide  .</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:+33617921004" className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg flex items-center justify-center gap-2">
                                 <PhoneCall className="w-5 h-5" /> 06 17 92 10 04

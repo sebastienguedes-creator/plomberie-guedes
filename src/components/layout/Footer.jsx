@@ -69,11 +69,6 @@ export default function Footer() {
                     Chauffage & Radiateurs
                   </Link>
                 </li>
-                <li>
-                  <Link to="/plombier-chauffagiste-evreux" className="hover:text-accent transition-colors">
-                    Intervention Évreux (27)
-                  </Link>
-                </li>
               </ul>
             </div>
 

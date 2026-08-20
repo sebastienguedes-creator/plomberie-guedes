@@ -1,7 +1,16 @@
-import { ShieldCheck, ArrowRight, PhoneCall } from 'lucide-react';
+import { ShieldCheck, ArrowRight, PhoneCall, Wind, Flame, Bath, Fan, Droplets, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Hero() {
+  const expertises = [
+    { title: "Pompes à Chaleur", icon: Wind, link: "/installation-pompe-a-chaleur" },
+    { title: "Chauffage", icon: Flame, link: "/chauffage-central-radiateurs" },
+    { title: "Salles de Bain", icon: Bath, link: "/renovation-salle-de-bain" },
+    { title: "VMC Double Flux", icon: Fan, link: "/installation-vmc-ventilation" },
+    { title: "Traitement Eau", icon: Droplets, link: "/installation-adoucisseur-eau" },
+    { title: "Dépannage", icon: AlertTriangle, link: "/urgence-depannage-plomberie" },
+  ];
+
   return (
     <section aria-labelledby="hero-heading" className="relative bg-primary text-white overflow-hidden py-16 lg:py-24 border-b border-slate-800">
       {/* Effet visuel d'arrière-plan subtil (Masqué pour les robots/lecteurs d'écran) */}
@@ -82,21 +91,16 @@ export default function Hero() {
                   <span className="text-xs bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-full border border-accent/20">Certifié RGE QualiPAC</span>
                 </div>
 
-                {/* Bloc image / illustration - Optimisé Core Web Vitals (LCP) et SEO Local */}
+                {/* Bloc image / illustration */}
                 <div className="rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 aspect-[4/3] flex items-center justify-center relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10" aria-hidden="true"></div>
-                  
-                  {/* Utilisation de l'image hero.png placée dans assets */}
                   <img 
                     src="/src/assets/hero.png" 
                     alt="Installation Pompe à Chaleur et Plomberie en Normandie" 
                     fetchPriority="high"
                     className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      e.target.style.display = 'none'; // Sécurité si l'image met du temps à charger
-                    }}
+                    onError={(e) => { e.target.style.display = 'none'; }}
                   />
-                  
                   <div className="absolute bottom-4 left-4 right-4 z-20 text-center">
                     <p className="text-sm font-medium text-slate-200 bg-slate-900/80 backdrop-blur-md py-2 px-4 rounded-xl border border-slate-800">
                       🔥 Installation Haute Performance
@@ -104,47 +108,20 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Liste des expertises rapides cliquables */}
-                <div className="space-y-2.5">
-                  <Link 
-                    to="/installation-pompe-a-chaleur"
-                    className="flex items-center justify-between text-sm text-slate-300 hover:text-accent transition-colors bg-slate-950/40 p-2 rounded-lg border border-slate-800/50 hover:border-accent/30"
-                  >
-                    <span>Pompes à Chaleur (PAC)</span>
-                    <span className="text-accent font-semibold text-xs bg-accent/10 px-2 py-0.5 rounded">Expertise</span>
-                  </Link>
-
-                  <Link 
-                    to="/chauffage-central-radiateurs"
-                    className="flex items-center justify-between text-sm text-slate-300 hover:text-accent transition-colors bg-slate-950/40 p-2 rounded-lg border border-slate-800/50 hover:border-accent/30"
-                  >
-                    <span>Chauffage & Radiateurs</span>
-                    <span className="text-accent font-semibold text-xs bg-accent/10 px-2 py-0.5 rounded">Confort</span>
-                  </Link>
-
-                  <Link 
-                    to="/renovation-salle-de-bain"
-                    className="flex items-center justify-between text-sm text-slate-300 hover:text-accent transition-colors bg-slate-950/40 p-2 rounded-lg border border-slate-800/50 hover:border-accent/30"
-                  >
-                    <span>Salles de Bain sur-mesure</span>
-                    <span className="text-accent font-semibold text-xs bg-accent/10 px-2 py-0.5 rounded">Création</span>
-                  </Link>
-
-                  <Link 
-                    to="/installation-vmc-ventilation"
-                    className="flex items-center justify-between text-sm text-slate-300 hover:text-accent transition-colors bg-slate-950/40 p-2 rounded-lg border border-slate-800/50 hover:border-accent/30"
-                  >
-                    <span>VMC Double Flux</span>
-                    <span className="text-accent font-semibold text-xs bg-accent/10 px-2 py-0.5 rounded">Maîtrise</span>
-                  </Link>
-
-                  <Link 
-                    to="/installation-adoucisseur-eau"
-                    className="flex items-center justify-between text-sm text-slate-300 hover:text-accent transition-colors bg-slate-950/40 p-2 rounded-lg border border-slate-800/50 hover:border-accent/30"
-                  >
-                    <span>Traitement de l'Eau</span>
-                    <span className="text-accent font-semibold text-xs bg-accent/10 px-2 py-0.5 rounded">Sur-mesure</span>
-                  </Link>
+                {/* Grille d'expertises visuelles */}
+                <div className="grid grid-cols-2 gap-3">
+                  {expertises.map((item, index) => (
+                    <Link 
+                      key={index}
+                      to={item.link}
+                      className="group flex flex-col items-center justify-center gap-2 p-3 bg-slate-950/50 hover:bg-accent border border-slate-700/50 hover:border-accent rounded-xl transition-all duration-300"
+                    >
+                      <item.icon className="w-5 h-5 text-accent group-hover:text-white transition-colors" />
+                      <span className="text-[11px] font-semibold text-slate-300 group-hover:text-white text-center leading-tight">
+                        {item.title}
+                      </span>
+                    </Link>
+                  ))}
                 </div>
 
               </div>
@@ -152,9 +129,7 @@ export default function Hero() {
           </div>
 
         </div>
-         
       </div>
-     
     </section>
   );
 }

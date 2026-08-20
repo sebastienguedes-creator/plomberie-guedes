@@ -115,7 +115,7 @@ export default function SalleDeBain() {
                                     Création & Rénovation de <span className="text-accent">Salle de Bain</span> en Normandie
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Confiez la transformation de votre salle de bain à un interlocuteur unique. De la dépose de l'existant à la pose de vos sanitaires et de la robinetterie, la <strong>SARL Anthony GUEDES</strong> concrétise vos projets partout en Normandie[cite: 20].
+                                    Confiez la transformation de votre salle de bain à un interlocuteur unique. De la dépose de l'existant à la pose de vos sanitaires et de la robinetterie, la <strong>SARL Anthony GUEDES</strong> concrétise vos projets partout en Normandie  .
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -142,15 +142,15 @@ export default function SalleDeBain() {
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Sparkles className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Douche à l'italienne :</strong> Receveur extra-plat, paroi vitrée, colonne thermostatique[cite: 20].</span>
+                                        <span><strong>Douche à l'italienne :</strong> Receveur extra-plat, paroi vitrée, colonne thermostatique  .</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Accessibility className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Aménagement PMR :</strong> Sécurisation, barres d'appui, sièges de douche adaptés[cite: 20].</span>
+                                        <span><strong>Aménagement PMR :</strong> Sécurisation, barres d'appui, sièges de douche adaptés  .</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Droplets className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Plomberie & Réseaux :</strong> Modification d'arrivées d'eau et évacuations sur-mesure[cite: 20].</span>
+                                        <span><strong>Plomberie & Réseaux :</strong> Modification d'arrivées d'eau et évacuations sur-mesure  .</span>
                                     </li>
                                 </ul>
                             </div>
@@ -165,7 +165,7 @@ export default function SalleDeBain() {
                             Votre artisan salle de bain en Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements, préfectures et sous-préfectures de la région Normandie[cite: 20] :
+                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements, préfectures et sous-préfectures de la région Normandie   :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
@@ -200,21 +200,21 @@ export default function SalleDeBain() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Combien de temps durent les travaux de rénovation d'une salle de bain ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    En moyenne, une rénovation complète de salle de bain (démolition, plomberie, sanitaires, étanchéité) dure entre 1 et 2 semaines selon l'ampleur du projet[cite: 20].
+                                    En moyenne, une rénovation complète de salle de bain (démolition, plomberie, sanitaires, étanchéité) dure entre 1 et 2 semaines selon l'ampleur du projet  .
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Proposez-vous le remplacement de baignoire par une douche à l'italienne ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Oui, c'est une intervention fréquente. Je dépose votre ancienne baignoire et j'installe un receveur extra-plat ou sur-mesure pour un accès sécurisé et moderne[cite: 20].
+                                    Oui, c'est une intervention fréquente. Je dépose votre ancienne baignoire et j'installe un receveur extra-plat ou sur-mesure pour un accès sécurisé et moderne  .
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Quels aménagements proposez-vous pour l'accessibilité PMR ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    J'installe des équipements adaptés tels que des receveurs de douche de plain-pied, des barres d'appui sécurisées et des sièges de douche ergonomiques pour faciliter le quotidien[cite: 20].
+                                    J'installe des équipements adaptés tels que des receveurs de douche de plain-pied, des barres d'appui sécurisées et des sièges de douche ergonomiques pour faciliter le quotidien  .
                                 </p>
                             </div>
                         </div>
@@ -225,7 +225,7 @@ export default function SalleDeBain() {
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Un projet de salle de bain en tête ?</h2>
-                        <p className="text-slate-100">Discutons de votre aménagement et obtenez une estimation rapide de vos travaux partout en Normandie[cite: 20].</p>
+                        <p className="text-slate-100">Discutons de votre aménagement et obtenez une estimation rapide de vos travaux partout en Normandie  .</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:+33617921004" className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg">06 17 92 10 04</a>
                             <Link to="/" className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg">Retour à l'accueil</Link>
