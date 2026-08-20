@@ -27,8 +27,8 @@ jobs:
           mkdir -p .vercel
           echo '{"orgId": "${{ secrets.VERCEL_ORG_ID }}", "projectId": "${{ secrets.VERCEL_PROJECT_ID }}"}' > .vercel/project.json
 
-      - name: 🌐 Déploiement direct du dossier final
-        run: npx vercel deploy dist --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
+      - name: 🌐 Déploiement direct sur Vercel
+        run: npx vercel deploy --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
