@@ -26,11 +26,18 @@ export default function SalleDeBain() {
                     "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
-                    { "@type": "AdministrativeArea", "name": "Normandie" },
+                    {
+                        "@type": "GeoCircle",
+                        "geoMidpoint": {
+                            "@type": "GeoCoordinates",
+                            "latitude": 49.122232,
+                            "longitude": 0.623779
+                        },
+                        "geoRadius": "150000" // 150 km autour de Valailles
+                    },
                     { "@type": "AdministrativeArea", "name": "Eure" },
                     { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
                     { "@type": "AdministrativeArea", "name": "Calvados" },
-                    { "@type": "AdministrativeArea", "name": "Manche" },
                     { "@type": "AdministrativeArea", "name": "Orne" },
                     { "@type": "City", "name": "Évreux" },
                     { "@type": "City", "name": "Bernay" },
@@ -41,15 +48,12 @@ export default function SalleDeBain() {
                     { "@type": "City", "name": "Caen" },
                     { "@type": "City", "name": "Lisieux" },
                     { "@type": "City", "name": "Bayeux" },
-                    { "@type": "City", "name": "Saint-Lô" },
-                    { "@type": "City", "name": "Cherbourg-en-Cotentin" },
-                    { "@type": "City", "name": "Avranches" },
                     { "@type": "City", "name": "Alençon" },
                     { "@type": "City", "name": "Argentan" },
                     { "@type": "City", "name": "Mortagne-au-Perche" },
-                    { "@type": "City", "name": "Valailles" }
+                    { "@type": "AdministrativeArea", "name": "Normandie" }
                 ],
-                "description": "Rénovation complète de salle de bain, création de douche à l'italienne, aménagement PMR et travaux de plomberie en Normandie.",
+                "description": "Rénovation complète de salle de bain, création de douche à l'italienne, aménagement PMR et travaux de plomberie sur un large secteur normand.",
                 "hasOfferCatalog": {
                     "@type": "OfferCatalog",
                     "name": "Services Salle de Bain",
@@ -97,7 +101,7 @@ export default function SalleDeBain() {
         <>
             <SEO 
                 title="Rénovation Salle de Bain Normandie : Clé en main | GUEDES"
-                description="Artisan spécialiste en rénovation de salle de bain en Normandie. J'interviens dans toutes les préfectures et sous-préfectures. Douche à l'italienne, aménagement PMR."
+                description="Artisan spécialiste en rénovation de salle de bain en Normandie (Eure, Seine-Maritime, Calvados, Orne). Douche à l'italienne, aménagement PMR."
                 canonicalUrl="https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain"
                 schema={schemaData}
             />
@@ -115,7 +119,7 @@ export default function SalleDeBain() {
                                     Création & Rénovation de <span className="text-accent">Salle de Bain</span> en Normandie
                                 </h1>
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Confiez la transformation de votre salle de bain à un interlocuteur unique. De la dépose de l'existant à la pose de vos sanitaires et de la robinetterie, la <strong>SARL Anthony GUEDES</strong> concrétise vos projets partout en Normandie  .
+                                    Confiez la transformation de votre salle de bain à un interlocuteur unique. De la dépose de l'existant à la pose de vos sanitaires et de la robinetterie, la <strong>SARL Anthony GUEDES</strong> concrétise vos projets sur un large rayon en Normandie.
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
                                     <a
@@ -142,15 +146,15 @@ export default function SalleDeBain() {
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Sparkles className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Douche à l'italienne :</strong> Receveur extra-plat, paroi vitrée, colonne thermostatique  .</span>
+                                        <span><strong>Douche à l'italienne :</strong> Receveur extra-plat, paroi vitrée, colonne thermostatique.</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Accessibility className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Aménagement PMR :</strong> Sécurisation, barres d'appui, sièges de douche adaptés  .</span>
+                                        <span><strong>Aménagement PMR :</strong> Sécurisation, barres d'appui, sièges de douche adaptés.</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Droplets className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Plomberie & Réseaux :</strong> Modification d'arrivées d'eau et évacuations sur-mesure  .</span>
+                                        <span><strong>Plomberie & Réseaux :</strong> Modification d'arrivées d'eau et évacuations sur-mesure.</span>
                                     </li>
                                 </ul>
                             </div>
@@ -162,19 +166,17 @@ export default function SalleDeBain() {
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
                         <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                            Votre artisan salle de bain en Normandie
+                            Intervention dans un large rayon sur la Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            Basé à <strong>Valailles</strong>, j'interviens dans l'ensemble des départements de la région Normandie :
+                            J'interviens sur la majorité du territoire normand, notamment dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
                                 "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
                                 "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
                                 "Caen (14)", "Lisieux (14)", "Bayeux (14)",
-                                "Saint-Lô (50)", "Cherbourg-en-Cotentin (50)", "Avranches (50)",
-                                "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)",
-                                "Valailles (27)"
+                                "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
                             ].map((ville, i) => (
                                 <span key={i} className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2">
                                     <MapPin className="w-3.5 h-3.5 text-accent" /> Salle de bain {ville}
@@ -200,21 +202,21 @@ export default function SalleDeBain() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Combien de temps durent les travaux de rénovation d'une salle de bain ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    En moyenne, une rénovation complète de salle de bain (démolition, plomberie, sanitaires, étanchéité) dure entre 1 et 2 semaines selon l'ampleur du projet  .
+                                    En moyenne, une rénovation complète de salle de bain (démolition, plomberie, sanitaires, étanchéité) dure entre 1 et 2 semaines selon l'ampleur du projet.
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Proposez-vous le remplacement de baignoire par une douche à l'italienne ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Oui, c'est une intervention fréquente. Je dépose votre ancienne baignoire et j'installe un receveur extra-plat ou sur-mesure pour un accès sécurisé et moderne  .
+                                    Oui, c'est une intervention fréquente. Je dépose votre ancienne baignoire et j'installe un receveur extra-plat ou sur-mesure pour un accès sécurisé et moderne.
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Quels aménagements proposez-vous pour l'accessibilité PMR ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    J'installe des équipements adaptés tels que des receveurs de douche de plain-pied, des barres d'appui sécurisées et des sièges de douche ergonomiques pour faciliter le quotidien  .
+                                    J'installe des équipements adaptés tels que des receveurs de douche de plain-pied, des barres d'appui sécurisées et des sièges de douche ergonomiques pour faciliter le quotidien.
                                 </p>
                             </div>
                         </div>
@@ -225,7 +227,7 @@ export default function SalleDeBain() {
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Un projet de salle de bain en tête ?</h2>
-                        <p className="text-slate-100">Discutons de votre aménagement et obtenez une estimation rapide de vos travaux partout en Normandie  .</p>
+                        <p className="text-slate-100">Discutons de votre aménagement et obtenez une estimation rapide de vos travaux sur une grande partie de la Normandie.</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:+33617921004" className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg">06 17 92 10 04</a>
                             <Link to="/" className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg">Retour à l'accueil</Link>

@@ -27,11 +27,18 @@ export default function ChauffageRadiateurs() {
                     "url": "https://www.guedes-plomberie-chauffage.fr"
                 },
                 "areaServed": [
-                    { "@type": "AdministrativeArea", "name": "Normandie" },
+                    {
+                        "@type": "GeoCircle",
+                        "geoMidpoint": {
+                            "@type": "GeoCoordinates",
+                            "latitude": 49.122232,
+                            "longitude": 0.623779
+                        },
+                        "geoRadius": "150000" // 150 km autour de Valailles
+                    },
                     { "@type": "AdministrativeArea", "name": "Eure" },
                     { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
                     { "@type": "AdministrativeArea", "name": "Calvados" },
-                    { "@type": "AdministrativeArea", "name": "Manche" },
                     { "@type": "AdministrativeArea", "name": "Orne" },
                     { "@type": "City", "name": "Évreux" },
                     { "@type": "City", "name": "Bernay" },
@@ -42,14 +49,12 @@ export default function ChauffageRadiateurs() {
                     { "@type": "City", "name": "Caen" },
                     { "@type": "City", "name": "Lisieux" },
                     { "@type": "City", "name": "Bayeux" },
-                    { "@type": "City", "name": "Saint-Lô" },
-                    { "@type": "City", "name": "Cherbourg-en-Cotentin" },
-                    { "@type": "City", "name": "Avranches" },
                     { "@type": "City", "name": "Alençon" },
                     { "@type": "City", "name": "Argentan" },
-                    { "@type": "City", "name": "Mortagne-au-Perche" }
+                    { "@type": "City", "name": "Mortagne-au-Perche" },
+                    { "@type": "AdministrativeArea", "name": "Normandie" }
                 ],
-                "description": "Pose et remplacement de radiateurs eau chaude et électriques, désembouage de circuit de chauffage central, modification de tuyauterie partout en Normandie. J'interviens pour votre chauffage."
+                "description": "Pose et remplacement de radiateurs eau chaude et électriques, désembouage de circuit de chauffage central, modification de tuyauterie sur un large secteur normand. J'interviens pour votre chauffage."
             },
             {
                 "@type": "FAQPage",
@@ -88,7 +93,7 @@ export default function ChauffageRadiateurs() {
         <>
             <SEO
                 title="Chauffage Central & Radiateurs Normandie : Départements & Villes"
-                description="Chauffagiste en Normandie : pose et remplacement de radiateurs, désembouage de réseau de chauffage central, purge et équilibrage. J'interviens dans toutes les préfectures et sous-préfectures."
+                description="Chauffagiste en Normandie (Eure, Seine-Maritime, Calvados, Orne) : pose et remplacement de radiateurs, désembouage. J'interviens dans un large rayon autour de Valailles."
                 canonicalUrl="https://www.guedes-plomberie-chauffage.fr/chauffage-central-radiateurs"
                 schema={schemaData}
             />
@@ -133,15 +138,15 @@ export default function ChauffageRadiateurs() {
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Thermometer className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Confort thermique optimal :</strong> Dimensionnement précis de la puissance de chaque radiateur pièce par pièce  .</span>
+                                        <span><strong>Confort thermique optimal :</strong> Dimensionnement précis de la puissance de chaque radiateur pièce par pièce.</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <Zap className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Économies d'énergie :</strong> Un circuit propre et équilibré réduit votre consommation jusqu'à 15 %  .</span>
+                                        <span><strong>Économies d'énergie :</strong> Un circuit propre et équilibré réduit votre consommation jusqu'à 15 %.</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ShieldCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Intervention toutes énergies :</strong> Raccordement sur pompe à chaleur, chaudière gaz, fioul ou granulés  .</span>
+                                        <span><strong>Intervention toutes énergies :</strong> Raccordement sur pompe à chaleur, chaudière gaz, fioul ou granulés.</span>
                                     </li>
                                 </ul>
                             </div>
@@ -155,7 +160,7 @@ export default function ChauffageRadiateurs() {
                         <div className="text-center space-y-4">
                             <h2 className="text-3xl font-bold text-white">Mes travaux de chauffage central</h2>
                             <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
-                                Intervention sur tout le réseau de distribution de chaleur dans votre logement  .
+                                Intervention sur tout le réseau de distribution de chaleur dans votre logement.
                             </p>
                         </div>
 
@@ -166,7 +171,7 @@ export default function ChauffageRadiateurs() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Désembouage de Réseau</h3>
                                 <p className="text-sm text-slate-400">
-                                    Nettoyage hydrodynamique du circuit pour éliminer la boue et le tartre. Indispensable avant la pose d'une pompe à chaleur  .
+                                    Nettoyage hydrodynamique du circuit pour éliminer la boue et le tartre. Indispensable avant la pose d'une pompe à chaleur.
                                 </p>
                             </div>
 
@@ -176,7 +181,7 @@ export default function ChauffageRadiateurs() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Remplacement de Radiateurs</h3>
                                 <p className="text-sm text-slate-400">
-                                    Installation de radiateurs eau chaude basse température, sèche-serviettes ou remplacement de vannes thermostatiques  .
+                                    Installation de radiateurs eau chaude basse température, sèche-serviettes ou remplacement de vannes thermostatiques.
                                 </p>
                             </div>
 
@@ -186,7 +191,7 @@ export default function ChauffageRadiateurs() {
                                 </div>
                                 <h3 className="text-xl font-bold text-white">Modification de Tuyauterie</h3>
                                 <p className="text-sm text-slate-400">
-                                    Déplacement de radiateurs, ajout d'émetteurs pour agrandissement ou réfection complète des réseaux cuivre/PEX  .
+                                    Déplacement de radiateurs, ajout d'émetteurs pour agrandissement ou réfection complète des réseaux cuivre/PEX.
                                 </p>
                             </div>
                         </div>
@@ -197,17 +202,16 @@ export default function ChauffageRadiateurs() {
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
                         <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                            Secteur d'intervention Chauffage en Normandie
+                            Intervention dans un large rayon sur la Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens dans l'ensemble des départements normands pour vos projets de chauffage   :
+                            J'interviens sur la majorité du territoire normand, notamment dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-2">
                             {[
                                 "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
                                 "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
                                 "Caen (14)", "Lisieux (14)", "Bayeux (14)",
-                                "Saint-Lô (50)", "Cherbourg-en-Cotentin (50)", "Avranches (50)",
                                 "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
                             ].map((lieu, i) => (
                                 <span key={i} className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2">
@@ -234,21 +238,21 @@ export default function ChauffageRadiateurs() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Pourquoi et quand faut-il désembouer son circuit de chauffage central ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Le désembouage permet d'éliminer les boues (oxydes métalliques et tartre) qui s'accumulent dans les tuyaux et radiateurs. Il est recommandé de le réaliser tous les 5 à 10 ans, ou impérativement avant l'installation d'une nouvelle chaudière ou d'une pompe à chaleur pour garantir un rendement optimal  .
+                                    Le désembouage permet d'éliminer les boues (oxydes métalliques et tartre) qui s'accumulent dans les tuyaux et radiateurs. Il est recommandé de le réaliser tous les 5 à 10 ans, ou impérativement avant l'installation d'une nouvelle chaudière ou d'une pompe à chaleur pour garantir un rendement optimal.
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Comment savoir si un radiateur a besoin d'être purgé ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Si votre radiateur chauffe en bas mais reste froid ou tiède sur le dessus, cela signifie que de l'air s'est infiltré dans le circuit. Une simple purge à l'aide d'une clé de purge permet de chasser l'air et de retrouver une diffusion homogène de la chaleur  .
+                                    Si votre radiateur chauffe en bas mais reste froid ou tiède sur le dessus, cela signifie que de l'air s'est infiltré dans le circuit. Une simple purge à l'aide d'une clé de purge permet de chasser l'air et de retrouver une diffusion homogène de la chaleur.
                                 </p>
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Est-il possible de remplacer un vieux radiateur par un modèle moderne ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Tout à fait. Je peux remplacer vos radiateurs existants (fonte, acier ou aluminium) par des modèles plus récents, plus performants et mieux adaptés à la configuration de vos pièces, tout en adaptant la tuyauterie si nécessaire  .
+                                    Tout à fait. Je peux remplacer vos radiateurs existants (fonte, acier ou aluminium) par des modèles plus récents, plus performants et mieux adaptés à la configuration de vos pièces, tout en adaptant la tuyauterie si nécessaire.
                                 </p>
                             </div>
                         </div>
@@ -259,7 +263,7 @@ export default function ChauffageRadiateurs() {
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Un projet de chauffage central ou des radiateurs à changer ?</h2>
-                        <p className="text-slate-100">Contactez-moi pour une étude personnalisée et un devis rapide partout en Normandie  .</p>
+                        <p className="text-slate-100">Contactez-moi pour une étude personnalisée et un devis rapide sur une grande partie de la Normandie.</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a href="tel:+33617921004" className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg">06 17 92 10 04</a>
                             <Link to="/" className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg">Retour à l'accueil</Link>
