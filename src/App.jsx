@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 
 // Layouts
@@ -15,12 +15,20 @@ import AdoucisseurEau from './pages/AdoucisseurEau';
 import VmcVentilation from './pages/VmcVentilation';
 import ChauffageRadiateurs from './pages/ChauffageRadiateurs';
 import UrgenceDepannage from './pages/UrgenceDepannage';
+import AdminChantier from './pages/AdminChantier';
 
 export default function App() {
+  const location = useLocation();
+  
+  // On vérifie si on est sur la page admin
+  const isAdminPage = location.pathname === '/admin';
+
   return (
     <div className="min-h-screen flex flex-col">
       <ScrollToTop />
-      <Navbar /> 
+      
+      {/* La Navbar s'affiche partout SAUF sur /admin */}
+      {!isAdminPage && <Navbar />} 
       
       <div className="flex-grow">
         <Routes>
@@ -37,10 +45,14 @@ export default function App() {
           {/* Pages légales */}
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
+
+          {/* Page Admin / Outil Chantier */}
+          <Route path="/admin" element={<AdminChantier />} />
         </Routes>
       </div>
 
-      <Footer />
+      {/* Le Footer s'affiche partout SAUF sur /admin */}
+      {!isAdminPage && <Footer />}
     </div>
   );
 }
