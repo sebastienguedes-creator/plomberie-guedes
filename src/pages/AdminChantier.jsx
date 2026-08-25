@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Camera, Send, CheckCircle, ArrowLeft, MapPin, Sparkles, RefreshCw, Loader2, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
@@ -204,7 +205,7 @@ export default function AdminChantier() {
   const [localisation, setLocalisation] = useState('Secteur non défini');
   const [chantierDate, setChantierDate] = useState(getTodayString());
   const [texteGenere, setTexteGenere] = useState('');
-  
+
   const [isGeneratingAi, setIsGeneratingAi] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [succes, setSucces] = useState(false);
@@ -215,7 +216,7 @@ export default function AdminChantier() {
     const dateFormatee = dateObj.toLocaleDateString('fr-FR', {
       day: 'numeric', month: 'long', year: 'numeric'
     });
-    
+
     setIsGeneratingAi(true);
     try {
       const texte = await generateMistralText(file, currentAction, currentCat, currentLoc, dateFormatee);
@@ -233,10 +234,10 @@ export default function AdminChantier() {
     if (file) {
       setImageFile(file);
       setPreview(URL.createObjectURL(file));
-      
+
       // Génération initiale
       mettreAJourTexte(file, action, categorie, 'Secteur d\'intervention', chantierDate);
-      
+
       setLocalisation('Recherche...');
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -246,11 +247,11 @@ export default function AdminChantier() {
                 headers: { 'Accept-Language': 'fr' }
               });
               const data = await res.json();
-              
+
               const nomVille = data.address?.city || data.address?.town || data.address?.village || data.address?.county || "notre secteur";
               const codePostal = data.address?.postcode;
               const villeFormatee = codePostal ? `${nomVille} (${codePostal})` : nomVille;
-              
+
               setLocalisation(villeFormatee);
               mettreAJourTexte(file, action, categorie, villeFormatee, chantierDate);
             } catch {
@@ -275,7 +276,7 @@ export default function AdminChantier() {
     const a = newAction !== null ? newAction : action;
     const c = newCat !== null ? newCat : categorie;
     const d = newDate !== null ? newDate : chantierDate;
-    
+
     if (newAction !== null) setAction(newAction);
     if (newCat !== null) setCategorie(newCat);
     if (newDate !== null) setChantierDate(newDate);
@@ -288,7 +289,7 @@ export default function AdminChantier() {
   // --- CIRCUIT DE PUBLICATION DIRECT ---
   const publierChantier = async () => {
     if (!imageFile || localisation === 'Recherche...') return;
-    
+
     if (!supabase) {
       alert("Erreur : La connexion à la base de données Supabase n'est pas configurée.");
       return;
@@ -300,12 +301,12 @@ export default function AdminChantier() {
       const formData = new FormData();
       formData.append('file', imageFile);
       formData.append('upload_preset', UPLOAD_PRESET);
-      
+
       const cloudinaryRes = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
         method: 'POST',
         body: formData
       });
-      
+
       const cloudinaryData = await cloudinaryRes.json();
       if (!cloudinaryData.secure_url) throw new Error("Erreur lors de l'upload Cloudinary");
       const imageUrl = cloudinaryData.secure_url;
@@ -313,11 +314,11 @@ export default function AdminChantier() {
       const { error: dbError } = await supabase
         .from('chantiers')
         .insert([
-          { 
-            image_url: imageUrl, 
-            texte: texteGenere, 
-            type: action, 
-            domaine: categorie, 
+          {
+            image_url: imageUrl,
+            texte: texteGenere,
+            type: action,
+            domaine: categorie,
             ville: localisation,
             created_at: new Date(chantierDate).toISOString()
           }
@@ -361,8 +362,13 @@ export default function AdminChantier() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 p-4 pb-24">
+      <Helmet>
+        <title>Administration - Chantiers</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+
       <div className="max-w-md mx-auto">
-        
+
         {/* En-tête */}
         <div className="flex items-center justify-between mb-6 pt-2">
           <Link to="/" className="text-slate-400 hover:text-white flex items-center gap-1 text-sm">
@@ -379,7 +385,7 @@ export default function AdminChantier() {
               <Sparkles className="text-blue-500" />
               Nouveau Chantier
             </h1>
-            
+
             {preview && (
               <div className="flex flex-col items-end gap-1.5">
                 {localisation === 'Recherche...' ? (
@@ -394,7 +400,7 @@ export default function AdminChantier() {
                     <div className="flex items-center gap-1 text-xs text-slate-300 font-medium bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
                       <Calendar size={12} className="text-blue-400" />
                       <span>Date :</span>
-                      <input 
+                      <input
                         type="date"
                         value={chantierDate}
                         onChange={(e) => handleSelectChange(null, null, e.target.value)}
@@ -443,8 +449,8 @@ export default function AdminChantier() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="block text-sm font-medium text-slate-300">2. Type</label>
-              <select 
-                value={action} 
+              <select
+                value={action}
                 onChange={(e) => handleSelectChange(e.target.value, null, null)}
                 disabled={isUploading}
                 className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
@@ -456,8 +462,8 @@ export default function AdminChantier() {
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-slate-300">3. Domaine</label>
-              <select 
-                value={categorie} 
+              <select
+                value={categorie}
                 onChange={(e) => handleSelectChange(null, e.target.value, null)}
                 disabled={isUploading}
                 className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
@@ -510,21 +516,20 @@ export default function AdminChantier() {
 
           {/* Bouton de publication */}
           {preview && (
-            <button 
+            <button
               onClick={publierChantier}
               disabled={isButtonDisabled}
-              className={`w-full font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${
-                succes ? 'bg-emerald-600 text-white' : 
-                isButtonDisabled ? 'bg-slate-700 text-slate-400 cursor-not-allowed' : 
-                'bg-blue-600 hover:bg-blue-500 text-white'
-              }`}
+              className={`w-full font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${succes ? 'bg-emerald-600 text-white' :
+                  isButtonDisabled ? 'bg-slate-700 text-slate-400 cursor-not-allowed' :
+                    'bg-blue-600 hover:bg-blue-500 text-white'
+                }`}
             >
               {succes ? <CheckCircle size={20} /> : isUploading ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
-              {succes ? 'Publié partout avec succès !' : 
-               isUploading ? 'Transmission en cours...' : 
-               isGeneratingAi ? 'Génération du texte par l\'IA...' :
-               localisation === 'Recherche...' ? 'Calcul de la position GPS...' : 
-               'Publier (Google + Site Web)'}
+              {succes ? 'Publié partout avec succès !' :
+                isUploading ? 'Transmission en cours...' :
+                  isGeneratingAi ? 'Génération du texte par l\'IA...' :
+                    localisation === 'Recherche...' ? 'Calcul de la position GPS...' :
+                      'Publier (Google + Site Web)'}
             </button>
           )}
         </div>
