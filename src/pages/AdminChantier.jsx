@@ -3,10 +3,12 @@ import { Camera, Send, CheckCircle, ArrowLeft, MapPin, Sparkles, RefreshCw, Load
 import { Link } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 
-// --- CONFIGURATION SÉCURISÉE (VIA .env) ---
+// --- CONFIGURATION SÉCURISÉE (VIA .env / VERCEL) ---
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Instanciation sécurisée : évite de faire planter l'application si les variables Vercel manquent
+const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
@@ -23,7 +25,7 @@ const fileToBase64 = (file) => {
   });
 };
 
-// --- GÉNÉRATEUR PAR IA (MISTRAL PIXTRAL-12B - HYBRIDE LOCAL / PROD VERCEL) ---
+// --- GÉNÉRATEUR PAR IA (MISTRAL PIXTRAL-12B) ---
 const generateMistralText = async (file, act, cat, loc, dateFormatted) => {
   try {
     let base64Image = null;
@@ -81,8 +83,8 @@ Fournis uniquement le texte rédigé final prêt à être mis en ligne, sans com
 
     let response;
 
-    // 1. En environnement de développement local (npm run dev) avec VITE_MISTRAL_API_KEY renseignée
-    if (import.meta.env.DEV && MISTRAL_API_KEY) {
+    // Si une clé Mistral est renseignée (en dev ou via Vercel), on interroge directement l'API Mistral
+    if (MISTRAL_API_KEY) {
       response = await fetch("https://api.mistral.ai/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -105,21 +107,16 @@ Fournis uniquement le texte rédigé final prêt à être mis en ligne, sans com
         })
       });
     } else {
-      // 2. En production sur Vercel (sécurisé via la fonction serveur /api/generate-description)
+      // Tentative via la route serveur Vercel si configurée
       response = await fetch("/api/generate-description", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          prompt,
-          base64Image
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, base64Image })
       });
     }
 
-    if (!response.ok) {
-      console.warn("Erreur API Mistral, bascule sur la génération locale de secours.");
+    if (!response || !response.ok) {
+      console.warn("Erreur ou absence d'API Mistral, bascule sur la génération dynamique locale.");
       return getUniqueDynamicText(act, cat, loc, dateFormatted);
     }
 
@@ -292,6 +289,11 @@ export default function AdminChantier() {
   const publierChantier = async () => {
     if (!imageFile || localisation === 'Recherche...') return;
     
+    if (!supabase) {
+      alert("Erreur : La connexion à la base de données Supabase n'est pas configurée.");
+      return;
+    }
+
     setIsUploading(true);
 
     try {
