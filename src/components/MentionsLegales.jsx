@@ -49,8 +49,8 @@ export default function MentionsLegales() {
                 Conformément à la réglementation applicable aux artisans du bâtiment, l'entreprise SARL Anthony GUEDES est couverte par une assurance Responsabilité Civile Professionnelle et une Garantie Décennale :
               </p>
               <ul className="mt-3 space-y-2 list-disc pl-5">
-                <li><strong>Compagnie d'assurance :</strong> [Nom de votre assurance, ex: MAAF / AXA]</li>
-                <li><strong>Numéro de police d'assurance :</strong> [Votre numéro de contrat]</li>
+                <li><strong>Compagnie d'assurance :</strong> MMA</li>
+                <li><strong>Numéro de police d'assurance :</strong> 149234389</li>
                 <li><strong>Couverture géographique :</strong> France Métropolitaine</li>
               </ul>
             </section>
@@ -81,17 +81,6 @@ export default function MentionsLegales() {
                 Toute reproduction totale ou partielle de ce site sans l'autorisation expresse de l'éditeur est prohibée et constituerait une contrefaçon sanctionnée par le Code de la propriété intellectuelle.
               </p>
             </section>
-
-            <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">7. Médiation de la consommation</h2>
-              <p>
-                Conformément aux articles L.616-1 et R.616-1 du code de la consommation, nous proposons un dispositif de médiation de la consommation. L'entité de médiation retenue est : <strong>[Nom de votre médiateur, obligatoire pour les artisans, ex: CNPM - MEDIATION DE LA CONSOMMATION]</strong>.
-              </p>
-              <p className="mt-2">
-                En cas de litige, vous pouvez déposer votre réclamation sur son site : [Lien du site du médiateur] ou par voie postale : [Adresse du médiateur].
-              </p>
-            </section>
-
           </div>
         </div>
       </div>

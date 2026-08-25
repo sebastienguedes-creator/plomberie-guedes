@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
+import { createClient } from '@supabase/supabase-js';
 import {
     Flame,
     ShieldCheck,
@@ -9,10 +11,47 @@ import {
     Euro,
     HelpCircle,
     MapPin,
-    Wrench
+    Wrench,
+    Image as ImageIcon,
+    X,
+    Maximize2
 } from 'lucide-react';
 
+// --- CONFIGURATION SUPABASE ---
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// --- UTILITAIRE IMAGE CLOUDINARY ---
+const getOptimizedImageUrl = (url) => {
+    if (!url) return '';
+    return url.replace('/upload/', '/upload/c_limit,w_1000,h_1000,f_auto,q_auto/');
+};
+
 export default function PompeAChaleur() {
+    const [chantiers, setChantiers] = useState([]);
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    useEffect(() => {
+        async function fetchDerniersChantiers() {
+            try {
+                const { data, error } = await supabase
+                    .from('chantiers')
+                    .select('*')
+                    .eq('domaine', 'PAC')
+                    .order('created_at', { ascending: false })
+                    .limit(6);
+
+                if (!error && data) {
+                    setChantiers(data);
+                }
+            } catch (err) {
+                console.error("Erreur lors de la récupération des chantiers :", err);
+            }
+        }
+        fetchDerniersChantiers();
+    }, []);
+
     // Données structurées JSON-LD (Service + FAQ pour Google Rich Snippets)
     const schemaData = {
         "@context": "https://schema.org",
@@ -35,7 +74,7 @@ export default function PompeAChaleur() {
                             "latitude": 49.122232,
                             "longitude": 0.623779
                         },
-                        "geoRadius": "150000" // 150 km autour de Valailles
+                        "geoRadius": "150000"
                     },
                     { "@type": "AdministrativeArea", "name": "Eure" },
                     { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
@@ -250,6 +289,96 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
+                {/* --- SECTION NOS RÉALISATIONS (DYNAMIQUE SUPABASE PAC) --- */}
+                {chantiers.length > 0 && (
+                    <section className="py-20 bg-slate-900 border-b border-slate-800">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                            <div className="text-center space-y-4">
+                                <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-xs font-bold">
+                                    <ImageIcon className="w-4 h-4" /> Nos réalisations
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                                    Dernières interventions sur les pompes à chaleur
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl mx-auto">
+                                    Installation, remplacement ou dépannage : suivez mes interventions récentes chez mes clients.
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {chantiers.map((chantier) => (
+                                    <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                        
+                                        {/* Image cliquable pour zoom instantané */}
+                                        <div
+                                            onClick={() => setSelectedImage(chantier.image_url)}
+                                            className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer"
+                                            title={`Agrandir la photo du chantier de ${chantier.ville}`}
+                                        >
+                                            <img
+                                                src={getOptimizedImageUrl(chantier.image_url)}
+                                                alt={`Installation d'une pompe à chaleur par l'entreprise Guedes Plomberie à ${chantier.ville}`}
+                                                title={`Chantier de pompe à chaleur à ${chantier.ville} en Normandie`}
+                                                className="w-full h-auto max-h-[350px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                                                loading="lazy"
+                                            />
+                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
+                                                <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
+                                                    <Maximize2 className="w-3.5 h-3.5 text-accent" /> Agrandir
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {/* Photo commentée / Descriptif textuel */}
+                                        <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
+                                            <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                                                {chantier.texte}
+                                            </p>
+                                        </div>
+
+                                        {/* Pied de carte avec Ville et Date */}
+                                        <div className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800 mt-auto">
+                                            <span className="text-xs font-bold text-accent uppercase tracking-wider flex items-center gap-1.5 line-clamp-1">
+                                                <MapPin className="w-3.5 h-3.5 shrink-0" /> {chantier.ville}
+                                            </span>
+                                            <span className="text-xs font-medium text-slate-400 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800 shrink-0">
+                                                <time dateTime={chantier.created_at}>
+                                                    {new Date(chantier.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                </time>
+                                            </span>
+                                        </div>
+
+                                    </article>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* --- MODALE DE ZOOM PLEIN ÉCRAN --- */}
+                {selectedImage && (
+                    <div
+                        onClick={() => setSelectedImage(null)}
+                        className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 animate-fadeIn"
+                    >
+                        <button
+                            onClick={() => setSelectedImage(null)}
+                            className="absolute top-6 right-6 bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-full border border-slate-700 transition-colors shadow-xl z-10"
+                            aria-label="Fermer"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        <div className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                            <img
+                                src={getOptimizedImageUrl(selectedImage)}
+                                alt="Agrandissement du chantier"
+                                className="max-w-full max-h-[85vh] object-contain rounded-2xl border border-slate-800 shadow-2xl"
+                            />
+                        </div>
+                    </div>
+                )}
+
                 {/* --- SECTION 4 : FAQ INTERACTIVE (RICH SNIPPETS GOOGLE) --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-950">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -280,7 +409,7 @@ export default function PompeAChaleur() {
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Quelle est la durée de vie d'une pompe à chaleur ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Une PAC bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité.
+                                    Une PAC bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien regular garantit des performances maximales et évite les surconsommations d'électricité.
                                 </p>
                             </div>
                         </div>
