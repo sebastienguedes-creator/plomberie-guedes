@@ -6,9 +6,39 @@ import ZoneInterventionMap from "../components/ZoneInterventionMap";
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    
+    // Récupération des données du formulaire via l'événement
+    const formData = new FormData(e.target);
+    const data = {
+      user_name: formData.get('user_name'),
+      user_phone: formData.get('user_phone'),
+      user_email: formData.get('user_email'),
+      project_type: formData.get('project_type'),
+      project_description: formData.get('project_description'),
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitted(true);
+      } else {
+        alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
+      }
+    } catch (error) {
+      console.error("Erreur réseau :", error);
+      alert("Impossible de contacter le serveur. Vérifiez votre connexion.");
+    }
   };
 
   // Données structurées Schema.org pour le référencement local Google
