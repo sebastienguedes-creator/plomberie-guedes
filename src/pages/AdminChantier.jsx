@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Camera, Send, CheckCircle, ArrowLeft, MapPin, Sparkles, RefreshCw, Loader2, Calendar } from 'lucide-react';
+import { Camera, Send, CheckCircle, ArrowLeft, MapPin, Sparkles, RefreshCw, Loader2, Calendar, Lock, Edit3, Trash2, Save, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 
@@ -8,7 +8,6 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Instanciation sécurisée : évite de faire planter l'application si les variables Vercel manquent
 const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -84,7 +83,6 @@ Fournis uniquement le texte rédigé final prêt à être mis en ligne, sans com
 
     let response;
 
-    // Si une clé Mistral est renseignée (en dev ou via Vercel), on interroge directement l'API Mistral
     if (MISTRAL_API_KEY) {
       response = await fetch("https://api.mistral.ai/v1/chat/completions", {
         method: "POST",
@@ -108,7 +106,6 @@ Fournis uniquement le texte rédigé final prêt à être mis en ligne, sans com
         })
       });
     } else {
-      // Tentative via la route serveur Vercel si configurée
       response = await fetch("/api/generate-description", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -117,7 +114,6 @@ Fournis uniquement le texte rédigé final prêt à être mis en ligne, sans com
     }
 
     if (!response || !response.ok) {
-      console.warn("Erreur ou absence d'API Mistral, bascule sur la génération dynamique locale.");
       return getUniqueDynamicText(act, cat, loc, dateFormatted);
     }
 
@@ -125,12 +121,11 @@ Fournis uniquement le texte rédigé final prêt à être mis en ligne, sans com
     const content = data.choices?.[0]?.message?.content;
     return content ? content.trim() : getUniqueDynamicText(act, cat, loc, dateFormatted);
   } catch (err) {
-    console.error("Erreur lors de la génération Mistral :", err);
     return getUniqueDynamicText(act, cat, loc, dateFormatted);
   }
 };
 
-// --- GÉNÉRATEUR LOCAL DE SECOURS (FALLBACK EN CAS D'ERREUR API OU DE CLÉ MANQUANTE) ---
+// --- GÉNÉRATEUR LOCAL DE SECOURS ---
 const getUniqueDynamicText = (act, cat, loc, date) => {
   const hooks = [
     `Intervention de ${act} réalisée à ${loc} le ${date} (${cat}).`,
@@ -142,42 +137,28 @@ const getUniqueDynamicText = (act, cat, loc, date) => {
 
   const domainBodies = {
     "Adoucisseur": [
-      "Pour dire adieu aux traces de calcaire et prolonger durablement la durée de vie de vos équipements, rien ne remplace une installation sur mesure.",
-      "L'eau en région étant particulièrement dure, la pose de cet adoucisseur garantit une protection optimale de votre réseau et un confort au quotidien.",
-      "Protéger son chauffe-eau et ses canalisations contre le tartre est indispensable : un chantier minutieux réalisé pour assurer une eau douce dans toute la maison."
+      "Pour dire adieu aux traces de calcaire et prolonger durablement la durée de vie de vos équipements, rien ne remplace une installation sur mesure."
     ],
     "PAC": [
-      "Optimiser les performances énergétiques de l'habitat et garantir un confort thermique idéal, quelle que soit la saison, c'est tout l'enjeu de cette installation.",
-      "Une solution de chauffage moderne et performante mise en place dans les règles de l'art pour maîtriser durablement votre consommation d'énergie.",
-      "Le choix d'une pompe à chaleur performante pour allier économies d'énergie et respect de l'environnement au cœur de notre région."
+      "Optimiser les performances énergétiques de l'habitat et garantir un confort thermique idéal, quelle que soit la saison, c'est tout l'enjeu de cette installation."
     ],
     "Salle de Bain": [
-      "Transformation et aménagement de cet espace d'eau pour allier esthétisme, modernité et fonctionnalité au quotidien.",
-      "Un travail de plomberie et de finition soigné pour donner vie à un projet de salle de bain sur mesure et pérenne.",
-      "Rénovation complète pensée pour optimiser l'espace et garantir un confort absolu dans la pièce d'eau."
+      "Transformation et aménagement de cet espace d'eau pour allier esthétisme, modernité et fonctionnalité au quotidien."
     ],
     "VMC": [
-      "Assurer un air sain et renouvelé en continu dans le logement est essentiel pour éviter l'humidité et protéger le bâti.",
-      "Installation d'un système de ventilation performant pour garantir une qualité d'air optimale et préserver la santé de votre foyer.",
-      "Maîtrise des flux d'air et ventilation soignée : un élément clé pour l'isolation et la salubrité de la maison."
+      "Assurer un air sain et renouvelé en continu dans le logement est essentiel pour éviter l'humidité et protéger le bâti."
     ],
     "Radiateur": [
-      "Mise en place d'émetteurs de chaleur adaptés pour assurer une température homogène et un confort thermique parfait dans chaque pièce.",
-      "Remplacement et raccordement de radiateurs pour optimiser la diffusion de la chaleur et gagner en efficacité énergétique.",
-      "Un système de chauffage central réglé et posé avec précision pour une performance thermique maximale."
+      "Mise en place d'émetteurs de chaleur adaptés pour assurer une température homogène et un confort thermique parfait dans chaque pièce."
     ]
   };
 
   const defaultBodies = [
-    "Un travail rigoureux et soigné assuré pour garantir la fiabilité et la durabilité de vos installations.",
-    "Parce que le respect des normes et la qualité de finition sont nos priorités, chaque intervention est menée avec le plus grand professionnalisme."
+    "Un travail rigoureux et soigné assuré pour garantir la fiabilité et la durabilité de vos installations."
   ];
 
   const ctas = [
-    "📞 Un projet de rénovation ou besoin d'un dépannage ? Contactez Guedes Plomberie pour un devis gratuit !",
-    "📞 Envie d'améliorer le confort de votre habitat ? Parlons de votre projet dès aujourd'hui !",
-    "📞 Besoin d'un conseil d'artisan qualifié ou d'une intervention rapide dans la région ? Appelez-nous !",
-    "📞 N'hésitez pas à nous contacter pour toute question ou demande d'accompagnement sur vos équipements !"
+    "📞 Un projet de rénovation ou besoin d'un dépannage ? Contactez Guedes Plomberie pour un devis gratuit !"
   ];
 
   const randomHook = hooks[Math.floor(Math.random() * hooks.length)];
@@ -185,19 +166,199 @@ const getUniqueDynamicText = (act, cat, loc, date) => {
   const randomBody = bodiesList[Math.floor(Math.random() * bodiesList.length)];
   const randomCta = ctas[Math.floor(Math.random() * ctas.length)];
 
-  return `${randomHook}\n\n${randomBody}\n\n${randomCta}\n\n#plomberie #artisan #guedesplomberie #${cat.toLowerCase().replace(/[^a-z0-9]/g, '')} #${act}`;
+  return `${randomHook}\n\n${randomBody}\n\n${randomCta}\n\n#plomberie #artisan #guedesplomberie`;
 };
 
-// Utilitaire : Date du jour
 const getTodayString = () => {
   const d = new Date();
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
+
+// --- UTILITAIRE : EXTRAIRE LE PUBLIC_ID CLOUDINARY DEPUIS L'URL ---
+const getPublicIdFromUrl = (url) => {
+  if (!url) return null;
+  try {
+    const parts = url.split('/');
+    const uploadIndex = parts.indexOf('upload');
+    if (uploadIndex === -1) return null;
+    let pathParts = parts.slice(uploadIndex + 1);
+    if (pathParts[0].startsWith('v')) {
+      pathParts = pathParts.slice(1); // Ignorer la version (ex: v12345678)
+    }
+    const fullPath = pathParts.join('/');
+    const lastDotIndex = fullPath.lastIndexOf('.');
+    return lastDotIndex !== -1 ? fullPath.substring(0, lastDotIndex) : fullPath;
+  } catch (e) {
+    return null;
+  }
 };
 
 export default function AdminChantier() {
+  // États d'authentification Supabase
+  const [session, setSession] = useState(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [authMessage, setAuthMessage] = useState('');
+  const [isForgotMode, setIsForgotMode] = useState(false);
+  const [isLoadingAuthAction, setIsLoadingAuthAction] = useState(false);
+
+  // --- GESTION DES ONGLETS ("add" ou "edit") ---
+  const [activeTab, setActiveTab] = useState('add');
+
+  // --- ÉTATS POUR LA LISTE DES CHANTIERS EXISTANTS ---
+  const [chantiersExistants, setChantiersExistants] = useState([]);
+  const [loadingChantiers, setLoadingChantiers] = useState(false);
+
+  // Vérification de la session active[cite: 2]
+  useEffect(() => {
+    if (!supabase) {
+      setLoadingAuth(false);
+      return;
+    }
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoadingAuth(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Charger les chantiers existants quand on va sur l'onglet "edit"[cite: 2]
+  useEffect(() => {
+    if (activeTab === 'edit' && session) {
+      chargerChantiers();
+    }
+  }, [activeTab, session]);
+
+  const chargerChantiers = async () => {
+    if (!supabase) return;
+    setLoadingChantiers(true);
+    const { data, error } = await supabase
+      .from('chantiers')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (!error && data) {
+      setChantiersExistants(data);
+    }
+    setLoadingChantiers(false);
+  };
+
+  const modifierChantierSupabase = async (id, nouveauTexte) => {
+    if (!supabase) return;
+    const { error } = await supabase
+      .from('chantiers')
+      .update({ texte: nouveauTexte })
+      .eq('id', id);
+
+    if (error) {
+      alert("Erreur lors de la modification.");
+    } else {
+      alert("Chantier mis à jour avec succès !");
+      chargerChantiers();
+    }
+  };
+
+  // --- NOUVEAU : GESTION DU COUP DE CŒUR / FORÇAGE DE VISIBILITÉ ---
+  const toggleForceVisible = async (id, currentStatus) => {
+    if (!supabase) return;
+    const newStatus = !currentStatus;
+    const { error } = await supabase
+      .from('chantiers')
+      .update({ force_visible: newStatus })
+      .eq('id', id);
+
+    if (error) {
+      alert("Erreur lors de la modification du statut épinglé.");
+    } else {
+      // Mise à jour instantanée de l'état local pour éviter un rechargement complet
+      setChantiersExistants(
+        chantiersExistants.map(c => c.id === id ? { ...c, force_visible: newStatus } : c)
+      );
+    }
+  };
+
+  const supprimerChantierSupabase = async (id, imageUrl) => {
+    if (!confirm("Voulez-vous vraiment supprimer ce chantier ? Cela supprimera l'entrée et l'image associée.")) return;
+    if (!supabase) return;
+
+    try {
+      // 1. Supprimer de la base de données Supabase[cite: 2]
+      const { error: dbError } = await supabase
+        .from('chantiers')
+        .delete()
+        .eq('id', id);
+
+      if (dbError) throw dbError;
+
+      // 2. Extraire le public_id et notifier Make pour supprimer l'image de Cloudinary[cite: 2]
+      const publicId = getPublicIdFromUrl(imageUrl);
+      if (MAKE_WEBHOOK_URL && publicId) {
+        await fetch(MAKE_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'delete_image',
+            public_id: publicId,
+            image_url: imageUrl
+          })
+        });
+      }
+
+      // 3. Mettre à jour l'état local[cite: 2]
+      setChantiersExistants(chantiersExistants.filter(c => c.id !== id));
+      alert("Chantier et image supprimés avec succès !");
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la suppression.");
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoadingAuthAction(true);
+    setAuthError('');
+    if (!supabase) return;
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) setAuthError("E-mail ou mot de passe incorrect.");
+    setIsLoadingAuthAction(false);
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      setAuthError("Veuillez entrer votre e-mail d'abord.");
+      return;
+    }
+    setIsLoadingAuthAction(true);
+    setAuthError('');
+    setAuthMessage('');
+
+    if (!supabase) return;
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/admin',
+    });
+
+    if (error) {
+      setAuthError("Erreur lors de l'envoi de l'e-mail de réinitialisation.");
+    } else {
+      setAuthMessage("Un e-mail de réinitialisation a été envoyé à cette adresse.");
+    }
+    setIsLoadingAuthAction(false);
+  };
+
+  const handleLogout = async () => {
+    if (supabase) await supabase.auth.signOut();
+  };
+
+  // États du module d'ajout de chantier d'origine[cite: 2]
   const [preview, setPreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [action, setAction] = useState('dépannage');
@@ -205,12 +366,10 @@ export default function AdminChantier() {
   const [localisation, setLocalisation] = useState('Secteur non défini');
   const [chantierDate, setChantierDate] = useState(getTodayString());
   const [texteGenere, setTexteGenere] = useState('');
-
   const [isGeneratingAi, setIsGeneratingAi] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [succes, setSucces] = useState(false);
 
-  // Fonction centrale de mise à jour du texte via Mistral AI
   const mettreAJourTexte = async (file, currentAction, currentCat, currentLoc, currentDate) => {
     const dateObj = new Date(currentDate || chantierDate);
     const dateFormatee = dateObj.toLocaleDateString('fr-FR', {
@@ -228,14 +387,11 @@ export default function AdminChantier() {
     }
   };
 
-  // Déclenchement de l'appareil photo & géolocalisation
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setImageFile(file);
       setPreview(URL.createObjectURL(file));
-
-      // Génération initiale
       mettreAJourTexte(file, action, categorie, 'Secteur d\'intervention', chantierDate);
 
       setLocalisation('Recherche...');
@@ -247,7 +403,6 @@ export default function AdminChantier() {
                 headers: { 'Accept-Language': 'fr' }
               });
               const data = await res.json();
-
               const nomVille = data.address?.city || data.address?.town || data.address?.village || data.address?.county || "notre secteur";
               const codePostal = data.address?.postcode;
               const villeFormatee = codePostal ? `${nomVille} (${codePostal})` : nomVille;
@@ -286,15 +441,8 @@ export default function AdminChantier() {
     }
   };
 
-  // --- CIRCUIT DE PUBLICATION DIRECT ---
   const publierChantier = async () => {
-    if (!imageFile || localisation === 'Recherche...') return;
-
-    if (!supabase) {
-      alert("Erreur : La connexion à la base de données Supabase n'est pas configurée.");
-      return;
-    }
-
+    if (!imageFile || localisation === 'Recherche...' || !supabase) return;
     setIsUploading(true);
 
     try {
@@ -308,7 +456,7 @@ export default function AdminChantier() {
       });
 
       const cloudinaryData = await cloudinaryRes.json();
-      if (!cloudinaryData.secure_url) throw new Error("Erreur lors de l'upload Cloudinary");
+      if (!cloudinaryData.secure_url) throw new Error("Erreur Cloudinary");
       const imageUrl = cloudinaryData.secure_url;
 
       const { error: dbError } = await supabase
@@ -351,12 +499,126 @@ export default function AdminChantier() {
       }, 3000);
 
     } catch (error) {
-      console.error("Erreur lors de la publication :", error);
-      alert("Une erreur est survenue lors de l'envoi. Vérifie la console.");
+      console.error(error);
+      alert("Erreur lors de la publication.");
     } finally {
       setIsUploading(false);
     }
   };
+
+  if (loadingAuth) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center">
+        <Loader2 className="animate-spin text-blue-500" size={32} />
+      </div>
+    );
+  }
+
+  // Écran de connexion (si non authentifié)[cite: 2]
+  if (!session) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center p-4">
+        <Helmet>
+          <title>Connexion - Admin Chantiers</title>
+          <meta name="robots" content="noindex, nofollow" />
+        </Helmet>
+        <div className="w-full max-w-sm bg-slate-800 rounded-2xl shadow-xl border border-slate-700/60 p-6 space-y-6">
+          <div className="text-center space-y-2">
+            <div className="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400 mx-auto border border-blue-500/30">
+              <Lock size={22} />
+            </div>
+            <h1 className="text-xl font-bold text-white">Espace Sécurisé</h1>
+            <p className="text-xs text-slate-400">Guedes Plomberie - Administration</p>
+          </div>
+
+          {!isForgotMode ? (
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <input
+                  type="email"
+                  placeholder="Adresse e-mail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm mb-3"
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Mot de passe"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+                  required
+                />
+              </div>
+
+              {authError && <p className="text-xs text-red-400 text-center font-medium">{authError}</p>}
+              {authMessage && <p className="text-xs text-emerald-400 text-center font-medium">{authMessage}</p>}
+
+              <button
+                type="submit"
+                disabled={isLoadingAuthAction}
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all text-sm flex items-center justify-center gap-2"
+              >
+                {isLoadingAuthAction && <Loader2 size={16} className="animate-spin" />}
+                Se connecter
+              </button>
+
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={() => { setIsForgotMode(true); setAuthError(''); setAuthMessage(''); }}
+                  className="text-xs text-blue-400 hover:underline"
+                >
+                  Mot de passe oublié ?
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <p className="text-xs text-slate-300 text-center">Entre ton e-mail pour recevoir un lien de réinitialisation :</p>
+              <input
+                type="email"
+                placeholder="Votre e-mail"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+                required
+              />
+
+              {authError && <p className="text-xs text-red-400 text-center font-medium">{authError}</p>}
+              {authMessage && <p className="text-xs text-emerald-400 text-center font-medium">{authMessage}</p>}
+
+              <button
+                type="submit"
+                disabled={isLoadingAuthAction}
+                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all text-sm flex items-center justify-center gap-2"
+              >
+                {isLoadingAuthAction && <Loader2 size={16} className="animate-spin" />}
+                Envoyer le lien de réinitialisation
+              </button>
+
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={() => { setIsForgotMode(false); setAuthError(''); setAuthMessage(''); }}
+                  className="text-xs text-slate-400 hover:text-white"
+                >
+                  Retour à la connexion
+                </button>
+              </div>
+            </form>
+          )}
+
+          <div className="text-center pt-2 border-t border-slate-700/50">
+            <Link to="/" className="text-xs text-slate-400 hover:text-white flex items-center justify-center gap-1">
+              <ArrowLeft size={14} /> Retour au site public
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const isButtonDisabled = !imageFile || isUploading || isGeneratingAi || succes || localisation === 'Recherche...';
 
@@ -369,170 +631,308 @@ export default function AdminChantier() {
 
       <div className="max-w-md mx-auto">
 
-        {/* En-tête */}
-        <div className="flex items-center justify-between mb-6 pt-2">
+        {/* En-tête & Déconnexion[cite: 2] */}
+        <div className="flex items-center justify-between mb-4 pt-2">
           <Link to="/" className="text-slate-400 hover:text-white flex items-center gap-1 text-sm">
             <ArrowLeft size={18} /> Retour au site
           </Link>
-          <span className="text-xs bg-blue-600/30 text-blue-400 px-3 py-1 rounded-full font-medium border border-blue-500/30">
-            Espace Interne
-          </span>
+          <button
+            onClick={handleLogout}
+            className="text-xs text-red-400 hover:text-red-300 bg-red-950/40 px-3 py-1 rounded-full border border-red-800/40"
+          >
+            Déconnexion
+          </button>
         </div>
 
-        <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/60 p-6 space-y-6">
-          <div className="flex items-start justify-between gap-2">
-            <h1 className="text-xl font-bold text-white flex items-center gap-2">
-              <Sparkles className="text-blue-500" />
-              Nouveau Chantier
-            </h1>
+        {/* --- BARRE D'ONGLETS MODULAIRE ---[cite: 2] */}
+        <div className="grid grid-cols-2 gap-2 mb-6 bg-slate-800 p-1.5 rounded-2xl border border-slate-700/60">
+          <button
+            onClick={() => setActiveTab('add')}
+            className={`py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'add'
+              ? 'bg-blue-600 text-white shadow-lg'
+              : 'text-slate-400 hover:text-slate-200'
+              }`}
+          >
+            <Sparkles size={16} /> Ajouter un chantier
+          </button>
+          <button
+            onClick={() => setActiveTab('edit')}
+            className={`py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${activeTab === 'edit'
+              ? 'bg-blue-600 text-white shadow-lg'
+              : 'text-slate-400 hover:text-slate-200'
+              }`}
+          >
+            <Edit3 size={16} /> Gérer / Modifier
+          </button>
+        </div>
 
-            {preview && (
-              <div className="flex flex-col items-end gap-1.5">
-                {localisation === 'Recherche...' ? (
-                  <div className="flex items-center gap-1.5 text-xs text-amber-400 font-medium bg-amber-950/50 px-2.5 py-1.5 rounded-lg border border-amber-800/50">
-                    <Loader2 size={12} className="animate-spin" /> Recherche GPS...
-                  </div>
-                ) : (
-                  <>
-                    <div className="flex items-center gap-1 text-xs text-emerald-400 font-medium bg-emerald-950/50 px-2.5 py-1 rounded-lg border border-emerald-800/50">
-                      <MapPin size={12} /> {localisation}
-                    </div>
-                    <div className="flex items-center gap-1 text-xs text-slate-300 font-medium bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
-                      <Calendar size={12} className="text-blue-400" />
-                      <span>Date :</span>
-                      <input
-                        type="date"
-                        value={chantierDate}
-                        onChange={(e) => handleSelectChange(null, null, e.target.value)}
-                        disabled={isUploading}
-                        className="bg-transparent text-slate-100 focus:outline-none cursor-pointer text-xs"
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
-          </div>
+        {/* --- ONGLET 1 : AJOUTER UN CHANTIER ---[cite: 2] */}
+        {activeTab === 'add' && (
+          <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/60 p-6 space-y-6">
+            <div className="flex items-start justify-between gap-2">
+              <h1 className="text-xl font-bold text-white flex items-center gap-2">
+                <Sparkles className="text-blue-500" />
+                Nouveau Chantier
+              </h1>
 
-          {/* Photo */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-slate-300">1. Photo du chantier</label>
-            <div className="relative border-2 border-dashed border-slate-600 rounded-xl p-6 hover:border-blue-500 transition-colors text-center bg-slate-900/50">
-              <input
-                type="file"
-                accept="image/*"
-                capture="environment"
-                onChange={handlePhotoChange}
-                disabled={isUploading}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 disabled:cursor-not-allowed"
-              />
-              {preview ? (
-                <div className="space-y-3">
-                  <img src={preview} alt="Aperçu" className="mx-auto h-40 object-cover rounded-lg border border-slate-700 shadow-md" />
-                  <div className="text-xs text-blue-400 flex items-center justify-center gap-1 font-medium">
-                    <RefreshCw size={14} /> Appuyer pour changer de photo
-                  </div>
-                </div>
-              ) : (
-                <div className="text-slate-400 flex flex-col items-center py-6">
-                  <div className="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400 mb-3 border border-blue-500/30">
-                    <Camera size={32} />
-                  </div>
-                  <span className="text-sm font-bold text-slate-200">Appuyer pour prendre la photo</span>
-                  <span className="text-xs text-slate-400 mt-1">L'appareil photo s'ouvrira directement</span>
+              {preview && (
+                <div className="flex flex-col items-end gap-1.5">
+                  {localisation === 'Recherche...' ? (
+                    <div className="flex items-center gap-1.5 text-xs text-amber-400 font-medium bg-amber-950/50 px-2.5 py-1.5 rounded-lg border border-amber-800/50">
+                      <Loader2 size={12} className="animate-spin" /> Recherche GPS...
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-1 text-xs text-emerald-400 font-medium bg-emerald-950/50 px-2.5 py-1 rounded-lg border border-emerald-800/50">
+                        <MapPin size={12} /> {localisation}
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-slate-300 font-medium bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
+                        <Calendar size={12} className="text-blue-400" />
+                        <span>Date :</span>
+                        <input
+                          type="date"
+                          value={chantierDate}
+                          onChange={(e) => handleSelectChange(null, null, e.target.value)}
+                          disabled={isUploading}
+                          className="bg-transparent text-slate-100 focus:outline-none cursor-pointer text-xs"
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Sélecteurs */}
-          <div className="grid grid-cols-2 gap-4">
+            {/* Photo[cite: 2] */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-300">2. Type</label>
-              <select
-                value={action}
-                onChange={(e) => handleSelectChange(e.target.value, null, null)}
-                disabled={isUploading}
-                className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
-              >
-                <option value="installation">Installation</option>
-                <option value="rénovation">Rénovation</option>
-                <option value="dépannage">Dépannage</option>
-              </select>
-            </div>
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-300">3. Domaine</label>
-              <select
-                value={categorie}
-                onChange={(e) => handleSelectChange(null, e.target.value, null)}
-                disabled={isUploading}
-                className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
-              >
-                <option value="PAC">PAC</option>
-                <option value="Salle de Bain">Salle de Bain</option>
-                <option value="Adoucisseur">Adoucisseur</option>
-                <option value="VMC">VMC</option>
-                <option value="Radiateur">Radiateur</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Aperçu du texte généré par Mistral AI (Editable avant envoi) */}
-          {preview && (
-            <div className="space-y-4 pt-2">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="block text-sm font-medium text-slate-300 flex items-center gap-1.5">
-                    <Sparkles size={14} className="text-blue-400" />
-                    4. Description IA (Modifiable) :
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => mettreAJourTexte(imageFile, action, categorie, localisation, chantierDate)}
-                    disabled={isGeneratingAi || isUploading}
-                    className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium disabled:opacity-50"
-                  >
-                    <RefreshCw size={12} className={isGeneratingAi ? "animate-spin" : ""} />
-                    Régénérer
-                  </button>
-                </div>
-
-                <div className="relative">
-                  {isGeneratingAi && (
-                    <div className="absolute inset-0 bg-slate-900/80 rounded-xl flex items-center justify-center gap-2 text-xs text-blue-400 font-medium z-10">
-                      <Loader2 size={16} className="animate-spin" /> Analyse Pixtral & Rédaction SEO...
+              <label className="block text-sm font-medium text-slate-300">1. Photo du chantier</label>
+              <div className="relative border-2 border-dashed border-slate-600 rounded-xl p-6 hover:border-blue-500 transition-colors text-center bg-slate-900/50">
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={handlePhotoChange}
+                  disabled={isUploading}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 disabled:cursor-not-allowed"
+                />
+                {preview ? (
+                  <div className="space-y-3">
+                    <img src={preview} alt="Aperçu" className="mx-auto h-40 object-cover rounded-lg border border-slate-700 shadow-md" />
+                    <div className="text-xs text-blue-400 flex items-center justify-center gap-1 font-medium">
+                      <RefreshCw size={14} /> Appuyer pour changer de photo
                     </div>
-                  )}
-                  <textarea
-                    value={texteGenere}
-                    onChange={(e) => setTexteGenere(e.target.value)}
-                    disabled={isUploading || isGeneratingAi}
-                    className="w-full bg-slate-900 p-4 rounded-xl text-xs text-slate-200 border border-slate-700/80 min-h-[150px] resize-y focus:ring-2 focus:ring-blue-500 focus:outline-none whitespace-pre-wrap leading-relaxed disabled:opacity-50"
-                  />
-                </div>
+                  </div>
+                ) : (
+                  <div className="text-slate-400 flex flex-col items-center py-6">
+                    <div className="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400 mb-3 border border-blue-500/30">
+                      <Camera size={32} />
+                    </div>
+                    <span className="text-sm font-bold text-slate-200">Appuyer pour prendre la photo</span>
+                    <span className="text-xs text-slate-400 mt-1">L'appareil photo s'ouvrira directement</span>
+                  </div>
+                )}
               </div>
             </div>
-          )}
 
-          {/* Bouton de publication */}
-          {preview && (
-            <button
-              onClick={publierChantier}
-              disabled={isButtonDisabled}
-              className={`w-full font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${succes ? 'bg-emerald-600 text-white' :
+            {/* Sélecteurs[cite: 2] */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-slate-300">2. Type</label>
+                <select
+                  value={action}
+                  onChange={(e) => handleSelectChange(e.target.value, null, null)}
+                  disabled={isUploading}
+                  className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
+                >
+                  <option value="installation">Installation</option>
+                  <option value="rénovation">Rénovation</option>
+                  <option value="dépannage">Dépannage</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-slate-300">3. Domaine</label>
+                <select
+                  value={categorie}
+                  onChange={(e) => handleSelectChange(null, e.target.value, null)}
+                  disabled={isUploading}
+                  className="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none disabled:opacity-50"
+                >
+                  <option value="PAC">PAC</option>
+                  <option value="Salle de Bain">Salle de Bain</option>
+                  <option value="Adoucisseur">Adoucisseur</option>
+                  <option value="VMC">VMC</option>
+                  <option value="Radiateur">Radiateur</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Aperçu du texte généré par Mistral AI[cite: 2] */}
+            {preview && (
+              <div className="space-y-4 pt-2">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label className="block text-sm font-medium text-slate-300 flex items-center gap-1.5">
+                      <Sparkles size={14} className="text-blue-400" />
+                      4. Description IA (Modifiable) :
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => mettreAJourTexte(imageFile, action, categorie, localisation, chantierDate)}
+                      disabled={isGeneratingAi || isUploading}
+                      className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium disabled:opacity-50"
+                    >
+                      <RefreshCw size={12} className={isGeneratingAi ? "animate-spin" : ""} />
+                      Régénérer
+                    </button>
+                  </div>
+
+                  <div className="relative">
+                    {isGeneratingAi && (
+                      <div className="absolute inset-0 bg-slate-900/80 rounded-xl flex items-center justify-center gap-2 text-xs text-blue-400 font-medium z-10">
+                        <Loader2 size={16} className="animate-spin" /> Analyse Pixtral & Rédaction SEO...
+                      </div>
+                    )}
+                    <textarea
+                      value={texteGenere}
+                      onChange={(e) => setTexteGenere(e.target.value)}
+                      disabled={isUploading || isGeneratingAi}
+                      className="w-full bg-slate-900 p-4 rounded-xl text-xs text-slate-200 border border-slate-700/80 min-h-[150px] resize-y focus:ring-2 focus:ring-blue-500 focus:outline-none whitespace-pre-wrap leading-relaxed disabled:opacity-50"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Bouton de publication[cite: 2] */}
+            {preview && (
+              <button
+                onClick={publierChantier}
+                disabled={isButtonDisabled}
+                className={`w-full font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${succes ? 'bg-emerald-600 text-white' :
                   isButtonDisabled ? 'bg-slate-700 text-slate-400 cursor-not-allowed' :
                     'bg-blue-600 hover:bg-blue-500 text-white'
+                  }`}
+              >
+                {succes ? <CheckCircle size={20} /> : isUploading ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
+                {succes ? 'Publié partout avec succès !' :
+                  isUploading ? 'Transmission en cours...' :
+                    isGeneratingAi ? 'Génération du texte par l\'IA...' :
+                      localisation === 'Recherche...' ? 'Calcul de la position GPS...' :
+                        'Publier (Google + Site Web)'}
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* --- ONGLET 2 : GÉRER ET MODIFIER LES CHANTIERS EXISTANTS ---[cite: 2] */}
+        {activeTab === 'edit' && (
+          <div className="space-y-4">
+            <h2 className="text-lg font-bold text-white flex items-center gap-2 px-1">
+              <Edit3 className="text-blue-500" size={18} /> Chantiers publiés ({chantiersExistants.length})
+            </h2>
+
+            {loadingChantiers ? (
+              <div className="bg-slate-800 rounded-2xl p-12 text-center border border-slate-700/60">
+                <Loader2 className="animate-spin text-blue-500 mx-auto" size={32} />
+                <p className="text-xs text-slate-400 mt-2">Chargement des chantiers...</p>
+              </div>
+            ) : chantiersExistants.length === 0 ? (
+              <div className="bg-slate-800 rounded-2xl p-8 text-center border border-slate-700/60 text-slate-400 text-xs">
+                Aucun chantier trouvé dans la base de données.
+              </div>
+            ) : (
+              chantiersExistants.map((chantier) => (
+                <ChantierEditableCard
+                  key={chantier.id}
+                  chantier={chantier}
+                  onUpdate={modifierChantierSupabase}
+                  onDelete={supprimerChantierSupabase}
+                  onToggleForce={toggleForceVisible}
+                />
+              ))
+            )}
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+// --- SOUS-COMPOSANT POUR CHAQUE CARTE MODIFIABLE ---[cite: 2]
+function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
+  const [texteModifie, setTexteModifie] = useState(chantier.texte);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    await onUpdate(chantier.id, texteModifie);
+    setIsSaving(false);
+  };
+
+  return (
+    <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/60 p-4 space-y-4">
+      <div className="flex gap-3">
+        {chantier.image_url && (
+          <img
+            src={chantier.image_url}
+            alt="Chantier"
+            className="w-20 h-20 object-cover rounded-xl border border-slate-700 flex-shrink-0"
+          />
+        )}
+        <div className="flex-1 text-xs space-y-1">
+          <div className="flex items-center justify-between text-slate-400">
+            <span className="bg-blue-950/60 text-blue-400 px-2 py-0.5 rounded border border-blue-800/40 font-medium">
+              {chantier.domaine} ({chantier.type})
+            </span>
+            <div className="flex items-center gap-2">
+              <span>{new Date(chantier.created_at).toLocaleDateString('fr-FR')}</span>
+              
+              {/* --- BOUTON CŒUR (FAVORI / FORÇAGE DE VISIBILITÉ) --- */}
+              <button
+                type="button"
+                onClick={() => onToggleForce(chantier.id, chantier.force_visible)}
+                title={chantier.force_visible ? "Épinglé (toujours visible sur le site)" : "Cliquer pour épingler sur le site"}
+                className={`p-1.5 rounded-lg transition-colors flex items-center justify-center ${
+                  chantier.force_visible
+                    ? "bg-red-500/20 text-red-500 border border-red-500/40"
+                    : "bg-slate-900 text-slate-400 hover:text-red-400 border border-slate-700"
                 }`}
-            >
-              {succes ? <CheckCircle size={20} /> : isUploading ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
-              {succes ? 'Publié partout avec succès !' :
-                isUploading ? 'Transmission en cours...' :
-                  isGeneratingAi ? 'Génération du texte par l\'IA...' :
-                    localisation === 'Recherche...' ? 'Calcul de la position GPS...' :
-                      'Publier (Google + Site Web)'}
-            </button>
-          )}
+              >
+                <Heart size={16} className={chantier.force_visible ? "fill-red-500" : ""} />
+              </button>
+            </div>
+          </div>
+          <div className="text-emerald-400 font-medium flex items-center gap-1">
+            <MapPin size={12} /> {chantier.ville}
+          </div>
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-xs font-medium text-slate-300">Modifier la description :</label>
+        <textarea
+          value={texteModifie}
+          onChange={(e) => setTexteModifie(e.target.value)}
+          className="w-full bg-slate-900 p-3 rounded-xl text-xs text-slate-200 border border-slate-700/80 min-h-[120px] resize-y focus:ring-2 focus:ring-blue-500 focus:outline-none whitespace-pre-wrap leading-relaxed"
+        />
+      </div>
+
+      <div className="flex items-center justify-between pt-1">
+        <button
+          onClick={() => onDelete(chantier.id, chantier.image_url)}
+          className="text-xs text-red-400 hover:text-red-300 bg-red-950/40 px-3 py-2 rounded-xl border border-red-800/40 flex items-center gap-1 transition-all"
+        >
+          <Trash2 size={14} /> Supprimer
+        </button>
+        <button
+          onClick={handleSave}
+          disabled={isSaving}
+          className="text-xs text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-xl font-bold shadow-lg flex items-center gap-1.5 transition-all disabled:opacity-50"
+        >
+          {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+          Enregistrer
+        </button>
       </div>
     </div>
   );

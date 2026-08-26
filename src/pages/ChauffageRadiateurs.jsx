@@ -42,9 +42,9 @@ export default function ChauffageRadiateurs() {
                     .from('chantiers')
                     .select('*')
                     .eq('domaine', 'Chauffage') // Filtre strict sur le domaine Chauffage
-                    .order('created_at', { ascending: false }) // Du plus récent au plus ancien
-                    .limit(6); // Les 6 derniers max
-
+                    .eq('visible_sur_site', true)
+                    .order('created_at', { ascending: false }); // Du plus récent au plus ancien
+                    
                 if (!error && data) {
                     setChantiers(data);
                 }

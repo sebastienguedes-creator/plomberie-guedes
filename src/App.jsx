@@ -1,4 +1,5 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 
 // Layouts
@@ -19,6 +20,20 @@ import AdminChantier from './pages/AdminChantier';
 
 export default function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // --- Raccourci secret pour aller sur /admin (Ctrl + Shift + Espace) ---
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === 'Space') {
+        e.preventDefault();
+        navigate('/admin');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate]);
   
   // On vérifie si on est sur la page admin
   const isAdminPage = location.pathname === '/admin';

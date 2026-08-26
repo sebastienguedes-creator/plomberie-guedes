@@ -39,8 +39,9 @@ export default function PompeAChaleur() {
                     .from('chantiers')
                     .select('*')
                     .eq('domaine', 'PAC')
-                    .order('created_at', { ascending: false })
-                    .limit(6);
+                    .eq('visible_sur_site', true)
+                    .order('created_at', { ascending: false });
+                    
 
                 if (!error && data) {
                     setChantiers(data);
