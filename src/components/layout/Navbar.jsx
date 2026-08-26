@@ -12,11 +12,12 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Accueil', href: '/' },
-    { name: 'PAC', href: '/installation-pompe-a-chaleur' },
+    { name: 'Clim. / PAC', href: '/installation-pompe-a-chaleur' },
     { name: 'Bain', href: '/renovation-salle-de-bain' },
     { name: 'Adoucisseur', href: '/installation-adoucisseur-eau' },
     { name: 'VMC', href: '/installation-vmc-ventilation' },
     { name: 'Radiateurs', href: '/chauffage-central-radiateurs' },
+    { name: 'Contact', href: '/contact' },
     { name: '🚨 Dépannage', href: '/urgence-depannage-plomberie', isUrgent: true },
   ];
 
@@ -24,18 +25,18 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 text-slate-900 h-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div className="flex items-center justify-between h-full">
-          
+
           {/* Logo & Marque */}
-          <Link 
+          <Link
             to="/"
             onClick={handleLinkClick}
             aria-label="SARL Anthony GUEDES - Accueil"
             className="flex items-center gap-3 hover:opacity-90 transition-opacity shrink-0"
           >
-            <img 
-              src="/Icone.png" 
-              alt="Logo SARL Anthony GUEDES" 
-              className="h-12 sm:h-14 w-auto object-contain" 
+            <img
+              src="/Icone.png"
+              alt="Logo SARL Anthony GUEDES"
+              className="h-12 sm:h-14 w-auto object-contain"
             />
             <div>
               <span className="font-bold text-base sm:text-xl tracking-wide block text-slate-900 leading-tight">
@@ -68,11 +69,10 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   to={link.href}
-                  className={`text-xs xl:text-sm font-semibold px-2.5 py-1.5 rounded-lg transition-colors ${
-                    isActive 
-                      ? 'text-accent bg-accent/10 font-bold' 
+                  className={`text-xs xl:text-sm font-semibold px-2.5 py-1.5 rounded-lg transition-colors ${isActive
+                      ? 'text-accent bg-accent/10 font-bold'
                       : 'text-slate-700 hover:text-accent hover:bg-slate-50'
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -101,7 +101,7 @@ export default function Navbar() {
             >
               <Phone className="w-5 h-5" aria-hidden="true" />
             </a>
-            
+
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
@@ -132,7 +132,7 @@ export default function Navbar() {
             onClick={handleLinkClick}
             className="block px-3 py-2 rounded-lg text-base font-semibold text-slate-800 hover:bg-slate-50"
           >
-            🔥 Pompe à Chaleur (PAC)
+            🔥 Clim. / Pompe à Chaleur (PAC)
           </Link>
           <Link
             to="/renovation-salle-de-bain"
@@ -168,6 +168,15 @@ export default function Navbar() {
             className="block px-3 py-2 rounded-lg text-base font-bold text-red-600 bg-red-50 border border-red-100"
           >
             🚨 Urgence & Dépannage
+          </Link>
+
+
+          <Link
+            to="/contact"
+            onClick={handleLinkClick}
+            className="block px-3 py-2 rounded-lg text-base font-semibold text-slate-800 hover:bg-slate-50"
+          >
+            ✉️ Contact & Devis
           </Link>
 
           <div className="pt-3">

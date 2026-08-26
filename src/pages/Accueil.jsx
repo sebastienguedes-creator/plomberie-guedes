@@ -1,7 +1,7 @@
 import SEO from '../components/SEO';
 import Hero from '../components/sections/Hero';
 import CertificationsBanner from '../components/sections/CertificationsBanner';
-import QuickAccessBar from '../components/sections/QuickAccessBar';
+//import QuickAccessBar from '../components/sections/QuickAccessBar';
 import Services from '../components/sections/Services';
 import Realisations from '../components/sections/Realisations';
 import Testimonials from '../components/sections/Testimonials';
@@ -89,11 +89,11 @@ export default function Accueil() {
 
             <Hero />
             <CertificationsBanner />
-            <QuickAccessBar />
+            {/*<QuickAccessBar />*/}
             <Services />
-            <Realisations />
+            {/*<Realisations />*/}
             <Testimonials />
-            <Contact />
+            {/*<Contact />*/}
         </main>
     );
 }

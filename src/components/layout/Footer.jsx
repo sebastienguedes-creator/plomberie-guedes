@@ -10,15 +10,15 @@ export default function Footer() {
 
           {/* Colonne 1 : Marque (Identique à la Navbar adaptée au mode sombre) */}
           <div className="space-y-4">
-            <Link 
+            <Link
               to="/"
               aria-label="SARL Anthony GUEDES - Accueil"
               className="flex items-center gap-3 hover:opacity-90 transition-opacity inline-flex"
             >
-              <img 
-                src="/Icone.png" 
-                alt="Logo SARL Anthony GUEDES" 
-                className="h-12 sm:h-14 w-auto object-contain" 
+              <img
+                src="/Icone.png"
+                alt="Logo SARL Anthony GUEDES"
+                className="h-12 sm:h-14 w-auto object-contain"
               />
               <div>
                 <span className="font-bold text-base sm:text-lg tracking-wide block text-white leading-tight">
@@ -42,7 +42,11 @@ export default function Footer() {
               <li><a href="/#services" className="hover:text-accent transition-colors">Services</a></li>
               <li><a href="/#realisations" className="hover:text-accent transition-colors">Réalisations</a></li>
               <li><a href="/#temoignages" className="hover:text-accent transition-colors">Avis Clients</a></li>
-              <li><a href="/#contact" className="hover:text-accent transition-colors">Contact</a></li>
+              <li>
+                <Link to="/contact" className="hover:text-accent transition-colors">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </nav>
 

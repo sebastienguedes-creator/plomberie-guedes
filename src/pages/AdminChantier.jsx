@@ -392,7 +392,6 @@ export default function AdminChantier() {
     if (file) {
       setImageFile(file);
       setPreview(URL.createObjectURL(file));
-      mettreAJourTexte(file, action, categorie, 'Secteur d\'intervention', chantierDate);
 
       setLocalisation('Recherche...');
       if (navigator.geolocation) {
@@ -408,25 +407,20 @@ export default function AdminChantier() {
               const villeFormatee = codePostal ? `${nomVille} (${codePostal})` : nomVille;
 
               setLocalisation(villeFormatee);
-              mettreAJourTexte(file, action, categorie, villeFormatee, chantierDate);
             } catch {
               setLocalisation('Secteur d\'intervention');
-              mettreAJourTexte(file, action, categorie, 'Secteur d\'intervention', chantierDate);
             }
           },
           () => {
             setLocalisation('Secteur d\'intervention');
-            mettreAJourTexte(file, action, categorie, 'Secteur d\'intervention', chantierDate);
           },
           { timeout: 10000 }
         );
       } else {
         setLocalisation('Secteur d\'intervention');
-        mettreAJourTexte(file, action, categorie, 'Secteur d\'intervention', chantierDate);
       }
     }
   };
-
   const handleSelectChange = (newAction, newCat, newDate) => {
     const a = newAction !== null ? newAction : action;
     const c = newCat !== null ? newCat : categorie;
@@ -436,9 +430,7 @@ export default function AdminChantier() {
     if (newCat !== null) setCategorie(newCat);
     if (newDate !== null) setChantierDate(newDate);
 
-    if (imageFile) {
-      mettreAJourTexte(imageFile, a, c, localisation, d);
-    }
+    // L'appel automatique à l'IA a été supprimé ici
   };
 
   const publierChantier = async () => {
@@ -778,11 +770,14 @@ export default function AdminChantier() {
                     <button
                       type="button"
                       onClick={() => mettreAJourTexte(imageFile, action, categorie, localisation, chantierDate)}
-                      disabled={isGeneratingAi || isUploading}
-                      className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium disabled:opacity-50"
+                      disabled={isGeneratingAi || isUploading || localisation === 'Recherche...'}
+                      className={`text-xs flex items-center gap-1 font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${localisation === 'Recherche...'
+                          ? 'text-slate-500'
+                          : 'text-blue-400 hover:text-blue-300'
+                        }`}
                     >
                       <RefreshCw size={12} className={isGeneratingAi ? "animate-spin" : ""} />
-                      Régénérer
+                      {texteGenere ? 'Régénérer' : 'Générer avec l\'IA'}
                     </button>
                   </div>
 
@@ -887,17 +882,16 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
             </span>
             <div className="flex items-center gap-2">
               <span>{new Date(chantier.created_at).toLocaleDateString('fr-FR')}</span>
-              
+
               {/* --- BOUTON CŒUR (FAVORI / FORÇAGE DE VISIBILITÉ) --- */}
               <button
                 type="button"
                 onClick={() => onToggleForce(chantier.id, chantier.force_visible)}
                 title={chantier.force_visible ? "Épinglé (toujours visible sur le site)" : "Cliquer pour épingler sur le site"}
-                className={`p-1.5 rounded-lg transition-colors flex items-center justify-center ${
-                  chantier.force_visible
+                className={`p-1.5 rounded-lg transition-colors flex items-center justify-center ${chantier.force_visible
                     ? "bg-red-500/20 text-red-500 border border-red-500/40"
                     : "bg-slate-900 text-slate-400 hover:text-red-400 border border-slate-700"
-                }`}
+                  }`}
               >
                 <Heart size={16} className={chantier.force_visible ? "fill-red-500" : ""} />
               </button>

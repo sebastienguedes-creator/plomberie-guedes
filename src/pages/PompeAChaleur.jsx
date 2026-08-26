@@ -14,7 +14,9 @@ import {
     Wrench,
     Image as ImageIcon,
     X,
-    Maximize2
+    Maximize2,
+    Snowflake,
+    ThermometerSun
 } from 'lucide-react';
 
 // --- CONFIGURATION SUPABASE ---
@@ -53,14 +55,14 @@ export default function PompeAChaleur() {
         fetchDerniersChantiers();
     }, []);
 
-    // Données structurées JSON-LD (Service + FAQ pour Google Rich Snippets)
+    // Données structurées JSON-LD enrichies (Service + FAQ avec Climatisation Réversible pour Google Rich Snippets)
     const schemaData = {
         "@context": "https://schema.org",
         "@graph": [
             {
                 "@type": "Service",
                 "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#service",
-                "name": "Installation et Entretien de Pompe à Chaleur (PAC)",
+                "name": "Installation, Entretien de Pompe à Chaleur & Climatisation Réversible",
                 "provider": {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
@@ -95,14 +97,14 @@ export default function PompeAChaleur() {
                     { "@type": "City", "name": "Mortagne-au-Perche" },
                     { "@type": "AdministrativeArea", "name": "Normandie" }
                 ],
-                "description": "Installation, remplacement de chaudière fioul/gaz et entretien de pompe à chaleur Air/Eau et Air/Air par un artisan certifié RGE QualiPAC sur un large secteur normand.",
+                "description": "Installation, remplacement de chaudière, climatisation réversible et entretien de pompe à chaleur Air/Eau et Air/Air par un artisan certifié RGE QualiPAC en Normandie.",
                 "hasOfferCatalog": {
                     "@type": "OfferCatalog",
-                    "name": "Services Pompe à Chaleur",
+                    "name": "Services Pompe à Chaleur et Climatisation",
                     "itemListElement": [
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pompe à chaleur Air/Eau" } },
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pompe à chaleur Air/Air (Climatisation)" } },
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien et Dépannage PAC" } }
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pompe à chaleur Air/Eau (Chauffage & Eau Chaude Sanitaire)" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climatisation Réversible & PAC Air/Air" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien, Dépannage PAC & Climatiseurs" } }
                     ]
                 }
             },
@@ -110,6 +112,14 @@ export default function PompeAChaleur() {
                 "@type": "FAQPage",
                 "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#faq",
                 "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Une pompe à chaleur peut-elle aussi servir de climatisation en été ?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Oui ! La pompe à chaleur Air/Air (climatisation réversible) permet de chauffer très efficacement en hiver et de rafraîchir le logement en été. De plus, certaines PAC Air/Eau proposent un mode plancher rafraîchissant."
+                        }
+                    },
                     {
                         "@type": "Question",
                         "name": "Combien de temps prend l'installation d'une PAC en remplacement d'une chaudière fioul ?",
@@ -128,10 +138,10 @@ export default function PompeAChaleur() {
                     },
                     {
                         "@type": "Question",
-                        "name": "Quelle est la durée de vie d'une pompe à chaleur ?",
+                        "name": "Quelle est la durée de vie d'une pompe à chaleur ou d'une climatisation réversible ?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Une PAC bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité."
+                            "text": "Une PAC ou climatisation bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité."
                         }
                     }
                 ]
@@ -142,40 +152,40 @@ export default function PompeAChaleur() {
     return (
         <>
             <SEO
-                title="Pompe à Chaleur Normandie : Départements & Villes | GUEDES"
-                description="Artisan RGE QualiPAC spécialisé en installation de pompe à chaleur Air/Eau & Air/Air en Normandie (Eure, Seine-Maritime, Calvados, Orne). Interventions autour de Valailles."
+                title="Pompe à Chaleur & Climatisation Réversible Normandie | GUEDES"
+                description="Artisan RGE QualiPAC spécialisé en installation de pompe à chaleur (Air/Eau) et climatisation réversible (Air/Air) en Normandie (Eure, Seine-Maritime, Calvados, Orne). Devis gratuit sous 48h."
                 canonicalUrl="https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur"
                 schema={schemaData}
             />
 
             <div className="bg-primary text-slate-100 min-h-screen">
 
-                {/* --- SECTION HERO (H1 SEO) --- */}
+                {/* --- SECTION HERO (H1 SEO OPTIMISÉ PAC & CLIMATISATION) --- */}
                 <section className="relative py-16 lg:py-24 border-b border-slate-800 bg-slate-950 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
                             <div className="lg:col-span-7 space-y-6">
                                 <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-accent">
-                                    <ShieldCheck className="w-4 h-4" /> Artisan Certifié RGE QualiPAC
+                                    <ShieldCheck className="w-4 h-4" /> Artisan Certifié RGE QualiPAC & Climatisation
                                 </div>
 
                                 <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white">
-                                    Installation de <span className="text-accent">Pompe à Chaleur</span> en Normandie
+                                    Installation de <span className="text-accent">Pompe à Chaleur</span> & <span className="text-accent">Climatisation Réversible</span> en Normandie
                                 </h1>
 
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Remplacez votre ancienne chaudière fioul ou gaz par une solution économique et écologique. La <strong>SARL Anthony GUEDES</strong> vous accompagne de l'étude thermique jusqu'à la mise en service sur un large rayon en Normandie.
+                                    Remplacez votre ancienne chaudière fioul ou gaz par une solution économique, écologique et réversible. La <strong>SARL Anthony GUEDES</strong> vous accompagne de l'étude thermique jusqu'à la mise en service de votre PAC ou climatiseur sur un large secteur en Normandie.
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
-                                    <a
-                                        href="#contact"
+                                    <Link
+                                        to="/contact"
                                         className="w-full sm:w-auto flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white px-8 py-4 rounded-xl font-semibold text-base transition-all shadow-xl shadow-accent/25"
                                     >
                                         <span>Demander mon étude gratuite</span>
                                         <ArrowRight className="w-5 h-5" />
-                                    </a>
+                                    </Link>
 
                                     <a
                                         href="tel:+33617921004"
@@ -196,20 +206,20 @@ export default function PompeAChaleur() {
                             {/* Bloc latéral d'engagement */}
                             <div className="lg:col-span-5 bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl space-y-6">
                                 <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-4">
-                                    Pourquoi installer une PAC en 2026 ?
+                                    Pourquoi opter pour une PAC Réversible en 2026 ?
                                 </h2>
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Euro className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Jusqu'à 70% d'économies</strong> sur votre facture annuelle de chauffage.</span>
+                                        <span><strong>Jusqu'à 70% d'économies</strong> sur votre facture annuelle d'énergie.</span>
+                                    </li>
+                                    <li className="flex items-start gap-3">
+                                        <ThermometerSun className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                                        <span><strong>Confort thermique 4 saisons</strong> : Chauffage performant l'hiver + Climatisation l'été.</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ShieldCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Installation certifiée</strong> dans le respect des normes en vigueur.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <Flame className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Confort thermique optimal</strong> toute l'année (chauffage + eau chaude sanitaire).</span>
+                                        <span><strong>Installation certifiée RGE</strong> réalisée dans le strict respect des normes constructeurs.</span>
                                     </li>
                                 </ul>
                             </div>
@@ -218,15 +228,15 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION 2 : LES TYPES DE POMPES À CHALEUR --- */}
+                {/* --- SECTION 2 : LES TYPES DE POMPES À CHALEUR & CLIMATISATION --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-900">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
                             <h2 className="text-3xl font-extrabold text-white">
-                                Mes solutions de <span className="text-accent">Pompe à Chaleur haute performance</span>
+                                Mes solutions de <span className="text-accent">Pompe à Chaleur & Climatisation alta performance</span>
                             </h2>
                             <p className="text-slate-400">
-                                Chaque logement a ses spécificités. Je sélectionne le matériel le plus adapté à votre réseau existant.
+                                Chaque logement a ses spécificités. Je sélectionne le matériel le plus adapté pour chauffer vos hivers et rafraîchir vos étés.
                             </p>
                         </div>
 
@@ -243,37 +253,37 @@ export default function PompeAChaleur() {
                                 <ul className="space-y-2 text-xs text-slate-400">
                                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Raccordement direct sur le réseau de chauffage central</li>
                                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Haute température disponible (rénovation)</li>
-                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Solution fiable et pérenne</li>
+                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Option plancher rafraîchissant l'été disponible</li>
                                 </ul>
                             </div>
 
-                            {/* PAC AIR / AIR */}
+                            {/* PAC AIR / AIR & CLIMATISATION RÉVERSIBLE */}
                             <div className="bg-slate-950 border border-slate-800 p-8 rounded-3xl space-y-6 hover:border-accent/40 transition-all">
                                 <div className="w-14 h-14 bg-accent/10 text-accent rounded-2xl flex items-center justify-center">
-                                    <Wrench className="w-8 h-8" />
+                                    <Snowflake className="w-8 h-8" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-white">PAC Air / Air (Climatisation Réversible)</h3>
+                                <h3 className="text-2xl font-bold text-white">PAC Air / Air & Climatisation Réversible</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Parfaite pour chauffer rapidement en hiver et rafraîchir en été. Elle insuffle de l'air chaud ou frais directement dans vos pièces de vie via des consoles murales ou un système gainable discret.
+                                    La solution ultime pour maitriser la température toute l'année. Elle souffle un air chaud très économique en hiver et bascule en <strong>climatiseur réversible très silencieux</strong> durant les fortes chaleurs estivales.
                                 </p>
                                 <ul className="space-y-2 text-xs text-slate-400">
-                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Montée en température très rapide</li>
-                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Confort 2-en-1 (Chauffage + Climatisation été)</li>
-                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Purification de l'air par filtres intégrés</li>
+                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Montée en température ou rafraîchissement ultra-rapide</li>
+                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Systèmes mono-split, multi-split ou gainable haut de gamme</li>
+                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Purification de l'air ambiant grâce aux filtres intégrés</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* --- SECTION 3 : ZONE D'INTERVENTION LOCALE (ANCRES SEO GEO) --- */}
+                {/* --- SECTION 3 : ZONE D'INTERVENTION LOCALE (ANCRES SEO GEO + CLIM) --- */}
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
                         <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                            Intervention dans un large rayon sur la Normandie
+                            Intervention PAC & Climatisation dans toute la Normandie
                         </h2>
                         <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens sur la majorité du territoire normand, notamment dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
+                            J'interviens pour la pose et la maintenance de votre pompe à chaleur ou climatisation dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
                         </p>
                         <div className="flex flex-wrap justify-center gap-3 pt-4">
                             {[
@@ -283,7 +293,7 @@ export default function PompeAChaleur() {
                                 "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
                             ].map((ville, i) => (
                                 <span key={i} className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2">
-                                    <MapPin className="w-3.5 h-3.5 text-accent" /> Pompe à chaleur {ville}
+                                    <MapPin className="w-3.5 h-3.5 text-accent" /> PAC & Climatisation {ville}
                                 </span>
                             ))}
                         </div>
@@ -299,10 +309,10 @@ export default function PompeAChaleur() {
                                     <ImageIcon className="w-4 h-4" /> Nos réalisations
                                 </div>
                                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-                                    Dernières interventions sur les pompes à chaleur
+                                    Dernières interventions PAC et Climatisation
                                 </h2>
                                 <p className="text-slate-400 max-w-2xl mx-auto">
-                                    Installation, remplacement ou dépannage : suivez mes interventions récentes chez mes clients.
+                                    Installation, remplacement ou dépannage : suivez mes interventions récentes chez mes clients normands.
                                 </p>
                             </div>
 
@@ -318,8 +328,8 @@ export default function PompeAChaleur() {
                                         >
                                             <img
                                                 src={getOptimizedImageUrl(chantier.image_url)}
-                                                alt={`Installation d'une pompe à chaleur par l'entreprise Guedes Plomberie à ${chantier.ville}`}
-                                                title={`Chantier de pompe à chaleur à ${chantier.ville} en Normandie`}
+                                                alt={`Installation d'une pompe à chaleur et climatisation réversible à ${chantier.ville}`}
+                                                title={`Chantier PAC et climatisation à ${chantier.ville} en Normandie`}
                                                 className="w-full h-auto max-h-[350px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
                                                 loading="lazy"
                                             />
@@ -388,11 +398,18 @@ export default function PompeAChaleur() {
                                 <HelpCircle className="w-4 h-4" /> Vos questions fréquentes
                             </div>
                             <h2 className="text-3xl font-extrabold text-white">
-                                Tout savoir sur l'installation d'une Pompe à Chaleur
+                                Tout savoir sur la Pompe à Chaleur et la Climatisation Réversible
                             </h2>
                         </div>
 
                         <div className="space-y-6">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                                <h3 className="font-bold text-white text-lg mb-2">Une pompe à chaleur peut-elle aussi servir de climatisation en été ?</h3>
+                                <p className="text-slate-300 text-sm leading-relaxed">
+                                    Oui ! La pompe à chaleur Air/Air (climatisation réversible) permet d'inverser son fluide frigorigène pour rafraîchir activement votre intérieur en été tout en chauffant très efficacement en hiver. Pour les PAC Air/Eau, l'option rafraîchissement permet également d'abaisser la température via un plancher chauffant.
+                                </p>
+                            </div>
+
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                                 <h3 className="font-bold text-white text-lg mb-2">Combien de temps prend l'installation d'une PAC en remplacement d'une chaudière fioul ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
@@ -408,9 +425,9 @@ export default function PompeAChaleur() {
                             </div>
 
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Quelle est la durée de vie d'une pompe à chaleur ?</h3>
+                                <h3 className="font-bold text-white text-lg mb-2">Quelle est la durée de vie d'une pompe à chaleur ou d'une climatisation ?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Une PAC bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien regular garantit des performances maximales et évite les surconsommations d'électricité.
+                                    Une installation bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité.
                                 </p>
                             </div>
                         </div>
@@ -421,10 +438,10 @@ export default function PompeAChaleur() {
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">
-                            Prêt à réduire vos factures de chauffage ?
+                            Prêt à maîtriser votre température en hiver comme en été ?
                         </h2>
                         <p className="text-slate-100 text-base">
-                            Contactez-moi pour obtenir une étude thermique personnalisée et un devis gratuit sous 48h sur une grande partie de la Normandie.
+                            Contactez-moi pour obtenir une étude thermique et un devis gratuit sous 48h pour votre pompe à chaleur ou climatisation réversible en Normandie.
                         </p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a

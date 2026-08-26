@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Phone, Mail, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
-import ZoneInterventionMap from "../ZoneInterventionMap";
+import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -18,7 +18,14 @@ export default function ContactPage() {
     "name": "SARL Anthony GUEDES - Plomberie Chauffage",
     "telephone": "+33617921004",
     "email": "anthonyguedes.plomberie@gmail.com",
-    "areaServed": ["Eure", "Seine-Maritime", "Normandie"],
+    "areaServed": [
+      "Eure", 
+      "Seine-Maritime", 
+      "Calvados", 
+      "Orne", 
+      "Normandie", 
+      "Île-de-France"
+    ],
     "priceRange": "€€",
     "openingHoursSpecification": [
       {
@@ -37,7 +44,7 @@ export default function ContactPage() {
         <title>Contact & Devis Gratuit | SARL Anthony Guedes - Plombier Chauffagiste</title>
         <meta 
           name="description" 
-          content="Besoin d'un devis gratuit pour une pompe à chaleur, une salle de bain ou un dépannage urgent dans l'Eure et la Seine-Maritime ? Contactez Anthony Guedes au 06 17 92 10 04." 
+          content="Besoin d'un devis gratuit pour une pompe à chaleur, une salle de bain ou un dépannage ? Dépannages urgents (30 km) et grands projets jusqu'à 150 km . Contactez Anthony Guedes au 06 17 92 10 04." 
         />
         <link rel="canonical" href="https://sarl-anthony-guedes.vercel.app/contact" />
         <script type="application/ld+json">
@@ -104,7 +111,10 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="text-xs text-slate-400 uppercase tracking-wider">Zone d'intervention</div>
-                    <div className="text-base font-semibold text-white">Normandie (Eure & Seine-Maritime)</div>
+                    <div className="text-base font-semibold text-white">
+                      Urgences : Rayon 30 km<br />
+                      <span className="text-xs text-slate-400 font-normal">Projets (PAC, SDB, ...) : Jusqu'à 150 km</span>
+                    </div>
                   </div>
                 </div>
 

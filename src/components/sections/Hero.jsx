@@ -40,14 +40,14 @@ export default function Hero() {
 
             {/* Boutons d'action (CTA) optimisés A11y & Format Téléphonique */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-              <a
-                href="#contact"
-                aria-label="Aller au formulaire pour estimer mon projet"
-                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white px-8 py-4 rounded-xl font-semibold text-base transition-all shadow-xl shadow-accent/25 hover:scale-105 active:scale-95"
-              >
-                <span>Estimer mon projet</span>
-                <ArrowRight className="w-5 h-5" aria-hidden="true" />
-              </a>
+<Link
+  to="/contact"
+  aria-label="Aller au formulaire pour estimer mon projet"
+  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-accent hover:bg-accent-light text-white px-8 py-4 rounded-xl font-semibold text-base transition-all shadow-xl shadow-accent/25 hover:scale-105 active:scale-95"
+>
+  <span>Estimer mon projet</span>
+  <ArrowRight className="w-5 h-5" aria-hidden="true" />
+</Link>
               
               <a
                 href="tel:+33617921004"

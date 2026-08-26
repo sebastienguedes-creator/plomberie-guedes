@@ -15,6 +15,7 @@ import SalleDeBain from './pages/SalleDeBain';
 import AdoucisseurEau from './pages/AdoucisseurEau';
 import VmcVentilation from './pages/VmcVentilation';
 import ChauffageRadiateurs from './pages/ChauffageRadiateurs';
+import ContactPage from './pages/ContactPage';
 import UrgenceDepannage from './pages/UrgenceDepannage';
 import AdminChantier from './pages/AdminChantier';
 
@@ -55,6 +56,7 @@ export default function App() {
           <Route path="/installation-adoucisseur-eau" element={<AdoucisseurEau />} />
           <Route path="/installation-vmc-ventilation" element={<VmcVentilation />} />
           <Route path="/chauffage-central-radiateurs" element={<ChauffageRadiateurs />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/urgence-depannage-plomberie" element={<UrgenceDepannage />} />
           
           {/* Pages légales */}
