@@ -14,7 +14,8 @@ import {
     HelpCircle,
     Image as ImageIcon,
     X,
-    Maximize2
+    Maximize2,
+    ChevronDown
 } from 'lucide-react';
 import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
@@ -30,11 +31,29 @@ const getOptimizedImageUrl = (url) => {
     return url.replace('/upload/', '/upload/c_limit,w_1000,h_1000,f_auto,q_auto/');
 };
 
+// --- DONNÉES FAQ ---
+const faqData = [
+    {
+        question: "Pourquoi et quand faut-il désembouer son circuit de chauffage central ?",
+        answer: "Le désembouage permet d'éliminer les boues (oxydes métalliques et tartre) qui s'accumulent dans les tuyaux et radiateurs. Il est recommandé de le réaliser tous les 5 à 10 ans, ou impérativement avant l'installation d'une nouvelle chaudière ou d'une pompe à chaleur pour garantir un rendement optimal."
+    },
+    {
+        question: "Comment savoir si un radiateur a besoin d'être purgé ?",
+        answer: "Si votre radiateur chauffe en bas mais reste froid ou tiède sur le dessus, cela signifie que de l'air s'est infiltré dans le circuit. Une simple purge à l'aide d'une clé de purge permet de chasser l'air et de retrouver une diffusion homogène de la chaleur."
+    },
+    {
+        question: "Est-il possible de remplacer un vieux radiateur par un modèle moderne ?",
+        answer: "Tout à fait. Je peux remplacer vos radiateurs existants (fonte, acier ou aluminium) par des modèles plus récents, plus performants et mieux adaptés à la configuration de vos pièces, tout en adaptant la tuyauterie si nécessaire."
+    }
+];
+
 export default function ChauffageRadiateurs() {
     // État pour stocker les chantiers
     const [chantiers, setChantiers] = useState([]);
     // État pour gérer la photo sélectionnée pour le zoom plein écran
     const [selectedImage, setSelectedImage] = useState(null);
+    // État pour gérer l'ouverture unique de l'accordéon FAQ
+    const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     useEffect(() => {
         async function fetchDerniersChantiers() {
@@ -368,7 +387,7 @@ export default function ChauffageRadiateurs() {
                     </div>
                 )}
 
-                {/* --- SECTION FAQ (RICH SNIPPETS GOOGLE) --- */}
+                {/* --- SECTION FAQ (ACCORDÉON AVEC EFFET FLUIDE GRID) --- */}
                 <section className="py-20 border-b border-slate-800">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <div className="text-center space-y-4">
@@ -380,27 +399,40 @@ export default function ChauffageRadiateurs() {
                             </h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Pourquoi et quand faut-il désembouer son circuit de chauffage central ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Le désembouage permet d'éliminer les boues (oxydes métalliques et tartre) qui s'accumulent dans les tuyaux et radiateurs. Il est recommandé de le réaliser tous les 5 à 10 ans, ou impérativement avant l'installation d'une nouvelle chaudière ou d'une pompe à chaleur pour garantir un rendement optimal.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Comment savoir si un radiateur a besoin d'être purgé ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Si votre radiateur chauffe en bas mais reste froid ou tiède sur le dessus, cela signifie que de l'air s'est infiltré dans le circuit. Une simple purge à l'aide d'une clé de purge permet de chasser l'air et de retrouver une diffusion homogène de la chaleur.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Est-il possible de remplacer un vieux radiateur par un modèle moderne ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Tout à fait. Je peux remplacer vos radiateurs existants (fonte, acier ou aluminium) par des modèles plus récents, plus performants et mieux adaptés à la configuration de vos pièces, tout en adaptant la tuyauterie si nécessaire.
-                                </p>
-                            </div>
+                        <div className="space-y-4">
+                            {faqData.map((faq, index) => (
+                                <div key={index} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors hover:border-slate-700">
+                                    <button
+                                        onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                                        className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-800/50 transition-colors focus:outline-none"
+                                        aria-expanded={openFaqIndex === index}
+                                    >
+                                        <h3 className="font-bold text-white text-lg pr-8">
+                                            {faq.question}
+                                        </h3>
+                                        <ChevronDown 
+                                            className={`w-6 h-6 text-accent shrink-0 transition-transform duration-300 ${
+                                                openFaqIndex === index ? "rotate-180" : ""
+                                            }`} 
+                                        />
+                                    </button>
+                                    
+                                    {/* Transition fluide via CSS Grid pour la hauteur automatique */}
+                                    <div 
+                                        className={`grid transition-all duration-300 ease-in-out ${
+                                            openFaqIndex === index 
+                                                ? "grid-rows-[1fr] opacity-100" 
+                                                : "grid-rows-[0fr] opacity-0"
+                                        }`}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <p className="px-6 pb-6 text-slate-300 text-sm leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>

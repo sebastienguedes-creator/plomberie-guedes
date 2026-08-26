@@ -13,7 +13,8 @@ import {
     Home,
     Image as ImageIcon,
     X,
-    Maximize2
+    Maximize2,
+    ChevronDown
 } from 'lucide-react';
 import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
@@ -29,11 +30,29 @@ const getOptimizedImageUrl = (url) => {
     return url.replace('/upload/', '/upload/c_limit,w_1000,h_1000,f_auto,q_auto/');
 };
 
+// --- DONNÉES FAQ ---
+const faqData = [
+    {
+        question: "Pourquoi installer une VMC dans son logement ?",
+        answer: "La VMC permet de renouveler l'air intérieur, d'évacuer l'humidité excessive, de prévenir l'apparition de moisissures et d'améliorer la qualité de l'air que vous respirez."
+    },
+    {
+        question: "Quelle est la différence entre une VMC simple flux et double flux ?",
+        answer: "La VMC simple flux extrait l'air vicié en faisant entrer de l'air neuf par des entrées d'air. La VMC double flux récupère quant à elle les calories de l'air extrait pour préchauffer l'air entrant, offrant ainsi un meilleur confort thermique et des économies d'énergie."
+    },
+    {
+        question: "À quelle fréquence faut-il entretenir sa VMC ?",
+        answer: "Il est recommandé de nettoyer les bouches d'extraction tous les 3 à 6 mois et de faire réaliser un entretien complet du bloc moteur et des gaines par un professionnel tous les 2 à 3 ans."
+    }
+];
+
 export default function VmcVentilation() {
     // État pour stocker les 6 derniers chantiers
     const [chantiers, setChantiers] = useState([]);
     // État pour gérer la photo sélectionnée pour le zoom plein écran
     const [selectedImage, setSelectedImage] = useState(null);
+    // État pour gérer l'ouverture unique de l'accordéon FAQ
+    const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     useEffect(() => {
         async function fetchDerniersChantiers() {
@@ -367,7 +386,7 @@ export default function VmcVentilation() {
                     </div>
                 )}
 
-                {/* SECTION FAQ */}
+                {/* SECTION FAQ (ACCORDÉON AVEC EFFET FLUIDE GRID) */}
                 <section className="py-20 border-b border-slate-800">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <div className="text-center space-y-4">
@@ -379,27 +398,40 @@ export default function VmcVentilation() {
                             </h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Pourquoi installer une VMC dans son logement ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    La VMC permet de renouveler l'air intérieur, d'évacuer l'humidité excessive, de prévenir l'apparition de moisissures et d'améliorer la qualité de l'air que vous respirez.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Quelle est la différence entre une VMC simple flux et double flux ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    La VMC simple flux extrait l'air vicié en faisant entrer de l'air neuf par des entrées d'air. La VMC double flux récupère quant à elle les calories de l'air extrait pour préchauffer l'air entrant, offrant ainsi un meilleur confort thermique et des économies d'énergie.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">À quelle fréquence faut-il entretenir sa VMC ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Il est recommandé de nettoyer les bouches d'extraction tous les 3 à 6 mois et de faire réaliser un entretien complet du bloc moteur et des gaines par un professionnel tous les 2 à 3 ans.
-                                </p>
-                            </div>
+                        <div className="space-y-4">
+                            {faqData.map((faq, index) => (
+                                <div key={index} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors hover:border-slate-700">
+                                    <button
+                                        onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                                        className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-800/50 transition-colors focus:outline-none"
+                                        aria-expanded={openFaqIndex === index}
+                                    >
+                                        <h3 className="font-bold text-white text-lg pr-8">
+                                            {faq.question}
+                                        </h3>
+                                        <ChevronDown 
+                                            className={`w-6 h-6 text-accent shrink-0 transition-transform duration-300 ${
+                                                openFaqIndex === index ? "rotate-180" : ""
+                                            }`} 
+                                        />
+                                    </button>
+                                    
+                                    {/* Transition fluide via CSS Grid pour la hauteur automatique */}
+                                    <div 
+                                        className={`grid transition-all duration-300 ease-in-out ${
+                                            openFaqIndex === index 
+                                                ? "grid-rows-[1fr] opacity-100" 
+                                                : "grid-rows-[0fr] opacity-0"
+                                        }`}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <p className="px-6 pb-6 text-slate-300 text-sm leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>

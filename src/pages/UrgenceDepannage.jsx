@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import {
@@ -9,11 +10,31 @@ import {
     Clock,
     MapPin,
     ShieldCheck,
-    HelpCircle
+    HelpCircle,
+    ChevronDown
 } from 'lucide-react';
 import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
+// --- DONNÉES FAQ ---
+const faqData = [
+    {
+        question: "Que faire en cas de fuite d'eau importante avant l'arrivée du plombier ?",
+        answer: "Coupez immédiatement l'alimentation générale en eau (généralement située près du compteur) pour limiter les dégâts, puis contactez-moi en urgence."
+    },
+    {
+        question: "Comment réagir face à une panne totale de chauffage en hiver ?",
+        answer: "Vérifiez l'alimentation électrique de votre équipement et la pression du circuit. Si le problème persiste, contactez-moi pour un diagnostic rapide."
+    },
+    {
+        question: "Intervenez-vous rapidement pour les dépannages urgents ?",
+        answer: "Oui, j'assure une prise en charge prioritaire pour les dépannages urgents dans un rayon de 30 km autour de Valailles (Bernay, Évreux, Lisieux, Louviers, Pont-Audemer, etc.)."
+    }
+];
+
 export default function UrgenceDepannage() {
+    // État pour gérer l'ouverture unique de l'accordéon FAQ
+    const [openFaqIndex, setOpenFaqIndex] = useState(null);
+
     const schemaData = {
         "@context": "https://schema.org",
         "@graph": [
@@ -197,7 +218,7 @@ export default function UrgenceDepannage() {
                     </div>
                 </section>
 
-{/* ZONES D'INTERVENTION */}
+                {/* ZONES D'INTERVENTION */}
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                         <div className="text-center space-y-4 max-w-3xl mx-auto">
@@ -239,7 +260,7 @@ export default function UrgenceDepannage() {
                     </div>
                 </section>
 
-                {/* --- SECTION FAQ (RICH SNIPPETS GOOGLE) --- */}
+                {/* --- SECTION FAQ (ACCORDÉON AVEC EFFET FLUIDE GRID) --- */}
                 <section className="py-20 border-b border-slate-800">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <div className="text-center space-y-4">
@@ -251,27 +272,40 @@ export default function UrgenceDepannage() {
                             </h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Que faire en cas de fuite d'eau importante avant l'arrivée du plombier ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Coupez immédiatement l'alimentation générale en eau (généralement située près du compteur) pour limiter les dégâts, puis contactez-moi en urgence.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Comment réagir face à une panne totale de chauffage en hiver ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Vérifiez l'alimentation électrique de votre équipement et la pression du circuit. Si le problème persiste, contactez-moi pour un diagnostic rapide.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Intervenez-vous rapidement pour les dépannages urgents ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Oui, j'assure une prise en charge prioritaire pour les dépannages urgents dans un rayon de 30 km autour de Valailles (Bernay, Évreux, Lisieux, Louviers, Pont-Audemer, etc.).
-                                </p>
-                            </div>
+                        <div className="space-y-4">
+                            {faqData.map((faq, index) => (
+                                <div key={index} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors hover:border-slate-700">
+                                    <button
+                                        onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                                        className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-800/50 transition-colors focus:outline-none"
+                                        aria-expanded={openFaqIndex === index}
+                                    >
+                                        <h3 className="font-bold text-white text-lg pr-8">
+                                            {faq.question}
+                                        </h3>
+                                        <ChevronDown 
+                                            className={`w-6 h-6 text-red-500 shrink-0 transition-transform duration-300 ${
+                                                openFaqIndex === index ? "rotate-180" : ""
+                                            }`} 
+                                        />
+                                    </button>
+                                    
+                                    {/* Transition fluide via CSS Grid pour la hauteur automatique */}
+                                    <div 
+                                        className={`grid transition-all duration-300 ease-in-out ${
+                                            openFaqIndex === index 
+                                                ? "grid-rows-[1fr] opacity-100" 
+                                                : "grid-rows-[0fr] opacity-0"
+                                        }`}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <p className="px-6 pb-6 text-slate-300 text-sm leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>

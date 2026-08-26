@@ -13,7 +13,8 @@ import {
     HelpCircle,
     Image as ImageIcon,
     X,
-    Maximize2
+    Maximize2,
+    ChevronDown
 } from 'lucide-react';
 import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
@@ -29,11 +30,37 @@ const getOptimizedImageUrl = (url) => {
     return url.replace('/upload/', '/upload/c_limit,w_1000,h_1000,f_auto,q_auto/');
 };
 
+// --- DONNÉES FAQ ---
+const faqData = [
+    {
+        question: "Combien de temps durent les travaux de rénovation d'une salle de bain ?",
+        answer: "En moyenne, une rénovation complète de salle de bain (démolition, plomberie, sanitaires, étanchéité) dure entre 1 et 2 semaines selon l'ampleur du projet."
+    },
+    {
+        question: "Proposez-vous le remplacement de baignoire par une douche à l'italienne ?",
+        answer: "Oui, c'est une intervention fréquente. Je dépose votre ancienne baignoire et j'installe un receveur extra-plat ou sur-mesure pour un accès sécurisé et moderne."
+    },
+    {
+        question: "Quels aménagements proposez-vous pour l'accessibilité PMR ?",
+        answer: "J'installe des équipements adaptés tels que des receveurs de douche de plain-pied, des barres d'appui sécurisées et des sièges de douche ergonomiques pour faciliter le quotidien."
+    },
+    {
+        question: "Dois-je acheter moi-même les équipements sanitaires et le carrelage ?",
+        answer: "Non. Pour vous garantir une installation irréprochable couverte par ma garantie décennale, je fournis l'ensemble des équipements sanitaires, de la robinetterie et des matériaux. Je ne travaille qu'avec du matériel professionnel dont je connais parfaitement la qualité, la fiabilité et la conformité technique."
+    },
+    {
+        question: "Aurons-nous de l'eau coupée pendant toute la durée des travaux ?",
+        answer: "Non, les coupures d'eau sont limitées au strict minimum (lors des raccordements et de la modification des réseaux). Je fais au mieux pour rétablir l'alimentation en fin de journée afin de préserver votre confort pendant la durée du chantier."
+    }
+];
+
 export default function SalleDeBain() {
     // État pour stocker les 6 derniers chantiers
     const [chantiers, setChantiers] = useState([]);
     // État pour gérer la photo sélectionnée pour le zoom plein écran
     const [selectedImage, setSelectedImage] = useState(null);
+    // État pour gérer l'ouverture unique de l'accordéon FAQ
+    const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     useEffect(() => {
         async function fetchDerniersChantiers() {
@@ -331,7 +358,7 @@ export default function SalleDeBain() {
                     </div>
                 )}
 
-                {/* --- SECTION FAQ (RICH SNIPPETS GOOGLE) --- */}
+                {/* --- SECTION FAQ (ACCORDÉON AVEC EFFET FLUIDE GRID) --- */}
                 <section className="py-20 border-b border-slate-800">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <div className="text-center space-y-4">
@@ -343,27 +370,40 @@ export default function SalleDeBain() {
                             </h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Combien de temps durent les travaux de rénovation d'une salle de bain ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    En moyenne, une rénovation complète de salle de bain (démolition, plomberie, sanitaires, étanchéité) dure entre 1 et 2 semaines selon l'ampleur du projet.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Proposez-vous le remplacement de baignoire par une douche à l'italienne ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Oui, c'est une intervention fréquente. Je dépose votre ancienne baignoire et j'installe un receveur extra-plat ou sur-mesure pour un accès sécurisé et moderne.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Quels aménagements proposez-vous pour l'accessibilité PMR ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    J'installe des équipements adaptés tels que des receveurs de douche de plain-pied, des barres d'appui sécurisées et des sièges de douche ergonomiques pour faciliter le quotidien.
-                                </p>
-                            </div>
+                        <div className="space-y-4">
+                            {faqData.map((faq, index) => (
+                                <div key={index} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors hover:border-slate-700">
+                                    <button
+                                        onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                                        className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-800/50 transition-colors focus:outline-none"
+                                        aria-expanded={openFaqIndex === index}
+                                    >
+                                        <h3 className="font-bold text-white text-lg pr-8">
+                                            {faq.question}
+                                        </h3>
+                                        <ChevronDown 
+                                            className={`w-6 h-6 text-accent shrink-0 transition-transform duration-300 ${
+                                                openFaqIndex === index ? "rotate-180" : ""
+                                            }`} 
+                                        />
+                                    </button>
+                                    
+                                    {/* Transition fluide via CSS Grid pour la hauteur automatique */}
+                                    <div 
+                                        className={`grid transition-all duration-300 ease-in-out ${
+                                            openFaqIndex === index 
+                                                ? "grid-rows-[1fr] opacity-100" 
+                                                : "grid-rows-[0fr] opacity-0"
+                                        }`}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <p className="px-6 pb-6 text-slate-300 text-sm leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>

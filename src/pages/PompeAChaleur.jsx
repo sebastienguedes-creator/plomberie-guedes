@@ -49,7 +49,20 @@ const faqData = [
     {
         question: "Quelle est la durée de vie d'une pompe à chaleur ou d'une climatisation ?",
         answer: "Une installation bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité."
+    },
+    {
+        question: "Une pompe à chaleur ou une climatisation fait-elle du bruit à l'extérieur ?",
+        answer: "Les unités extérieures modernes sont conçues pour être silencieuses. Lors de l'installation, je veille à positionner l'appareil de manière stratégique (loin des chambres et des limites de propriété) pour respecter les seuils de nuisances sonores et garantir votre confort ainsi que celui de vos voisins."
+    },
+    {
+        question: "Est-ce qu'une pompe à chaleur consomme beaucoup d'électricité ?",
+        answer: "Non, une PAC est très économe. Grâce au Coefficient de Performance (COP), elle restitue en moyenne 3 à 4 kWh de chaleur pour seulement 1 kWh d'électricité consommé. Elle permet de réduire significativement vos factures par rapport à une chaudière fioul, gaz ou à des radiateurs électriques d'ancienne génération."
+    },
+    {
+        question: "L'entretien d'une pompe à chaleur est-il obligatoire ?",
+        answer: "Oui, la réglementation impose un contrôle d'étanchéité du circuit de fluides frigorigènes et un entretien complet. Il est fortement recommandé de confier cette maintenance à un professionnel qualifié une fois par an pour préserver les performances de l'appareil et prolonger sa durée de vie."
     }
+
 ];
 
 export default function PompeAChaleur() {

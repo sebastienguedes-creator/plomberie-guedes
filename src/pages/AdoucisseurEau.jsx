@@ -13,7 +13,8 @@ import {
     HelpCircle,
     Image as ImageIcon,
     X,
-    Maximize2
+    Maximize2,
+    ChevronDown
 } from 'lucide-react';
 import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
@@ -29,11 +30,29 @@ const getOptimizedImageUrl = (url) => {
     return url.replace('/upload/', '/upload/c_limit,w_1000,h_1000,f_auto,q_auto/');
 };
 
+// --- DONNÉES FAQ ---
+const faqData = [
+    {
+        question: "Comment savoir si l'eau de ma maison est trop calcaire ?",
+        answer: "L'eau calcaire se manifeste par des traces blanches sur la robinetterie, du tartre dans les appareils, une peau sèche après la douche et du linge rêche. Je peux réaliser un test de dureté pour mesurer précisément votre taux de calcaire."
+    },
+    {
+        question: "Où doit-on installer l'adoucisseur d'eau ?",
+        answer: "J'installe généralement l'adoucisseur à l'arrivée d'eau principale de la maison, juste après le compteur, afin de traiter l'ensemble de l'eau qui alimente votre logement."
+    },
+    {
+        question: "Quel est l'entretien nécessaire pour un adoucisseur ?",
+        answer: "L'entretien régulier consiste principalement à recharger le bac en sel adoucisseur selon votre consommation, ainsi qu'à effectuer une maintenance de contrôle annuelle que je peux assurer."
+    }
+];
+
 export default function AdoucisseurEau() {
-    // État pour stocker les 6 derniers chantiers
+    // État pour stocker les derniers chantiers
     const [chantiers, setChantiers] = useState([]);
     // État pour gérer la photo sélectionnée pour le zoom plein écran
     const [selectedImage, setSelectedImage] = useState(null);
+    // État pour gérer l'ouverture unique de l'accordéon FAQ
+    const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     useEffect(() => {
         async function fetchDerniersChantiers() {
@@ -322,7 +341,7 @@ export default function AdoucisseurEau() {
                     </div>
                 )}
 
-                {/* --- SECTION FAQ --- */}
+                {/* --- SECTION FAQ (ACCORDÉON AVEC EFFET FLUIDE GRID) --- */}
                 <section className="py-20 border-b border-slate-800">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <div className="text-center space-y-4">
@@ -334,27 +353,40 @@ export default function AdoucisseurEau() {
                             </h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Comment savoir si l'eau de ma maison est trop calcaire ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    L'eau calcaire se manifeste par des traces blanches sur la robinetterie, du tartre dans les appareils, une peau sèche après la douche et du linge rêche. Je peux réaliser un test de dureté pour mesurer précisément votre taux de calcaire.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Où doit-on installer l'adoucisseur d'eau ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    J'installe généralement l'adoucisseur à l'arrivée d'eau principale de la maison, juste après le compteur, afin de traiter l'ensemble de l'eau qui alimente votre logement.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Quel est l'entretien nécessaire pour un adoucisseur ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    L'entretien régulier consiste principalement à recharger le bac en sel adoucisseur selon votre consommation, ainsi qu'à effectuer une maintenance de contrôle annuelle que je peux assurer.
-                                </p>
-                            </div>
+                        <div className="space-y-4">
+                            {faqData.map((faq, index) => (
+                                <div key={index} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors hover:border-slate-700">
+                                    <button
+                                        onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                                        className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-800/50 transition-colors focus:outline-none"
+                                        aria-expanded={openFaqIndex === index}
+                                    >
+                                        <h3 className="font-bold text-white text-lg pr-8">
+                                            {faq.question}
+                                        </h3>
+                                        <ChevronDown 
+                                            className={`w-6 h-6 text-accent shrink-0 transition-transform duration-300 ${
+                                                openFaqIndex === index ? "rotate-180" : ""
+                                            }`} 
+                                        />
+                                    </button>
+                                    
+                                    {/* Transition fluide via CSS Grid pour la hauteur automatique */}
+                                    <div 
+                                        className={`grid transition-all duration-300 ease-in-out ${
+                                            openFaqIndex === index 
+                                                ? "grid-rows-[1fr] opacity-100" 
+                                                : "grid-rows-[0fr] opacity-0"
+                                        }`}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <p className="px-6 pb-6 text-slate-300 text-sm leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
