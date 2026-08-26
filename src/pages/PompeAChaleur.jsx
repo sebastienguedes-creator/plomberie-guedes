@@ -16,8 +16,10 @@ import {
     X,
     Maximize2,
     Snowflake,
-    ThermometerSun
+    ThermometerSun,
+    ChevronDown // Ajout de l'icône pour l'accordéon
 } from 'lucide-react';
+import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
 // --- CONFIGURATION SUPABASE ---
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -30,9 +32,31 @@ const getOptimizedImageUrl = (url) => {
     return url.replace('/upload/', '/upload/c_limit,w_1000,h_1000,f_auto,q_auto/');
 };
 
+// --- DONNÉES DE LA FAQ ---
+const faqData = [
+    {
+        question: "Une pompe à chaleur peut-elle aussi servir de climatisation en été ?",
+        answer: "Oui ! La pompe à chaleur Air/Air (climatisation réversible) permet d'inverser son fluide frigorigène pour rafraîchir activement votre intérieur en été tout en chauffant très efficacement en hiver. Pour les PAC Air/Eau, l'option rafraîchissement permet également d'abaisser la température via un plancher chauffant."
+    },
+    {
+        question: "Combien de temps prend l'installation d'une PAC en remplacement d'une chaudière fioul ?",
+        answer: "L'installation complète d'une pompe à chaleur Air/Eau prend généralement entre 2 et 4 jours, incluant le démontage de l'ancienne chaudière, le désembouage du réseau et la mise en service."
+    },
+    {
+        question: "Faut-il conserver ses anciens radiateurs ?",
+        answer: "Dans la majorité des cas, oui ! Les pompes à chaleur Haute Température récentes s'adaptent parfaitement sur les réseaux de radiateurs en fonte ou en acier existants, sans avoir besoin de modifier toute votre tuyauterie."
+    },
+    {
+        question: "Quelle est la durée de vie d'une pompe à chaleur ou d'une climatisation ?",
+        answer: "Une installation bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité."
+    }
+];
+
 export default function PompeAChaleur() {
     const [chantiers, setChantiers] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
+    // NOUVEAU : État pour gérer l'accordéon de la FAQ (null par défaut = tout fermé)
+    const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     useEffect(() => {
         async function fetchDerniersChantiers() {
@@ -43,7 +67,6 @@ export default function PompeAChaleur() {
                     .eq('domaine', 'PAC')
                     .eq('visible_sur_site', true)
                     .order('created_at', { ascending: false });
-                    
 
                 if (!error && data) {
                     setChantiers(data);
@@ -233,7 +256,7 @@ export default function PompeAChaleur() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
                             <h2 className="text-3xl font-extrabold text-white">
-                                Mes solutions de <span className="text-accent">Pompe à Chaleur & Climatisation alta performance</span>
+                                Mes solutions de <span className="text-accent">Pompe à Chaleur & Climatisation haute performance</span>
                             </h2>
                             <p className="text-slate-400">
                                 Chaque logement a ses spécificités. Je sélectionne le matériel le plus adapté pour chauffer vos hivers et rafraîchir vos étés.
@@ -276,26 +299,37 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION 3 : ZONE D'INTERVENTION LOCALE (ANCRES SEO GEO + CLIM) --- */}
+                {/* --- SECTION 3 : ZONE D'INTERVENTION LOCALE (MAP + VILLES) --- */}
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                            Intervention PAC & Climatisation dans toute la Normandie
-                        </h2>
-                        <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens pour la pose et la maintenance de votre pompe à chaleur ou climatisation dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-3 pt-4">
-                            {[
-                                "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
-                                "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
-                                "Caen (14)", "Lisieux (14)", "Bayeux (14)",
-                                "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
-                            ].map((ville, i) => (
-                                <span key={i} className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2">
-                                    <MapPin className="w-3.5 h-3.5 text-accent" /> PAC & Climatisation {ville}
-                                </span>
-                            ))}
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                        <div className="text-center space-y-4 max-w-3xl mx-auto">
+                            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                                Intervention PAC & Climatisation dans toute la Normandie
+                            </h2>
+                            <p className="text-slate-400 text-sm sm:text-base">
+                                J'interviens pour la pose et la maintenance de votre pompe à chaleur ou climatisation dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
+                            </p>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
+                                <ZoneInterventionMap showEmergency={false} showProjects={true} />
+                                
+                                <div className="pt-4 border-t border-slate-800">
+                                    <div className="flex flex-wrap justify-center gap-3">
+                                        {[
+                                            "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
+                                            "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
+                                            "Caen (14)", "Lisieux (14)", "Bayeux (14)",
+                                            "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
+                                        ].map((ville, i) => (
+                                            <span key={i} className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
+                                                <MapPin className="w-3.5 h-3.5 text-accent" /> PAC & Climatisation {ville}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -390,7 +424,7 @@ export default function PompeAChaleur() {
                     </div>
                 )}
 
-                {/* --- SECTION 4 : FAQ INTERACTIVE (RICH SNIPPETS GOOGLE) --- */}
+                {/* --- SECTION 4 : FAQ INTERACTIVE (ACCORDÉON EXCLUSIF) --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-950">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <div className="text-center space-y-4">
@@ -402,34 +436,35 @@ export default function PompeAChaleur() {
                             </h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Une pompe à chaleur peut-elle aussi servir de climatisation en été ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Oui ! La pompe à chaleur Air/Air (climatisation réversible) permet d'inverser son fluide frigorigène pour rafraîchir activement votre intérieur en été tout en chauffant très efficacement en hiver. Pour les PAC Air/Eau, l'option rafraîchissement permet également d'abaisser la température via un plancher chauffant.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Combien de temps prend l'installation d'une PAC en remplacement d'une chaudière fioul ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    L'installation complète d'une pompe à chaleur Air/Eau prend généralement entre 2 et 4 jours, incluant le démontage de l'ancienne chaudière, le désembouage du réseau et la mise en service.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Faut-il conserver ses anciens radiateurs ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Dans la majorité des cas, oui ! Les pompes à chaleur Haute Température récentes s'adaptent parfaitement sur les réseaux de radiateurs en fonte ou en acier existants, sans avoir besoin de modifier toute votre tuyauterie.
-                                </p>
-                            </div>
-
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-                                <h3 className="font-bold text-white text-lg mb-2">Quelle est la durée de vie d'une pompe à chaleur ou d'une climatisation ?</h3>
-                                <p className="text-slate-300 text-sm leading-relaxed">
-                                    Une installation bien dimensionnée et entretenue annuellement a une durée de vie moyenne de 15 à 20 ans. Un entretien régulier garantit des performances maximales et évite les surconsommations d'électricité.
-                                </p>
-                            </div>
+                        <div className="space-y-4">
+                            {faqData.map((faq, index) => {
+                                const isOpen = openFaqIndex === index;
+                                return (
+                                    <div 
+                                        key={index} 
+                                        className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all duration-300"
+                                    >
+                                        <button
+                                            onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                                            className="w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-slate-800/50 transition-colors"
+                                        >
+                                            <h3 className="font-bold text-white text-lg pr-4">{faq.question}</h3>
+                                            <ChevronDown 
+                                                className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+                                            />
+                                        </button>
+                                        <div 
+                                            className={`transition-all duration-300 ease-in-out px-6 overflow-hidden ${
+                                                isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'
+                                            }`}
+                                        >
+                                            <p className="text-slate-300 text-sm leading-relaxed">
+                                                {faq.answer}
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>

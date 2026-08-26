@@ -98,7 +98,7 @@ export default function Hero() {
                   <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-transparent to-transparent z-10" aria-hidden="true"></div>
                   
                   <img 
-                    src="/src/assets/Camion_SARL_Anthony_GUEDES.webp" 
+                    src="/Camion_SARL_Anthony_GUEDES.webp"
                     alt="Installation Pompe à Chaleur et Plomberie en Normandie" 
                     fetchPriority="high"
                     className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500"

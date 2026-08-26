@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       from: 'Site Web <onboarding@resend.dev>',
       to: [process.env.GMAIL_USER], // Votre adresse e-mail pour recevoir les demandes
       replyTo: user_email,
-      subject: `Nouveau contact site web : ${project_type}`,
+      subject: `Contact Site Web`,
       html: `
         <div style="font-family: ui-sans-serif, system-ui, sans-serif; background-color: #020617; padding: 40px 20px; color: #f1f5f9;">
           <div style="max-width: 600px; margin: 0 auto; background-color: #0f172a; border: 1px solid #1e293b; border-radius: 16px; overflow: hidden;">
@@ -27,8 +27,8 @@ export default async function handler(req, res) {
               <p style="margin: 0 0 24px 0; font-size: 18px; font-weight: bold;">${user_name}</p>
 
               <p style="margin: 0 0 8px 0; color: #94a3b8; font-size: 12px; text-transform: uppercase;">Contact</p>
-              <p style="margin: 0 0 4px 0;"><strong style="color: #3b82f6;">Tél :</strong> ${user_phone}</p>
-              <p style="margin: 0 0 24px 0;"><strong style="color: #3b82f6;">Email :</strong> <a href="mailto:${user_email}" style="color: #f1f5f9;">${user_email}</a></p>
+              <p style="margin: 0 0 4px 0;"><strong style="color: #3b82f6;">Tél :</strong> <a href="tel:${user_phone}" style="color: #f1f5f9; text-decoration: none;">${user_phone}</a></p>
+              <p style="margin: 0 0 24px 0;"><strong style="color: #3b82f6;">Email :</strong> <a href="mailto:${user_email}" style="color: #f1f5f9; text-decoration: none;">${user_email}</a></p>
 
               <p style="margin: 0 0 8px 0; color: #94a3b8; font-size: 12px; text-transform: uppercase;">Type de projet</p>
               <div style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); padding: 8px 16px; border-radius: 99px; display: inline-block; margin-bottom: 24px; color: #60a5fa; font-weight: bold;">

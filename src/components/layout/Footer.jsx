@@ -6,9 +6,9 @@ export default function Footer() {
     <footer className="bg-slate-950 text-slate-400 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
 
-          {/* Colonne 1 : Marque (Identique à la Navbar adaptée au mode sombre) */}
+          {/* Colonne 1 : Marque */}
           <div className="space-y-4">
             <Link
               to="/"
@@ -34,26 +34,15 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Colonne 2 : Navigation rapide */}
+          {/* Colonne 2 : Navigation (Regroupe Accueil, Expertises et Contact) */}
           <nav aria-label="Navigation de pied de page">
             <h4 className="font-bold text-white text-sm mb-4 uppercase tracking-wider">Navigation</h4>
             <ul className="space-y-2 text-xs">
-              <li><Link to="/" className="hover:text-accent transition-colors">Accueil</Link></li>
-              <li><a href="/#services" className="hover:text-accent transition-colors">Services</a></li>
-              <li><a href="/#realisations" className="hover:text-accent transition-colors">Réalisations</a></li>
-              <li><a href="/#temoignages" className="hover:text-accent transition-colors">Avis Clients</a></li>
               <li>
-                <Link to="/contact" className="hover:text-accent transition-colors">
-                  Contact
+                <Link to="/" className="hover:text-accent transition-colors">
+                  Accueil
                 </Link>
               </li>
-            </ul>
-          </nav>
-
-          {/* Colonne 3 : Expertises (liens SEO) */}
-          <div>
-            <h4 className="font-bold text-white text-sm mb-4 uppercase tracking-wider">Expertises</h4>
-            <ul className="space-y-2 text-xs">
               <li>
                 <Link to="/urgence-depannage-plomberie" className="text-red-500 hover:underline font-semibold">
                   Urgence & Dépannage
@@ -84,10 +73,15 @@ export default function Footer() {
                   Chauffage & Radiateurs
                 </Link>
               </li>
+              <li>
+                <Link to="/contact" className="hover:text-accent transition-colors font-semibold">
+                  Contact
+                </Link>
+              </li>
             </ul>
-          </div>
+          </nav>
 
-          {/* Colonne 4 : Engagements */}
+          {/* Colonne 3 : Engagements */}
           <div>
             <h4 className="font-bold text-white text-sm mb-4 uppercase tracking-wider">Engagements</h4>
             <div className="space-y-3">

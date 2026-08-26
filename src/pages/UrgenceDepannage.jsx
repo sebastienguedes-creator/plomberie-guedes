@@ -11,6 +11,7 @@ import {
     ShieldCheck,
     HelpCircle
 } from 'lucide-react';
+import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
 export default function UrgenceDepannage() {
     const schemaData = {
@@ -196,25 +197,44 @@ export default function UrgenceDepannage() {
                     </div>
                 </section>
 
-                {/* ZONES D'INTERVENTION */}
+{/* ZONES D'INTERVENTION */}
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                            Secteur d'intervention en Dépannage (30 km)
-                        </h2>
-                        <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens rapidement pour vos urgences en plomberie et chauffage sur les communes suivantes et leurs alentours :
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-3 pt-2">
-                            {[
-                                "Bernay", "Évreux", "Brionne", "Beaumont-le-Roger",
-                                "Conches-en-Ouche", "Le Neubourg", "Elbeuf", "Louviers",
-                                "Lisieux", "Pont-Audemer"
-                            ].map((ville, i) => (
-                                <span key={i} className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2">
-                                    <MapPin className="w-3.5 h-3.5 text-red-500" /> {ville}
-                                </span>
-                            ))}
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                        <div className="text-center space-y-4 max-w-3xl mx-auto">
+                            <div className="inline-flex items-center gap-2 bg-red-500/10 text-red-500 border border-red-500/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+                                <MapPin className="w-4 h-4" /> Zone d'intervention prioritaire
+                            </div>
+                            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                                Secteur d'intervention en Dépannage (30 km)
+                            </h2>
+                            <p className="text-slate-400 text-sm sm:text-base">
+                                Intervention rapide pour vos urgences en plomberie et chauffage autour de Valailles et ses environs :
+                            </p>
+                        </div>
+
+                        {/* Intégration de la carte en mode Urgence (uniquement le cercle rouge 30 km) */}
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
+                                <ZoneInterventionMap showEmergency={true} showProjects={false} />
+                                
+                                {/* Liste des villes en dessous */}
+                                <div className="pt-2 border-t border-slate-800">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 text-center">
+                                        Principales communes desservies en urgence :
+                                    </p>
+                                    <div className="flex flex-wrap justify-center gap-2.5">
+                                        {[
+                                            "Bernay", "Évreux", "Brionne", "Beaumont-le-Roger",
+                                            "Conches-en-Ouche", "Le Neubourg", "Elbeuf", "Louviers",
+                                            "Lisieux", "Pont-Audemer"
+                                        ].map((ville, i) => (
+                                            <span key={i} className="bg-slate-950 border border-slate-800 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-red-500/40 transition-colors">
+                                                <MapPin className="w-3.5 h-3.5 text-red-500" /> {ville}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

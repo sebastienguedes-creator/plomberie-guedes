@@ -16,6 +16,7 @@ import {
     X,
     Maximize2
 } from 'lucide-react';
+import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
 // --- CONFIGURATION SUPABASE ---
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -30,7 +31,7 @@ const getOptimizedImageUrl = (url) => {
 };
 
 export default function ChauffageRadiateurs() {
-    // État pour stocker les 6 derniers chantiers
+    // État pour stocker les chantiers
     const [chantiers, setChantiers] = useState([]);
     // État pour gérer la photo sélectionnée pour le zoom plein écran
     const [selectedImage, setSelectedImage] = useState(null);
@@ -43,7 +44,8 @@ export default function ChauffageRadiateurs() {
                     .select('*')
                     .eq('domaine', 'Chauffage') // Filtre strict sur le domaine Chauffage
                     .eq('visible_sur_site', true)
-                    .order('created_at', { ascending: false }); // Du plus récent au plus ancien
+                    .order('created_at', { ascending: false })
+                    .limit(6); // Les 6 derniers max pour cohérence
 
                 if (!error && data) {
                     setChantiers(data);
@@ -240,26 +242,37 @@ export default function ChauffageRadiateurs() {
                     </div>
                 </section>
 
-                {/* ZONES D'INTERVENTION - DÉPARTEMENTS, PRÉFECTURES, SOUS-PRÉFECTURES */}
+                {/* --- SECTION 3 : ZONE D'INTERVENTION LOCALE (MAP + VILLES) --- */}
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                            Intervention dans un large rayon sur la Normandie
-                        </h2>
-                        <p className="text-slate-400 max-w-2xl mx-auto text-sm">
-                            J'interviens sur la majorité du territoire normand, notamment dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-3 pt-2">
-                            {[
-                                "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
-                                "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
-                                "Caen (14)", "Lisieux (14)", "Bayeux (14)",
-                                "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
-                            ].map((lieu, i) => (
-                                <span key={i} className="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2">
-                                    <MapPin className="w-3.5 h-3.5 text-accent" /> Chauffage {lieu}
-                                </span>
-                            ))}
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                        <div className="text-center space-y-4 max-w-3xl mx-auto">
+                            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                                Secteur d'intervention Chauffage & Radiateurs
+                            </h2>
+                            <p className="text-slate-400 text-sm sm:text-base">
+                                J'interviens pour l'installation, le remplacement de radiateurs, le désembouage et le dépannage de vos systèmes de chauffage sur une grande partie de la Normandie :
+                            </p>
+                        </div>
+
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
+                                <ZoneInterventionMap showEmergency={false} showProjects={true} />
+                                
+                                <div className="pt-4 border-t border-slate-800">
+                                    <div className="flex flex-wrap justify-center gap-3">
+                                        {[
+                                            "Chauffage Évreux (27)", "Chauffage Bernay (27)", "Chauffage Les Andelys (27)",
+                                            "Chauffage Rouen (76)", "Chauffage Le Havre (76)", "Chauffage Dieppe (76)",
+                                            "Chauffage Caen (14)", "Chauffage Lisieux (14)", "Chauffage Bayeux (14)",
+                                            "Chauffage Alençon (61)", "Chauffage Argentan (61)", "Chauffage Mortagne-au-Perche (61)"
+                                        ].map((ville, i) => (
+                                            <span key={i} className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
+                                                <MapPin className="w-3.5 h-3.5 text-accent" /> {ville}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

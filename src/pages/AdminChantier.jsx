@@ -211,7 +211,7 @@ export default function AdminChantier() {
   const [chantiersExistants, setChantiersExistants] = useState([]);
   const [loadingChantiers, setLoadingChantiers] = useState(false);
 
-  // Vérification de la session active[cite: 2]
+  // Vérification de la session active
   useEffect(() => {
     if (!supabase) {
       setLoadingAuth(false);
@@ -229,7 +229,7 @@ export default function AdminChantier() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Charger les chantiers existants quand on va sur l'onglet "edit"[cite: 2]
+  // Charger les chantiers existants quand on va sur l'onglet "edit"
   useEffect(() => {
     if (activeTab === 'edit' && session) {
       chargerChantiers();
@@ -250,11 +250,12 @@ export default function AdminChantier() {
     setLoadingChantiers(false);
   };
 
-  const modifierChantierSupabase = async (id, nouveauTexte) => {
+  // --- MISE À JOUR : Gestion de la ville en plus du texte ---
+  const modifierChantierSupabase = async (id, nouveauTexte, nouvelleVille) => {
     if (!supabase) return;
     const { error } = await supabase
       .from('chantiers')
-      .update({ texte: nouveauTexte })
+      .update({ texte: nouveauTexte, ville: nouvelleVille })
       .eq('id', id);
 
     if (error) {
@@ -289,7 +290,7 @@ export default function AdminChantier() {
     if (!supabase) return;
 
     try {
-      // 1. Supprimer de la base de données Supabase[cite: 2]
+      // 1. Supprimer de la base de données Supabase
       const { error: dbError } = await supabase
         .from('chantiers')
         .delete()
@@ -297,7 +298,7 @@ export default function AdminChantier() {
 
       if (dbError) throw dbError;
 
-      // 2. Extraire le public_id et notifier Make pour supprimer l'image de Cloudinary[cite: 2]
+      // 2. Extraire le public_id et notifier Make pour supprimer l'image de Cloudinary
       const publicId = getPublicIdFromUrl(imageUrl);
       if (MAKE_WEBHOOK_URL && publicId) {
         await fetch(MAKE_WEBHOOK_URL, {
@@ -311,7 +312,7 @@ export default function AdminChantier() {
         });
       }
 
-      // 3. Mettre à jour l'état local[cite: 2]
+      // 3. Mettre à jour l'état local
       setChantiersExistants(chantiersExistants.filter(c => c.id !== id));
       alert("Chantier et image supprimés avec succès !");
     } catch (error) {
@@ -358,7 +359,7 @@ export default function AdminChantier() {
     if (supabase) await supabase.auth.signOut();
   };
 
-  // États du module d'ajout de chantier d'origine[cite: 2]
+  // États du module d'ajout de chantier
   const [preview, setPreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [action, setAction] = useState('dépannage');
@@ -369,6 +370,35 @@ export default function AdminChantier() {
   const [isGeneratingAi, setIsGeneratingAi] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [succes, setSucces] = useState(false);
+
+  // --- ÉTATS POUR L'API GOUV (NOUVEAU) ---
+  const [rechercheVille, setRechercheVille] = useState('');
+  const [suggestionsVilles, setSuggestionsVilles] = useState([]);
+  const [isSaisieManuelle, setIsSaisieManuelle] = useState(false);
+
+  // --- RECHERCHE DE VILLES VIA L'API GOUV (NOUVEAU) ---
+  useEffect(() => {
+    if (rechercheVille.length < 2) {
+      setSuggestionsVilles([]);
+      return;
+    }
+    
+    const fetchVilles = async () => {
+      try {
+        const res = await fetch(`https://geo.api.gouv.fr/communes?nom=${rechercheVille}&fields=codesPostaux&boost=population&limit=5`);
+        const data = await res.json();
+        setSuggestionsVilles(data);
+      } catch (err) {
+        console.error("Erreur lors de la récupération des villes", err);
+      }
+    };
+
+    const delayDebounceFn = setTimeout(() => {
+      fetchVilles();
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [rechercheVille]);
 
   const mettreAJourTexte = async (file, currentAction, currentCat, currentLoc, currentDate) => {
     const dateObj = new Date(currentDate || chantierDate);
@@ -429,8 +459,6 @@ export default function AdminChantier() {
     if (newAction !== null) setAction(newAction);
     if (newCat !== null) setCategorie(newCat);
     if (newDate !== null) setChantierDate(newDate);
-
-    // L'appel automatique à l'IA a été supprimé ici
   };
 
   const publierChantier = async () => {
@@ -506,7 +534,7 @@ export default function AdminChantier() {
     );
   }
 
-  // Écran de connexion (si non authentifié)[cite: 2]
+  // Écran de connexion (si non authentifié)
   if (!session) {
     return (
       <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center p-4">
@@ -623,7 +651,7 @@ export default function AdminChantier() {
 
       <div className="max-w-md mx-auto">
 
-        {/* En-tête & Déconnexion[cite: 2] */}
+        {/* En-tête & Déconnexion */}
         <div className="flex items-center justify-between mb-4 pt-2">
           <Link to="/" className="text-slate-400 hover:text-white flex items-center gap-1 text-sm">
             <ArrowLeft size={18} /> Retour au site
@@ -636,7 +664,7 @@ export default function AdminChantier() {
           </button>
         </div>
 
-        {/* --- BARRE D'ONGLETS MODULAIRE ---[cite: 2] */}
+        {/* --- BARRE D'ONGLETS MODULAIRE --- */}
         <div className="grid grid-cols-2 gap-2 mb-6 bg-slate-800 p-1.5 rounded-2xl border border-slate-700/60">
           <button
             onClick={() => setActiveTab('add')}
@@ -658,7 +686,7 @@ export default function AdminChantier() {
           </button>
         </div>
 
-        {/* --- ONGLET 1 : AJOUTER UN CHANTIER ---[cite: 2] */}
+        {/* --- ONGLET 1 : AJOUTER UN CHANTIER --- */}
         {activeTab === 'add' && (
           <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/60 p-6 space-y-6">
             <div className="flex items-start justify-between gap-2">
@@ -675,9 +703,53 @@ export default function AdminChantier() {
                     </div>
                   ) : (
                     <>
-                      <div className="flex items-center gap-1 text-xs text-emerald-400 font-medium bg-emerald-950/50 px-2.5 py-1 rounded-lg border border-emerald-800/50">
-                        <MapPin size={12} /> {localisation}
+                      {/* --- CHAMP DE LOCALISATION AVEC AUTOCOMPLÉTION API GOUV --- */}
+                      <div className="relative">
+                        <div 
+                          className="flex items-center gap-1 text-xs text-emerald-400 font-medium bg-emerald-950/50 px-2.5 py-1 rounded-lg border border-emerald-800/50 cursor-pointer"
+                          onClick={() => setIsSaisieManuelle(true)}
+                        >
+                          <MapPin size={12} className="flex-shrink-0" />
+                          {isSaisieManuelle ? (
+                            <input
+                              type="text"
+                              autoFocus
+                              value={rechercheVille}
+                              onChange={(e) => setRechercheVille(e.target.value)}
+                              placeholder="Tapez une ville..."
+                              className="bg-transparent border-none focus:outline-none text-emerald-400 w-full placeholder-emerald-700/50"
+                              onBlur={() => setTimeout(() => setIsSaisieManuelle(false), 200)}
+                            />
+                          ) : (
+                            <span>{localisation}</span>
+                          )}
+                        </div>
+
+                        {/* Liste déroulante des suggestions Gouv */}
+                        {isSaisieManuelle && suggestionsVilles.length > 0 && (
+                          <div className="absolute top-full mt-1 right-0 w-[200px] bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50 overflow-hidden">
+                            {suggestionsVilles.map((ville) => (
+                              <div
+                                key={ville.code}
+                                className="px-3 py-2 text-xs text-slate-200 hover:bg-blue-600 cursor-pointer flex items-center justify-between"
+                                onMouseDown={(e) => {
+                                  e.preventDefault(); // Empêche la fermeture avant l'enregistrement
+                                  const cp = ville.codesPostaux ? ville.codesPostaux[0] : '';
+                                  const villeFormatee = cp ? `${ville.nom} (${cp})` : ville.nom;
+                                  
+                                  setLocalisation(villeFormatee);
+                                  setIsSaisieManuelle(false);
+                                  setRechercheVille('');
+                                }}
+                              >
+                                <span className="font-medium">{ville.nom}</span>
+                                <span className="text-slate-400 text-[10px]">{ville.codesPostaux?.[0]}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
+                      
                       <div className="flex items-center gap-1 text-xs text-slate-300 font-medium bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
                         <Calendar size={12} className="text-blue-400" />
                         <span>Date :</span>
@@ -695,7 +767,7 @@ export default function AdminChantier() {
               )}
             </div>
 
-            {/* Photo[cite: 2] */}
+            {/* Photo */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-slate-300">1. Photo du chantier</label>
               <div className="relative border-2 border-dashed border-slate-600 rounded-xl p-6 hover:border-blue-500 transition-colors text-center bg-slate-900/50">
@@ -726,7 +798,7 @@ export default function AdminChantier() {
               </div>
             </div>
 
-            {/* Sélecteurs[cite: 2] */}
+            {/* Sélecteurs */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-300">2. Type</label>
@@ -758,7 +830,7 @@ export default function AdminChantier() {
               </div>
             </div>
 
-            {/* Aperçu du texte généré par Mistral AI[cite: 2] */}
+            {/* Aperçu du texte généré par Mistral AI */}
             {preview && (
               <div className="space-y-4 pt-2">
                 <div className="space-y-2">
@@ -798,7 +870,7 @@ export default function AdminChantier() {
               </div>
             )}
 
-            {/* Bouton de publication[cite: 2] */}
+            {/* Bouton de publication */}
             {preview && (
               <button
                 onClick={publierChantier}
@@ -819,7 +891,7 @@ export default function AdminChantier() {
           </div>
         )}
 
-        {/* --- ONGLET 2 : GÉRER ET MODIFIER LES CHANTIERS EXISTANTS ---[cite: 2] */}
+        {/* --- ONGLET 2 : GÉRER ET MODIFIER LES CHANTIERS EXISTANTS --- */}
         {activeTab === 'edit' && (
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-white flex items-center gap-2 px-1">
@@ -854,14 +926,44 @@ export default function AdminChantier() {
   );
 }
 
-// --- SOUS-COMPOSANT POUR CHAQUE CARTE MODIFIABLE ---[cite: 2]
+// --- SOUS-COMPOSANT POUR CHAQUE CARTE MODIFIABLE ---
 function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
   const [texteModifie, setTexteModifie] = useState(chantier.texte);
+  const [villeModifiee, setVilleModifiee] = useState(chantier.ville);
   const [isSaving, setIsSaving] = useState(false);
+
+  // --- NOUVEAU : États pour l'API Gouv dans la modification ---
+  const [rechercheVille, setRechercheVille] = useState('');
+  const [suggestionsVilles, setSuggestionsVilles] = useState([]);
+  const [isSaisieManuelle, setIsSaisieManuelle] = useState(false);
+
+  // --- NOUVEAU : Recherche de villes via l'API Gouv ---
+  useEffect(() => {
+    if (rechercheVille.length < 2) {
+      setSuggestionsVilles([]);
+      return;
+    }
+    
+    const fetchVilles = async () => {
+      try {
+        const res = await fetch(`https://geo.api.gouv.fr/communes?nom=${rechercheVille}&fields=codesPostaux&boost=population&limit=5`);
+        const data = await res.json();
+        setSuggestionsVilles(data);
+      } catch (err) {
+        console.error("Erreur lors de la récupération des villes", err);
+      }
+    };
+
+    const delayDebounceFn = setTimeout(() => {
+      fetchVilles();
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [rechercheVille]);
 
   const handleSave = async () => {
     setIsSaving(true);
-    await onUpdate(chantier.id, texteModifie);
+    await onUpdate(chantier.id, texteModifie, villeModifiee);
     setIsSaving(false);
   };
 
@@ -883,7 +985,7 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
             <div className="flex items-center gap-2">
               <span>{new Date(chantier.created_at).toLocaleDateString('fr-FR')}</span>
 
-              {/* --- BOUTON CŒUR (FAVORI / FORÇAGE DE VISIBILITÉ) --- */}
+              {/* BOUTON CŒUR (FAVORI / FORÇAGE DE VISIBILITÉ) */}
               <button
                 type="button"
                 onClick={() => onToggleForce(chantier.id, chantier.force_visible)}
@@ -897,9 +999,56 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
               </button>
             </div>
           </div>
-          <div className="text-emerald-400 font-medium flex items-center gap-1">
-            <MapPin size={12} /> {chantier.ville}
+          
+          {/* --- CHAMP DE LOCALISATION AVEC AUTOCOMPLÉTION API GOUV --- */}
+          <div className="relative pt-1">
+            <div 
+              className="flex items-center gap-1 text-emerald-400 font-medium cursor-pointer"
+              onClick={() => setIsSaisieManuelle(true)}
+            >
+              <MapPin size={12} className="flex-shrink-0" />
+              {isSaisieManuelle ? (
+                <input
+                  type="text"
+                  autoFocus
+                  value={rechercheVille}
+                  onChange={(e) => setRechercheVille(e.target.value)}
+                  placeholder="Tapez une ville..."
+                  className="bg-transparent border-b border-emerald-500 focus:outline-none text-emerald-400 w-full placeholder-emerald-700/50"
+                  onBlur={() => setTimeout(() => setIsSaisieManuelle(false), 200)}
+                />
+              ) : (
+                <span className="border-b border-transparent hover:border-emerald-800 w-full pb-0.5">
+                  {villeModifiee}
+                </span>
+              )}
+            </div>
+
+            {/* Liste déroulante des suggestions Gouv */}
+            {isSaisieManuelle && suggestionsVilles.length > 0 && (
+              <div className="absolute top-full mt-1 left-0 w-[200px] bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50 overflow-hidden">
+                {suggestionsVilles.map((ville) => (
+                  <div
+                    key={ville.code}
+                    className="px-3 py-2 text-xs text-slate-200 hover:bg-blue-600 cursor-pointer flex items-center justify-between"
+                    onMouseDown={(e) => {
+                      e.preventDefault(); // Empêche la fermeture avant l'enregistrement
+                      const cp = ville.codesPostaux ? ville.codesPostaux[0] : '';
+                      const villeFormatee = cp ? `${ville.nom} (${cp})` : ville.nom;
+                      
+                      setVilleModifiee(villeFormatee);
+                      setIsSaisieManuelle(false);
+                      setRechercheVille('');
+                    }}
+                  >
+                    <span className="font-medium">{ville.nom}</span>
+                    <span className="text-slate-400 text-[10px]">{ville.codesPostaux?.[0]}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
         </div>
       </div>
 
