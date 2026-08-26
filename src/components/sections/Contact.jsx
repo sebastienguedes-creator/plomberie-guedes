@@ -1,14 +1,44 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Phone, Mail, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
-import ZoneInterventionMap from "../ZoneInterventionMap";
+import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+
+    const formData = {
+      user_name: e.target.user_name.value,
+      user_phone: e.target.user_phone.value,
+      user_email: e.target.user_email.value,
+      project_type: e.target.project_type.value,
+      project_description: e.target.project_description.value,
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        alert("Une erreur est survenue lors de l'envoi.");
+      }
+    } catch (error) {
+      console.error("Erreur de fetch :", error);
+      alert("Impossible de joindre le serveur.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Données structurées Schema.org pour le référencement local Google
@@ -18,7 +48,14 @@ export default function ContactPage() {
     "name": "SARL Anthony GUEDES - Plomberie Chauffage",
     "telephone": "+33617921004",
     "email": "anthonyguedes.plomberie@gmail.com",
-    "areaServed": ["Eure", "Seine-Maritime", "Normandie"],
+    "areaServed": [
+      "Eure", 
+      "Seine-Maritime", 
+      "Calvados", 
+      "Orne", 
+      "Normandie", 
+      "Île-de-France"
+    ],
     "priceRange": "€€",
     "openingHoursSpecification": [
       {
@@ -37,7 +74,7 @@ export default function ContactPage() {
         <title>Contact & Devis Gratuit | SARL Anthony Guedes - Plombier Chauffagiste</title>
         <meta 
           name="description" 
-          content="Besoin d'un devis gratuit pour une pompe à chaleur, une salle de bain ou un dépannage urgent dans l'Eure et la Seine-Maritime ? Contactez Anthony Guedes au 06 17 92 10 04." 
+          content="Besoin d'un devis gratuit pour une pompe à chaleur, une salle de bain ou un dépannage ? Dépannages urgents (30 km) et grands projets jusqu'à 150 km . Contactez Anthony Guedes au 06 17 92 10 04." 
         />
         <link rel="canonical" href="https://sarl-anthony-guedes.vercel.app/contact" />
         <script type="application/ld+json">
@@ -104,7 +141,10 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="text-xs text-slate-400 uppercase tracking-wider">Zone d'intervention</div>
-                    <div className="text-base font-semibold text-white">Normandie (Eure & Seine-Maritime)</div>
+                    <div className="text-base font-semibold text-white">
+                      Urgences : Rayon 30 km<br />
+                      <span className="text-xs text-slate-400 font-normal">Projets (PAC, SDB, ...) : Jusqu'à 150 km</span>
+                    </div>
                   </div>
                 </div>
 
@@ -220,9 +260,10 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02] active:scale-[0.98]"
+                    disabled={isLoading}
+                    className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 cursor-pointer"
                   >
-                    <span>Envoyer ma demande de devis</span>
+                    <span>{isLoading ? 'Envoi en cours...' : 'Envoyer ma demande de devis'}</span>
                     <Send className="w-4 h-4" />
                   </button>
 
