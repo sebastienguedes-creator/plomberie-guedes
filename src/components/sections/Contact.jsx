@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Phone, Mail, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
-import ZoneInterventionMap from "../components/ZoneInterventionMap";
+import ZoneInterventionMap from "../ZoneInterventionMap";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
