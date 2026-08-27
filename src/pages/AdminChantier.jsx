@@ -183,7 +183,7 @@ const getPublicIdFromUrl = (url) => {
     if (uploadIndex === -1) return null;
     let pathParts = parts.slice(uploadIndex + 1);
     if (pathParts[0].startsWith('v')) {
-      pathParts = pathParts.slice(1); // Ignorer la version (ex: v12345678)
+      pathParts = pathParts.slice(1);
     }
     const fullPath = pathParts.join('/');
     const lastDotIndex = fullPath.lastIndexOf('.');
@@ -194,7 +194,6 @@ const getPublicIdFromUrl = (url) => {
 };
 
 export default function AdminChantier() {
-  // États d'authentification Supabase
   const [session, setSession] = useState(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
   const [email, setEmail] = useState('');
@@ -204,14 +203,11 @@ export default function AdminChantier() {
   const [isForgotMode, setIsForgotMode] = useState(false);
   const [isLoadingAuthAction, setIsLoadingAuthAction] = useState(false);
 
-  // --- GESTION DES ONGLETS ("add" ou "edit") ---
   const [activeTab, setActiveTab] = useState('add');
 
-  // --- ÉTATS POUR LA LISTE DES CHANTIERS EXISTANTS ---
   const [chantiersExistants, setChantiersExistants] = useState([]);
   const [loadingChantiers, setLoadingChantiers] = useState(false);
 
-  // Vérification de la session active
   useEffect(() => {
     if (!supabase) {
       setLoadingAuth(false);
@@ -229,7 +225,6 @@ export default function AdminChantier() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Charger les chantiers existants quand on va sur l'onglet "edit"
   useEffect(() => {
     if (activeTab === 'edit' && session) {
       chargerChantiers();
@@ -250,12 +245,17 @@ export default function AdminChantier() {
     setLoadingChantiers(false);
   };
 
-  // --- MISE À JOUR : Gestion de la ville en plus du texte ---
-  const modifierChantierSupabase = async (id, nouveauTexte, nouvelleVille) => {
+  const modifierChantierSupabase = async (id, nouveauTexte, nouvelleVille, nouveauType, nouveauDomaine, nouvelleDate) => {
     if (!supabase) return;
     const { error } = await supabase
       .from('chantiers')
-      .update({ texte: nouveauTexte, ville: nouvelleVille })
+      .update({ 
+        texte: nouveauTexte, 
+        ville: nouvelleVille,
+        type: nouveauType,
+        domaine: nouveauDomaine,
+        created_at: new Date(nouvelleDate).toISOString()
+      })
       .eq('id', id);
 
     if (error) {
@@ -266,7 +266,6 @@ export default function AdminChantier() {
     }
   };
 
-  // --- NOUVEAU : GESTION DU COUP DE CŒUR / FORÇAGE DE VISIBILITÉ ---
   const toggleForceVisible = async (id, currentStatus) => {
     if (!supabase) return;
     const newStatus = !currentStatus;
@@ -278,7 +277,6 @@ export default function AdminChantier() {
     if (error) {
       alert("Erreur lors de la modification du statut épinglé.");
     } else {
-      // Mise à jour instantanée de l'état local pour éviter un rechargement complet
       setChantiersExistants(
         chantiersExistants.map(c => c.id === id ? { ...c, force_visible: newStatus } : c)
       );
@@ -290,7 +288,6 @@ export default function AdminChantier() {
     if (!supabase) return;
 
     try {
-      // 1. Supprimer de la base de données Supabase
       const { error: dbError } = await supabase
         .from('chantiers')
         .delete()
@@ -298,7 +295,6 @@ export default function AdminChantier() {
 
       if (dbError) throw dbError;
 
-      // 2. Extraire le public_id et notifier Make pour supprimer l'image de Cloudinary
       const publicId = getPublicIdFromUrl(imageUrl);
       if (MAKE_WEBHOOK_URL && publicId) {
         await fetch(MAKE_WEBHOOK_URL, {
@@ -312,7 +308,6 @@ export default function AdminChantier() {
         });
       }
 
-      // 3. Mettre à jour l'état local
       setChantiersExistants(chantiersExistants.filter(c => c.id !== id));
       alert("Chantier et image supprimés avec succès !");
     } catch (error) {
@@ -359,7 +354,6 @@ export default function AdminChantier() {
     if (supabase) await supabase.auth.signOut();
   };
 
-  // États du module d'ajout de chantier
   const [preview, setPreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [action, setAction] = useState('dépannage');
@@ -371,12 +365,10 @@ export default function AdminChantier() {
   const [isUploading, setIsUploading] = useState(false);
   const [succes, setSucces] = useState(false);
 
-  // --- ÉTATS POUR L'API GOUV (NOUVEAU) ---
   const [rechercheVille, setRechercheVille] = useState('');
   const [suggestionsVilles, setSuggestionsVilles] = useState([]);
   const [isSaisieManuelle, setIsSaisieManuelle] = useState(false);
 
-  // --- RECHERCHE DE VILLES VIA L'API GOUV (NOUVEAU) ---
   useEffect(() => {
     if (rechercheVille.length < 2) {
       setSuggestionsVilles([]);
@@ -451,11 +443,8 @@ export default function AdminChantier() {
       }
     }
   };
-  const handleSelectChange = (newAction, newCat, newDate) => {
-    const a = newAction !== null ? newAction : action;
-    const c = newCat !== null ? newCat : categorie;
-    const d = newDate !== null ? newDate : chantierDate;
 
+  const handleSelectChange = (newAction, newCat, newDate) => {
     if (newAction !== null) setAction(newAction);
     if (newCat !== null) setCategorie(newCat);
     if (newDate !== null) setChantierDate(newDate);
@@ -534,7 +523,6 @@ export default function AdminChantier() {
     );
   }
 
-  // Écran de connexion (si non authentifié)
   if (!session) {
     return (
       <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center p-4">
@@ -651,7 +639,6 @@ export default function AdminChantier() {
 
       <div className="max-w-md mx-auto">
 
-        {/* En-tête & Déconnexion */}
         <div className="flex items-center justify-between mb-4 pt-2">
           <Link to="/" className="text-slate-400 hover:text-white flex items-center gap-1 text-sm">
             <ArrowLeft size={18} /> Retour au site
@@ -664,7 +651,6 @@ export default function AdminChantier() {
           </button>
         </div>
 
-        {/* --- BARRE D'ONGLETS MODULAIRE --- */}
         <div className="grid grid-cols-2 gap-2 mb-6 bg-slate-800 p-1.5 rounded-2xl border border-slate-700/60">
           <button
             onClick={() => setActiveTab('add')}
@@ -686,7 +672,6 @@ export default function AdminChantier() {
           </button>
         </div>
 
-        {/* --- ONGLET 1 : AJOUTER UN CHANTIER --- */}
         {activeTab === 'add' && (
           <div className="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/60 p-6 space-y-6">
             <div className="flex items-start justify-between gap-2">
@@ -703,7 +688,6 @@ export default function AdminChantier() {
                     </div>
                   ) : (
                     <>
-                      {/* --- CHAMP DE LOCALISATION AVEC AUTOCOMPLÉTION API GOUV --- */}
                       <div className="relative">
                         <div 
                           className="flex items-center gap-1 text-xs text-emerald-400 font-medium bg-emerald-950/50 px-2.5 py-1 rounded-lg border border-emerald-800/50 cursor-pointer"
@@ -725,7 +709,6 @@ export default function AdminChantier() {
                           )}
                         </div>
 
-                        {/* Liste déroulante des suggestions Gouv */}
                         {isSaisieManuelle && suggestionsVilles.length > 0 && (
                           <div className="absolute top-full mt-1 right-0 w-[200px] bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50 overflow-hidden">
                             {suggestionsVilles.map((ville) => (
@@ -733,7 +716,7 @@ export default function AdminChantier() {
                                 key={ville.code}
                                 className="px-3 py-2 text-xs text-slate-200 hover:bg-blue-600 cursor-pointer flex items-center justify-between"
                                 onMouseDown={(e) => {
-                                  e.preventDefault(); // Empêche la fermeture avant l'enregistrement
+                                  e.preventDefault();
                                   const cp = ville.codesPostaux ? ville.codesPostaux[0] : '';
                                   const villeFormatee = cp ? `${ville.nom} (${cp})` : ville.nom;
                                   
@@ -767,7 +750,6 @@ export default function AdminChantier() {
               )}
             </div>
 
-            {/* Photo */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-slate-300">1. Photo du chantier</label>
               <div className="relative border-2 border-dashed border-slate-600 rounded-xl p-6 hover:border-blue-500 transition-colors text-center bg-slate-900/50">
@@ -798,7 +780,6 @@ export default function AdminChantier() {
               </div>
             </div>
 
-            {/* Sélecteurs */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-300">2. Type</label>
@@ -830,7 +811,6 @@ export default function AdminChantier() {
               </div>
             </div>
 
-            {/* Aperçu du texte généré par Mistral AI */}
             {preview && (
               <div className="space-y-4 pt-2">
                 <div className="space-y-2">
@@ -870,7 +850,6 @@ export default function AdminChantier() {
               </div>
             )}
 
-            {/* Bouton de publication */}
             {preview && (
               <button
                 onClick={publierChantier}
@@ -891,7 +870,6 @@ export default function AdminChantier() {
           </div>
         )}
 
-        {/* --- ONGLET 2 : GÉRER ET MODIFIER LES CHANTIERS EXISTANTS --- */}
         {activeTab === 'edit' && (
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-white flex items-center gap-2 px-1">
@@ -930,14 +908,24 @@ export default function AdminChantier() {
 function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
   const [texteModifie, setTexteModifie] = useState(chantier.texte);
   const [villeModifiee, setVilleModifiee] = useState(chantier.ville);
+  
+  const [typeModifie, setTypeModifie] = useState(chantier.type || 'dépannage');
+  const [domaineModifie, setDomaineModifie] = useState(chantier.domaine || 'PAC');
+  
+  const getFormattedDateForInput = (dateStr) => {
+    if (!dateStr) return getTodayString();
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return getTodayString();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
+  const [dateModifiee, setDateModifiee] = useState(getFormattedDateForInput(chantier.created_at));
+
   const [isSaving, setIsSaving] = useState(false);
 
-  // --- NOUVEAU : États pour l'API Gouv dans la modification ---
   const [rechercheVille, setRechercheVille] = useState('');
   const [suggestionsVilles, setSuggestionsVilles] = useState([]);
   const [isSaisieManuelle, setIsSaisieManuelle] = useState(false);
 
-  // --- NOUVEAU : Recherche de villes via l'API Gouv ---
   useEffect(() => {
     if (rechercheVille.length < 2) {
       setSuggestionsVilles([]);
@@ -963,7 +951,7 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
 
   const handleSave = async () => {
     setIsSaving(true);
-    await onUpdate(chantier.id, texteModifie, villeModifiee);
+    await onUpdate(chantier.id, texteModifie, villeModifiee, typeModifie, domaineModifie, dateModifiee);
     setIsSaving(false);
   };
 
@@ -980,12 +968,18 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
         <div className="flex-1 text-xs space-y-1">
           <div className="flex items-center justify-between text-slate-400">
             <span className="bg-blue-950/60 text-blue-400 px-2 py-0.5 rounded border border-blue-800/40 font-medium">
-              {chantier.domaine} ({chantier.type})
+              {domaineModifie} ({typeModifie})
             </span>
-            <div className="flex items-center gap-2">
-              <span>{new Date(chantier.created_at).toLocaleDateString('fr-FR')}</span>
+            <div className="flex items-center gap-1.5">
+              {/* Sélecteur de date intégré en haut à droite */}
+              <input
+                type="date"
+                value={dateModifiee}
+                onChange={(e) => setDateModifiee(e.target.value)}
+                className="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-slate-300 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none cursor-pointer"
+                title="Modifier la date du chantier"
+              />
 
-              {/* BOUTON CŒUR (FAVORI / FORÇAGE DE VISIBILITÉ) */}
               <button
                 type="button"
                 onClick={() => onToggleForce(chantier.id, chantier.force_visible)}
@@ -1000,7 +994,6 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
             </div>
           </div>
           
-          {/* --- CHAMP DE LOCALISATION AVEC AUTOCOMPLÉTION API GOUV --- */}
           <div className="relative pt-1">
             <div 
               className="flex items-center gap-1 text-emerald-400 font-medium cursor-pointer"
@@ -1024,7 +1017,6 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
               )}
             </div>
 
-            {/* Liste déroulante des suggestions Gouv */}
             {isSaisieManuelle && suggestionsVilles.length > 0 && (
               <div className="absolute top-full mt-1 left-0 w-[200px] bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50 overflow-hidden">
                 {suggestionsVilles.map((ville) => (
@@ -1032,7 +1024,7 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
                     key={ville.code}
                     className="px-3 py-2 text-xs text-slate-200 hover:bg-blue-600 cursor-pointer flex items-center justify-between"
                     onMouseDown={(e) => {
-                      e.preventDefault(); // Empêche la fermeture avant l'enregistrement
+                      e.preventDefault();
                       const cp = ville.codesPostaux ? ville.codesPostaux[0] : '';
                       const villeFormatee = cp ? `${ville.nom} (${cp})` : ville.nom;
                       
@@ -1048,7 +1040,36 @@ function ChantierEditableCard({ chantier, onUpdate, onDelete, onToggleForce }) {
               </div>
             )}
           </div>
+        </div>
+      </div>
 
+      {/* Grille sur 2 colonnes (Type et Domaine) */}
+      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-700/40">
+        <div>
+          <label className="block text-[10px] text-slate-400 mb-1">Type</label>
+          <select
+            value={typeModifie}
+            onChange={(e) => setTypeModifie(e.target.value)}
+            className="w-full p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          >
+            <option value="installation">Installation</option>
+            <option value="rénovation">Rénovation</option>
+            <option value="dépannage">Dépannage</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-[10px] text-slate-400 mb-1">Domaine</label>
+          <select
+            value={domaineModifie}
+            onChange={(e) => setDomaineModifie(e.target.value)}
+            className="w-full p-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          >
+            <option value="PAC">PAC</option>
+            <option value="Salle de Bain">Salle de Bain</option>
+            <option value="Adoucisseur">Adoucisseur</option>
+            <option value="VMC">VMC</option>
+            <option value="Radiateur">Radiateur</option>
+          </select>
         </div>
       </div>
 

@@ -93,7 +93,18 @@ export default function SalleDeBain() {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.guedes-plomberie-chauffage.fr"
+                    "email": "anthonyguedes.plomberie@gmail.com",
+                    "url": "https://www.guedes-plomberie-chauffage.fr",
+                    "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
+                    "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
+                    "priceRange": "€€",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "2A Rue du Ravin",
+                        "addressLocality": "Valailles",
+                        "postalCode": "27300",
+                        "addressCountry": "FR"
+                    },
                 },
                 "areaServed": [
                     {
@@ -247,7 +258,7 @@ export default function SalleDeBain() {
                         <div className="max-w-4xl mx-auto">
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
                                 <ZoneInterventionMap showEmergency={false} showProjects={true} />
-                                
+
                                 <div className="pt-4 border-t border-slate-800">
                                     <div className="flex flex-wrap justify-center gap-3">
                                         {[
@@ -381,20 +392,18 @@ export default function SalleDeBain() {
                                         <h3 className="font-bold text-white text-lg pr-8">
                                             {faq.question}
                                         </h3>
-                                        <ChevronDown 
-                                            className={`w-6 h-6 text-accent shrink-0 transition-transform duration-300 ${
-                                                openFaqIndex === index ? "rotate-180" : ""
-                                            }`} 
+                                        <ChevronDown
+                                            className={`w-6 h-6 text-accent shrink-0 transition-transform duration-300 ${openFaqIndex === index ? "rotate-180" : ""
+                                                }`}
                                         />
                                     </button>
-                                    
+
                                     {/* Transition fluide via CSS Grid pour la hauteur automatique */}
-                                    <div 
-                                        className={`grid transition-all duration-300 ease-in-out ${
-                                            openFaqIndex === index 
-                                                ? "grid-rows-[1fr] opacity-100" 
+                                    <div
+                                        className={`grid transition-all duration-300 ease-in-out ${openFaqIndex === index
+                                                ? "grid-rows-[1fr] opacity-100"
                                                 : "grid-rows-[0fr] opacity-0"
-                                        }`}
+                                            }`}
                                     >
                                         <div className="overflow-hidden">
                                             <p className="px-6 pb-6 text-slate-300 text-sm leading-relaxed">

@@ -76,7 +76,7 @@ const handleSubmit = async (e) => {
           name="description" 
           content="Besoin d'un devis gratuit pour une pompe à chaleur, une salle de bain ou un dépannage ? Dépannages urgents (30 km) et grands projets jusqu'à 150 km . Contactez Anthony Guedes au 06 17 92 10 04." 
         />
-        <link rel="canonical" href="https://sarl-anthony-guedes.vercel.app/contact" />
+        <link rel="canonical" href="https://www.guedes-plomberie-chauffage.fr/contact" />
         <script type="application/ld+json">
           {JSON.stringify(schemaData)}
         </script>

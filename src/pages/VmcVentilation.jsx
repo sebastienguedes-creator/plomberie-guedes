@@ -85,7 +85,18 @@ export default function VmcVentilation() {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.guedes-plomberie-chauffage.fr"
+                    "email": "anthonyguedes.plomberie@gmail.com",
+                    "url": "https://www.guedes-plomberie-chauffage.fr",
+                    "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
+                    "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
+                    "priceRange": "€€",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "2A Rue du Ravin",
+                        "addressLocality": "Valailles",
+                        "postalCode": "27300",
+                        "addressCountry": "FR"
+                    },
                 },
                 "areaServed": [
                     {

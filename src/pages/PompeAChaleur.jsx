@@ -103,7 +103,18 @@ export default function PompeAChaleur() {
                     "@type": "Plumber",
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
-                    "url": "https://www.guedes-plomberie-chauffage.fr"
+                    "email": "anthonyguedes.plomberie@gmail.com",
+                    "url": "https://www.guedes-plomberie-chauffage.fr",
+                    "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
+                    "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
+                    "priceRange": "€€",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "streetAddress": "2A Rue du Ravin",
+                        "addressLocality": "Valailles",
+                        "postalCode": "27300",
+                        "addressCountry": "FR"
+                    },
                 },
                 "areaServed": [
                     {
@@ -327,7 +338,7 @@ export default function PompeAChaleur() {
                         <div className="max-w-4xl mx-auto">
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
                                 <ZoneInterventionMap showEmergency={false} showProjects={true} />
-                                
+
                                 <div className="pt-4 border-t border-slate-800">
                                     <div className="flex flex-wrap justify-center gap-3">
                                         {[
@@ -366,7 +377,7 @@ export default function PompeAChaleur() {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {chantiers.map((chantier) => (
                                     <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
-                                        
+
                                         {/* Image cliquable pour zoom instantané */}
                                         <div
                                             onClick={() => setSelectedImage(chantier.image_url)}
@@ -453,8 +464,8 @@ export default function PompeAChaleur() {
                             {faqData.map((faq, index) => {
                                 const isOpen = openFaqIndex === index;
                                 return (
-                                    <div 
-                                        key={index} 
+                                    <div
+                                        key={index}
                                         className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all duration-300"
                                     >
                                         <button
@@ -462,14 +473,13 @@ export default function PompeAChaleur() {
                                             className="w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-slate-800/50 transition-colors"
                                         >
                                             <h3 className="font-bold text-white text-lg pr-4">{faq.question}</h3>
-                                            <ChevronDown 
-                                                className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+                                            <ChevronDown
+                                                className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
                                             />
                                         </button>
-                                        <div 
-                                            className={`transition-all duration-300 ease-in-out px-6 overflow-hidden ${
-                                                isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'
-                                            }`}
+                                        <div
+                                            className={`transition-all duration-300 ease-in-out px-6 overflow-hidden ${isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'
+                                                }`}
                                         >
                                             <p className="text-slate-300 text-sm leading-relaxed">
                                                 {faq.answer}
