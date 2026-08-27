@@ -8,7 +8,10 @@ export default function SEO({ title, description, canonicalUrl, ogImage, schema 
     const defaultImage = `${siteUrl}/hero.png`;
 
     // Gestion du titre (Page | Site)
-    const pageTitle = title ? `${title} | ${siteName}` : defaultTitle;
+    // On ajoute le nom de l'entreprise uniquement s'il n'est pas déjà présent dans le titre
+const pageTitle = title 
+    ? (title.includes(siteName) ? title : `${title} | ${siteName}`) 
+    : defaultTitle;
     const metaDescription = description || defaultDescription;
     const canonical = canonicalUrl || siteUrl;
     const ogImg = ogImage || defaultImage;
