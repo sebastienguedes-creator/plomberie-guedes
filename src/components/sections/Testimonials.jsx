@@ -49,20 +49,21 @@ export default function Testimonials() {
       rating: 5,
       date: "Il y a 6 mois",
       comment: "Excellente prestation pour 1 salle de bain, 1 wc et 1 cuisine, et tout en un: plomberie, électricité, placo... plus pratique et rapide que de faire intervenir 3 artisans. Travail très soigné, avec un SAV réactif si besoin, le tout dans la bonne humeur"
-    }    
+    }
   ];
 
   return (
     <section id="temoignages" aria-labelledby="temoignages-heading" className="py-20 lg:py-28 bg-slate-900 border-b border-slate-800 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* En-tête de section */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 bg-accent/10 text-accent border border-accent/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
             Confiance & Satisfaction
           </div>
+          {/* H2 Optimisé SEO */}
           <h2 id="temoignages-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Ce que les clients disent de <span className="text-accent">mes interventions</span>
+            Avis clients sur nos <span className="text-accent">interventions en plomberie</span>
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
             Découvrez les retours d'expérience de particuliers qui m'ont fait confiance pour leurs travaux de chauffage et de plomberie.
@@ -72,7 +73,7 @@ export default function Testimonials() {
         {/* Grille des avis */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {reviews.map((review, index) => (
-            <article 
+            <article
               key={index}
               className="bg-slate-950 border border-slate-800 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl hover:border-accent/40 transition-all duration-300 group"
             >
@@ -99,14 +100,14 @@ export default function Testimonials() {
               <div className="border-t border-slate-900 pt-4 mt-auto">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-bold text-white text-sm">{review.name}</h3>
+                    <p className="font-bold text-white text-sm">{review.name}</p>
                     <p className="text-xs text-slate-400">
                       {review.location} • <span className="text-accent">{review.project}</span>
                     </p>
                   </div>
-                  <CheckCircle2 
-                    className="w-5 h-5 text-emerald-500 shrink-0" 
-                    aria-label="Avis vérifié" 
+                  <CheckCircle2
+                    className="w-5 h-5 text-emerald-500 shrink-0"
+                    aria-label="Avis vérifié"
                     role="img"
                   />
                 </div>

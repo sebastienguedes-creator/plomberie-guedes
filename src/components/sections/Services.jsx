@@ -10,7 +10,7 @@ export default function Services() {
       tag: "Spécialité Principale",
       features: ["Installation clé en main", "Étude thermique sur-mesure", "Marques certifiées"],
       link: "/installation-pompe-a-chaleur",
-      linkText: "Découvrir les PAC"
+      linkText: "Installation de pompe à chaleur (27)"
     },
     {
       icon: Wrench,
@@ -19,7 +19,7 @@ export default function Services() {
       tag: "Performance",
       features: ["Désembouage réseau", "Équilibrage thermique", "Régulation intelligente"],
       link: "/chauffage-central-radiateurs",
-      linkText: "En savoir plus sur le chauffage"
+      linkText: "Installation & dépannage chauffage"
     },
     {
       icon: Bath,
@@ -28,7 +28,7 @@ export default function Services() {
       tag: "Sur-mesure",
       features: ["Design moderne", "Normes PMR", "Coordination des travaux"],
       link: "/renovation-salle-de-bain",
-      linkText: "Voir la rénovation de bain"
+      linkText: "Rénovation de salle de bain à Bernay"
     },
     {
       icon: Droplet,
@@ -37,7 +37,7 @@ export default function Services() {
       tag: "Protection",
       features: ["Anti-calcaire", "Eau purifiée", "Entretien simplifié"],
       link: "/installation-adoucisseur-eau",
-      linkText: "Découvrir les adoucisseurs"
+      linkText: "Installation d'adoucisseur d'eau (27)"
     },
     {
       icon: Wind,
@@ -46,7 +46,7 @@ export default function Services() {
       tag: "Confort & Santé",
       features: ["Filtration des pollens", "Récupération de calories", "Silencieux et discret"],
       link: "/installation-vmc-ventilation",
-      linkText: "En savoir plus sur la VMC"
+      linkText: "Installation de VMC dans l'Eure"
     },
     {
       icon: AlertTriangle,
@@ -55,7 +55,7 @@ export default function Services() {
       tag: "Urgence 27",
       features: ["Diagnostic précis", "Réactivité garantie", "Réparation immédiate"],
       link: "/urgence-depannage-plomberie",
-      linkText: "Besoin d'un dépannage urgent"
+      linkText: "Dépannage plomberie urgent (27)"
     }
   ];
 
@@ -63,13 +63,13 @@ export default function Services() {
     <section id="services" aria-labelledby="services-heading" className="py-20 lg:py-28 bg-slate-900 border-b border-slate-800 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* En-tête de section */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 bg-accent/10 text-accent border border-accent/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
             Savoir-faire & Expertise
           </div>
+          {/* H2 Optimisé SEO */}
           <h2 id="services-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Des solutions adaptées à votre <span className="text-accent">confort thermique</span>
+            Nos prestations de <span className="text-accent">plomberie et chauffage dans l'Eure</span>
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
             Bénéficiez d'un accompagnement professionnel de l'étude de votre projet jusqu'à la maintenance de vos équipements.

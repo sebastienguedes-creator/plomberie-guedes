@@ -39,15 +39,16 @@ export default function Realisations() {
       <div className="absolute bottom-10 right-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* En-tête de section */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 bg-hydro/10 text-hydro border border-hydro/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-4 h-4" aria-hidden="true" />
             <span>Chantiers & Savoir-faire</span>
           </div>
+          {/* H2 Optimisé SEO */}
           <h2 id="realisations-heading" className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-            Découvrez la qualité de mes <span className="text-hydro">réalisations sur le terrain</span>
+            Découvrez nos <span className="text-hydro">réalisations en plomberie et chauffage (27)</span>
           </h2>
           <p className="text-slate-300 text-base sm:text-lg">
             La précision d'une installation propre, dans les règles de l'art et le respect total de votre habitat.
@@ -57,17 +58,17 @@ export default function Realisations() {
         {/* Grille des réalisations */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <article 
+            <article
               key={index}
               className="bg-primary border border-slate-800 rounded-3xl overflow-hidden shadow-2xl hover:border-hydro/50 transition-all duration-500 group flex flex-col justify-between"
             >
               {/* Simulation de visuel photo de chantier haut de gamme */}
               <div className="relative h-64 bg-slate-900 overflow-hidden flex items-center justify-center border-b border-slate-800">
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent z-10" aria-hidden="true" />
-                
+
                 {/* Effet de lueur au survol */}
                 <div className="absolute inset-0 bg-hydro/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" aria-hidden="true" />
-                
+
                 {/* Visuel stylisé (Masqué pour l'A11y car le titre est déjà lu plus bas) */}
                 <div className="absolute inset-0 flex items-center justify-center text-slate-700 group-hover:scale-105 transition-transform duration-700" aria-hidden="true">
                   <div className="text-center space-y-2 px-6">
@@ -104,11 +105,11 @@ export default function Realisations() {
                       <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" /> Conforme Normes
                     </span>
                   </div>
-                  
+
                   <h3 className="text-xl font-bold text-white group-hover:text-hydro transition-colors mb-2">
                     {project.title}
                   </h3>
-                  
+
                   <p className="text-slate-300 text-sm leading-relaxed">
                     {project.description}
                   </p>
