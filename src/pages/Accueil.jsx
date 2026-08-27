@@ -8,7 +8,7 @@ import Testimonials from '../components/sections/Testimonials';
 import Contact from '../components/sections/Contact';
 
 export default function Accueil() {
-    const schemaData = {
+const schemaData = {
         "@context": "https://schema.org",
         "@graph": [
             {
@@ -17,10 +17,13 @@ export default function Accueil() {
                 "name": "SARL Anthony GUEDES",
                 "url": "https://www.guedes-plomberie-chauffage.fr/",
                 "telephone": "+33617921004",
+                "email": "anthonyguedes.plomberie@gmail.com",
+                "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
+                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
                 "priceRange": "€€",
                 "address": {
                     "@type": "PostalAddress",
-                    "streetAddress": "2A Rue du Ravin", // Ajustez si vous avez une rue précise
+                    "streetAddress": "2A Rue du Ravin",
                     "addressLocality": "Valailles",
                     "postalCode": "27300",
                     "addressCountry": "FR"

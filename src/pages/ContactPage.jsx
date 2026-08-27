@@ -41,13 +41,24 @@ const handleSubmit = async (e) => {
     }
   };
 
-  // Données structurées Schema.org pour le référencement local Google
+// Données structurées Schema.org mises à jour pour le référencement local Google (avec address, logo, image)
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Plumber",
     "name": "SARL Anthony GUEDES - Plomberie Chauffage",
     "telephone": "+33617921004",
     "email": "anthonyguedes.plomberie@gmail.com",
+    "url": "https://www.guedes-plomberie-chauffage.fr",
+    "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
+    "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
+    "priceRange": "€€",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2A Rue du Ravin",
+        "addressLocality": "Valailles",
+        "postalCode": "27300",
+        "addressCountry": "FR"
+    },
     "areaServed": [
       "Eure", 
       "Seine-Maritime", 
@@ -56,7 +67,6 @@ const handleSubmit = async (e) => {
       "Normandie", 
       "Île-de-France"
     ],
-    "priceRange": "€€",
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
