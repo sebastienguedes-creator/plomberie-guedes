@@ -17,7 +17,7 @@ import {
     Maximize2,
     Snowflake,
     ThermometerSun,
-    ChevronDown // Ajout de l'icône pour l'accordéon
+    ChevronDown 
 } from 'lucide-react';
 import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
@@ -62,13 +62,11 @@ const faqData = [
         question: "L'entretien d'une pompe à chaleur est-il obligatoire ?",
         answer: "Oui, la réglementation impose un contrôle d'étanchéité du circuit de fluides frigorigènes et un entretien complet. Il est fortement recommandé de confier cette maintenance à un professionnel qualifié une fois par an pour préserver les performances de l'appareil et prolonger sa durée de vie."
     }
-
 ];
 
 export default function PompeAChaleur() {
     const [chantiers, setChantiers] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
-    // NOUVEAU : État pour gérer l'accordéon de la FAQ (null par défaut = tout fermé)
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     useEffect(() => {
@@ -91,7 +89,7 @@ export default function PompeAChaleur() {
         fetchDerniersChantiers();
     }, []);
 
-    // Données structurées JSON-LD enrichies (Service + FAQ avec Climatisation Réversible pour Google Rich Snippets)
+    // Données structurées JSON-LD optimisées pour le référencement local dans l'Eure (27)
     const schemaData = {
         "@context": "https://schema.org",
         "@graph": [
@@ -100,7 +98,7 @@ export default function PompeAChaleur() {
                 "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#service",
                 "name": "Installation, Entretien de Pompe à Chaleur & Climatisation Réversible",
                 "provider": {
-                    "@type": "Plumber",
+                    "@type": ["Plumber", "HVACBusiness"],
                     "name": "SARL Anthony GUEDES",
                     "telephone": "+33617921004",
                     "email": "anthonyguedes.plomberie@gmail.com",
@@ -117,41 +115,26 @@ export default function PompeAChaleur() {
                     },
                 },
                 "areaServed": [
-                    {
-                        "@type": "GeoCircle",
-                        "geoMidpoint": {
-                            "@type": "GeoCoordinates",
-                            "latitude": 49.122232,
-                            "longitude": 0.623779
-                        },
-                        "geoRadius": "150000"
-                    },
-                    { "@type": "AdministrativeArea", "name": "Eure" },
-                    { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
-                    { "@type": "AdministrativeArea", "name": "Calvados" },
-                    { "@type": "AdministrativeArea", "name": "Orne" },
-                    { "@type": "City", "name": "Évreux" },
                     { "@type": "City", "name": "Bernay" },
+                    { "@type": "City", "name": "Évreux" },
+                    { "@type": "City", "name": "Valailles" },
+                    { "@type": "City", "name": "Le Neubourg" },
+                    { "@type": "City", "name": "Pont-Audemer" },
+                    { "@type": "City", "name": "Brionne" },
+                    { "@type": "City", "name": "Beaumont-le-Roger" },
+                    { "@type": "City", "name": "Conches-en-Ouche" },
+                    { "@type": "City", "name": "Serquigny" },
                     { "@type": "City", "name": "Les Andelys" },
-                    { "@type": "City", "name": "Rouen" },
-                    { "@type": "City", "name": "Le Havre" },
-                    { "@type": "City", "name": "Dieppe" },
-                    { "@type": "City", "name": "Caen" },
-                    { "@type": "City", "name": "Lisieux" },
-                    { "@type": "City", "name": "Bayeux" },
-                    { "@type": "City", "name": "Alençon" },
-                    { "@type": "City", "name": "Argentan" },
-                    { "@type": "City", "name": "Mortagne-au-Perche" },
-                    { "@type": "AdministrativeArea", "name": "Normandie" }
+                    { "@type": "AdministrativeArea", "name": "Eure (27)" }
                 ],
-                "description": "Installation, remplacement de chaudière, climatisation réversible et entretien de pompe à chaleur Air/Eau et Air/Air par un artisan certifié RGE QualiPAC en Normandie.",
+                "description": "Artisan chauffagiste et frigoriste certifié RGE QualiPAC dans l'Eure (27). Spécialiste de l'installation, du remplacement et de l'entretien de pompes à chaleur Air/Eau et climatisation réversible (Air/Air).",
                 "hasOfferCatalog": {
                     "@type": "OfferCatalog",
                     "name": "Services Pompe à Chaleur et Climatisation",
                     "itemListElement": [
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pompe à chaleur Air/Eau (Chauffage & Eau Chaude Sanitaire)" } },
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climatisation Réversible & PAC Air/Air" } },
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien, Dépannage PAC & Climatiseurs" } }
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Pompe à chaleur Air/Eau (Chauffage & Eau Chaude Sanitaire)" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Climatisation Réversible & PAC Air/Air" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien et Dépannage de systèmes thermiques (PAC & Clim)" } }
                     ]
                 }
             },
@@ -199,30 +182,30 @@ export default function PompeAChaleur() {
     return (
         <>
             <SEO
-                title="Pompe à Chaleur & Climatisation Réversible Normandie | GUEDES"
-                description="Artisan RGE QualiPAC spécialisé en installation de pompe à chaleur (Air/Eau) et climatisation réversible (Air/Air) en Normandie (Eure, Seine-Maritime, Calvados, Orne). Devis gratuit sous 48h."
+                title="Installation Pompe à Chaleur & Climatisation Eure (27) | GUEDES Chauffage"
+                description="Artisan chauffagiste RGE QualiPAC spécialisé en installation de pompe à chaleur (Air/Eau) et climatisation réversible (Air/Air) dans l'Eure (Bernay, Évreux). Devis gratuit sous 48h."
                 canonicalUrl="https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur"
                 schema={schemaData}
             />
 
             <div className="bg-primary text-slate-100 min-h-screen">
 
-                {/* --- SECTION HERO (H1 SEO OPTIMISÉ PAC & CLIMATISATION) --- */}
+                {/* --- SECTION HERO --- */}
                 <section className="relative py-16 lg:py-24 border-b border-slate-800 bg-slate-950 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
                             <div className="lg:col-span-7 space-y-6">
                                 <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-accent">
-                                    <ShieldCheck className="w-4 h-4" /> Artisan Certifié RGE QualiPAC & Climatisation
+                                    <ShieldCheck className="w-4 h-4" /> Artisan Chauffagiste Certifié RGE QualiPAC
                                 </div>
 
                                 <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white">
-                                    Installation de <span className="text-accent">Pompe à Chaleur</span> & <span className="text-accent">Climatisation Réversible</span> en Normandie
+                                    Spécialiste en <span className="text-accent">Pompe à Chaleur</span> & <span className="text-accent">Climatisation Réversible</span> dans l'Eure (27)
                                 </h1>
 
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Remplacez votre ancienne chaudière fioul ou gaz par une solution économique, écologique et réversible. La <strong>SARL Anthony GUEDES</strong> vous accompagne de l'étude thermique jusqu'à la mise en service de votre PAC ou climatiseur sur un large secteur en Normandie.
+                                    Réussissez votre transition énergétique en remplaçant votre ancienne chaudière. La <strong>SARL Anthony GUEDES</strong>, experte en confort thermique, vous accompagne de l'étude énergétique jusqu'à la mise en service de votre système de chauffage ou de climatisation dans l'Eure et ses alentours.
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
@@ -245,7 +228,7 @@ export default function PompeAChaleur() {
 
                                 <div className="flex items-center gap-6 pt-6 text-xs text-slate-400 border-t border-slate-800">
                                     <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Devis sous 48h</span>
-                                    <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Artisan RGE QualiPAC</span>
+                                    <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Qualification RGE pour les aides</span>
                                     <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Garantie Décennale</span>
                                 </div>
                             </div>
@@ -253,12 +236,12 @@ export default function PompeAChaleur() {
                             {/* Bloc latéral d'engagement */}
                             <div className="lg:col-span-5 bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl space-y-6">
                                 <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-4">
-                                    Pourquoi opter pour une PAC Réversible en 2026 ?
+                                    Pourquoi installer une PAC Réversible en 2026 ?
                                 </h2>
                                 <ul className="space-y-4 text-sm text-slate-300">
                                     <li className="flex items-start gap-3">
                                         <Euro className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Jusqu'à 70% d'économies</strong> sur votre facture annuelle d'énergie.</span>
+                                        <span><strong>Jusqu'à 70% d'économies</strong> sur votre facture annuelle d'énergie grâce à une haute efficacité thermique.</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ThermometerSun className="w-5 h-5 text-accent shrink-0 mt-0.5" />
@@ -266,7 +249,7 @@ export default function PompeAChaleur() {
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <ShieldCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                                        <span><strong>Installation certifiée RGE</strong> réalisée dans le strict respect des normes constructeurs.</span>
+                                        <span><strong>Installation certifiée RGE</strong> réalisée dans le strict respect des normes des fabricants constructeurs.</span>
                                     </li>
                                 </ul>
                             </div>
@@ -275,43 +258,41 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION 2 : LES TYPES DE POMPES À CHALEUR & CLIMATISATION --- */}
+                {/* --- SECTION 2 : LES TYPES DE POMPES À CHALEUR --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-900">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
                             <h2 className="text-3xl font-extrabold text-white">
-                                Mes solutions de <span className="text-accent">Pompe à Chaleur & Climatisation haute performance</span>
+                                Nos solutions de <span className="text-accent">Chauffage & Climatisation haute performance</span>
                             </h2>
                             <p className="text-slate-400">
-                                Chaque logement a ses spécificités. Je sélectionne le matériel le plus adapté pour chauffer vos hivers et rafraîchir vos étés.
+                                Chaque logement a ses spécificités. En tant que frigoriste et chauffagiste, je sélectionne le matériel le plus adapté pour chauffer vos hivers et rafraîchir vos étés avec un rendement optimal.
                             </p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {/* PAC AIR / EAU */}
                             <div className="bg-slate-950 border border-slate-800 p-8 rounded-3xl space-y-6 hover:border-accent/40 transition-all">
                                 <div className="w-14 h-14 bg-accent/10 text-accent rounded-2xl flex items-center justify-center">
                                     <Flame className="w-8 h-8" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-white">Pompe à Chaleur Air / Eau</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    Idéale en remplacement d'une chaudière fioul ou gaz. La PAC Air/Eau capte les calories de l'air extérieur pour chauffer l'eau de vos radiateurs ou de votre plancher chauffant, tout en produisant votre eau chaude sanitaire.
+                                    Idéale pour la rénovation énergétique en remplacement d'une chaudière fioul ou gaz. La PAC Air/Eau capte les calories de l'air extérieur pour chauffer l'eau de vos radiateurs ou de votre plancher chauffant, tout en produisant votre eau chaude sanitaire.
                                 </p>
                                 <ul className="space-y-2 text-xs text-slate-400">
                                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Raccordement direct sur le réseau de chauffage central</li>
-                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Haute température disponible (rénovation)</li>
+                                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Haute température disponible pour la rénovation</li>
                                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Option plancher rafraîchissant l'été disponible</li>
                                 </ul>
                             </div>
 
-                            {/* PAC AIR / AIR & CLIMATISATION RÉVERSIBLE */}
                             <div className="bg-slate-950 border border-slate-800 p-8 rounded-3xl space-y-6 hover:border-accent/40 transition-all">
                                 <div className="w-14 h-14 bg-accent/10 text-accent rounded-2xl flex items-center justify-center">
                                     <Snowflake className="w-8 h-8" />
                                 </div>
                                 <h3 className="text-2xl font-bold text-white">PAC Air / Air & Climatisation Réversible</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed">
-                                    La solution ultime pour maitriser la température toute l'année. Elle souffle un air chaud très économique en hiver et bascule en <strong>climatiseur réversible très silencieux</strong> durant les fortes chaleurs estivales.
+                                    La solution ultime pour maîtriser la température intérieure toute l'année. Elle diffuse une chaleur très économique en hiver et bascule en <strong>climatiseur réversible très silencieux</strong> durant les fortes chaleurs estivales.
                                 </p>
                                 <ul className="space-y-2 text-xs text-slate-400">
                                     <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-accent" /> Montée en température ou rafraîchissement ultra-rapide</li>
@@ -323,15 +304,15 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION 3 : ZONE D'INTERVENTION LOCALE (MAP + VILLES) --- */}
+                {/* --- SECTION 3 : ZONE D'INTERVENTION --- */}
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                         <div className="text-center space-y-4 max-w-3xl mx-auto">
                             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                                Intervention PAC & Climatisation dans toute la Normandie
+                                Installation, Dépannage et Entretien PAC dans l'Eure (27)
                             </h2>
                             <p className="text-slate-400 text-sm sm:text-base">
-                                J'interviens pour la pose et la maintenance de votre pompe à chaleur ou climatisation dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
+                                J'interviens pour l'étude thermique, la pose et la maintenance de votre pompe à chaleur ou climatisation à Bernay, Évreux, Pont-Audemer et dans tout le département de l'Eure :
                             </p>
                         </div>
 
@@ -342,13 +323,13 @@ export default function PompeAChaleur() {
                                 <div className="pt-4 border-t border-slate-800">
                                     <div className="flex flex-wrap justify-center gap-3">
                                         {[
-                                            "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
-                                            "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
-                                            "Caen (14)", "Lisieux (14)", "Bayeux (14)",
-                                            "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
+                                            "Bernay (27)", "Évreux (27)", "Valailles (27)",
+                                            "Grand Bourgtheroulde (27)", "Le Neubourg (27)", "Pont-Audemer (27)",
+                                            "Brionne (27)", "Beaumont-le-Roger (27)", "Conches-en-Ouche (27)",
+                                            "Serquigny (27)", "Louviers (27)", "Vernon (27)", "Les Andelys (27)"
                                         ].map((ville, i) => (
                                             <span key={i} className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
-                                                <MapPin className="w-3.5 h-3.5 text-accent" /> PAC & Climatisation {ville}
+                                                <MapPin className="w-3.5 h-3.5 text-accent" /> PAC & Clim {ville}
                                             </span>
                                         ))}
                                     </div>
@@ -358,7 +339,7 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION NOS RÉALISATIONS (DYNAMIQUE SUPABASE PAC) --- */}
+                {/* --- SECTION NOS RÉALISATIONS --- */}
                 {chantiers.length > 0 && (
                     <section className="py-20 bg-slate-900 border-b border-slate-800">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
@@ -367,18 +348,16 @@ export default function PompeAChaleur() {
                                     <ImageIcon className="w-4 h-4" /> Nos réalisations
                                 </div>
                                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-                                    Dernières interventions PAC et Climatisation
+                                    Derniers chantiers Chauffage et Climatisation
                                 </h2>
                                 <p className="text-slate-400 max-w-2xl mx-auto">
-                                    Installation, remplacement ou dépannage : suivez mes interventions récentes chez mes clients normands.
+                                    Installation de systèmes thermodynamiques, remplacement de chaudières ou dépannage : découvrez mes interventions récentes chez mes clients dans l'Eure.
                                 </p>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {chantiers.map((chantier) => (
                                     <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
-
-                                        {/* Image cliquable pour zoom instantané */}
                                         <div
                                             onClick={() => setSelectedImage(chantier.image_url)}
                                             className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer"
@@ -386,8 +365,8 @@ export default function PompeAChaleur() {
                                         >
                                             <img
                                                 src={getOptimizedImageUrl(chantier.image_url)}
-                                                alt={`Installation d'une pompe à chaleur et climatisation réversible à ${chantier.ville}`}
-                                                title={`Chantier PAC et climatisation à ${chantier.ville} en Normandie`}
+                                                alt={`Mise en place d'une pompe à chaleur et climatisation à ${chantier.ville}`}
+                                                title={`Chantier PAC et climatisation à ${chantier.ville} dans l'Eure`}
                                                 className="w-full h-auto max-h-[350px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
                                                 loading="lazy"
                                             />
@@ -398,14 +377,12 @@ export default function PompeAChaleur() {
                                             </div>
                                         </div>
 
-                                        {/* Photo commentée / Descriptif textuel */}
                                         <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
                                             <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
                                                 {chantier.texte}
                                             </p>
                                         </div>
 
-                                        {/* Pied de carte avec Ville et Date */}
                                         <div className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800 mt-auto">
                                             <span className="text-xs font-bold text-accent uppercase tracking-wider flex items-center gap-1.5 line-clamp-1">
                                                 <MapPin className="w-3.5 h-3.5 shrink-0" /> {chantier.ville}
@@ -424,7 +401,6 @@ export default function PompeAChaleur() {
                     </section>
                 )}
 
-                {/* --- MODALE DE ZOOM PLEIN ÉCRAN --- */}
                 {selectedImage && (
                     <div
                         onClick={() => setSelectedImage(null)}
@@ -441,14 +417,14 @@ export default function PompeAChaleur() {
                         <div className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
                             <img
                                 src={getOptimizedImageUrl(selectedImage)}
-                                alt="Agrandissement du chantier"
+                                alt="Agrandissement du chantier d'installation thermique"
                                 className="max-w-full max-h-[85vh] object-contain rounded-2xl border border-slate-800 shadow-2xl"
                             />
                         </div>
                     </div>
                 )}
 
-                {/* --- SECTION 4 : FAQ INTERACTIVE (ACCORDÉON EXCLUSIF) --- */}
+                {/* --- SECTION 4 : FAQ --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-950">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <div className="text-center space-y-4">
@@ -456,7 +432,7 @@ export default function PompeAChaleur() {
                                 <HelpCircle className="w-4 h-4" /> Vos questions fréquentes
                             </div>
                             <h2 className="text-3xl font-extrabold text-white">
-                                Tout savoir sur la Pompe à Chaleur et la Climatisation Réversible
+                                L'expertise Pompe à Chaleur et Climatisation Réversible
                             </h2>
                         </div>
 
@@ -496,10 +472,10 @@ export default function PompeAChaleur() {
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">
-                            Prêt à maîtriser votre température en hiver comme en été ?
+                            Prêt à optimiser votre confort thermique en toutes saisons ?
                         </h2>
                         <p className="text-slate-100 text-base">
-                            Contactez-moi pour obtenir une étude thermique et un devis gratuit sous 48h pour votre pompe à chaleur ou climatisation réversible en Normandie.
+                            Contactez-moi pour obtenir une étude énergétique et un devis gratuit sous 48h pour votre pompe à chaleur ou climatisation dans l'Eure.
                         </p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
                             <a

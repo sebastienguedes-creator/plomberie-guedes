@@ -67,9 +67,9 @@ export default function Services() {
           <div className="inline-flex items-center gap-2 bg-accent/10 text-accent border border-accent/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
             Savoir-faire & Expertise
           </div>
-          {/* H2 Optimisé SEO */}
+          {/* H2 Optimisé SEO & Cohérent Normandie */}
           <h2 id="services-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Nos prestations de <span className="text-accent">plomberie et chauffage dans l'Eure</span>
+            Nos prestations de <span className="text-accent">plomberie et chauffage en Normandie</span>
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
             Bénéficiez d'un accompagnement professionnel de l'étude de votre projet jusqu'à la maintenance de vos équipements.
