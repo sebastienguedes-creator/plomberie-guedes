@@ -64,6 +64,87 @@ const faqData = [
     }
 ];
 
+// --- JSON-LD ENRICHI (Sorti du composant pour éviter les re-rendus inutiles) ---
+const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Service",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#service",
+            "name": "Installation, Entretien de Pompe à Chaleur & Climatisation Réversible",
+            "provider": {
+                "@type": ["Plumber", "HVACBusiness", "LocalBusiness"],
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#organization",
+                "name": "SARL Anthony GUEDES",
+                "telephone": "+33617921004",
+                "email": "anthonyguedes.plomberie@gmail.com",
+                "url": "https://www.guedes-plomberie-chauffage.fr",
+                "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
+                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
+                "priceRange": "€€",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "2A Rue du Ravin",
+                    "addressLocality": "Valailles",
+                    "postalCode": "27300",
+                    "addressRegion": "Normandie",
+                    "addressCountry": "FR"
+                }
+            },
+            "areaServed": [
+                { "@type": "AdministrativeArea", "name": "Normandie" },
+                { "@type": "AdministrativeArea", "name": "Eure" },
+                { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
+                { "@type": "AdministrativeArea", "name": "Calvados" },
+                { "@type": "City", "name": "Bourgtheroulde-Infreville" },
+                { "@type": "City", "name": "Bernay" },
+                { "@type": "City", "name": "Évreux" },
+                { "@type": "City", "name": "Le Neubourg" }
+            ],
+            "description": "Artisan chauffagiste et frigoriste certifié RGE QualiPAC intervenant dans l'Eure (27) et sur toute la Normandie. Spécialiste de l'installation et de l'entretien de pompes à chaleur Air/Eau et climatisation réversible.",
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Services Pompe à Chaleur et Climatisation",
+                "itemListElement": [
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Pompe à chaleur Air/Eau" } },
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Climatisation Réversible & PAC Air/Air" } },
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien et Dépannage PAC & Clim" } }
+                ]
+            }
+        },
+        {
+            "@type": "FAQPage",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#faq",
+            "mainEntity": faqData.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                }
+            }))
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#breadcrumb",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Accueil",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Pompe à Chaleur & Climatisation",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur"
+                }
+            ]
+        }
+    ]
+};
+
 export default function PompeAChaleur() {
     const [chantiers, setChantiers] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -88,87 +169,6 @@ export default function PompeAChaleur() {
         }
         fetchDerniersChantiers();
     }, []);
-
-    // --- JSON-LD ENRICHI ---
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "Service",
-                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#service",
-                "name": "Installation, Entretien de Pompe à Chaleur & Climatisation Réversible",
-                "provider": {
-                    "@type": ["Plumber", "HVACBusiness", "LocalBusiness"],
-                    "@id": "https://www.guedes-plomberie-chauffage.fr/#organization",
-                    "name": "SARL Anthony GUEDES",
-                    "telephone": "+33617921004",
-                    "email": "anthonyguedes.plomberie@gmail.com",
-                    "url": "https://www.guedes-plomberie-chauffage.fr",
-                    "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
-                    "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
-                    "priceRange": "€€",
-                    "address": {
-                        "@type": "PostalAddress",
-                        "streetAddress": "2A Rue du Ravin",
-                        "addressLocality": "Valailles",
-                        "postalCode": "27300",
-                        "addressRegion": "Normandie",
-                        "addressCountry": "FR"
-                    }
-                },
-                "areaServed": [
-                    { "@type": "AdministrativeArea", "name": "Normandie" },
-                    { "@type": "AdministrativeArea", "name": "Eure" },
-                    { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
-                    { "@type": "AdministrativeArea", "name": "Calvados" },
-                    { "@type": "City", "name": "Bourgtheroulde-Infreville" },
-                    { "@type": "City", "name": "Bernay" },
-                    { "@type": "City", "name": "Évreux" },
-                    { "@type": "City", "name": "Le Neubourg" }
-                ],
-                "description": "Artisan chauffagiste et frigoriste certifié RGE QualiPAC intervenant dans l'Eure (27) et sur toute la Normandie. Spécialiste de l'installation et de l'entretien de pompes à chaleur Air/Eau et climatisation réversible.",
-                "hasOfferCatalog": {
-                    "@type": "OfferCatalog",
-                    "name": "Services Pompe à Chaleur et Climatisation",
-                    "itemListElement": [
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Pompe à chaleur Air/Eau" } },
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Climatisation Réversible & PAC Air/Air" } },
-                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien et Dépannage PAC & Clim" } }
-                    ]
-                }
-            },
-            {
-                "@type": "FAQPage",
-                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#faq",
-                "mainEntity": faqData.map(faq => ({
-                    "@type": "Question",
-                    "name": faq.question,
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": faq.answer
-                    }
-                }))
-            },
-            {
-                "@type": "BreadcrumbList",
-                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#breadcrumb",
-                "itemListElement": [
-                    {
-                        "@type": "ListItem",
-                        "position": 1,
-                        "name": "Accueil",
-                        "item": "https://www.guedes-plomberie-chauffage.fr/"
-                    },
-                    {
-                        "@type": "ListItem",
-                        "position": 2,
-                        "name": "Pompe à Chaleur & Climatisation",
-                        "item": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur"
-                    }
-                ]
-            }
-        ]
-    };
 
     return (
         <main>
@@ -351,6 +351,7 @@ export default function PompeAChaleur() {
                                 {chantiers.map((chantier) => (
                                     <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
                                         <button
+                                            type="button"
                                             onClick={() => setSelectedImage(chantier.image_url)}
                                             className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
                                             aria-label={`Agrandir la photo du chantier d'installation de pompe à chaleur à ${chantier.ville}`}
@@ -362,6 +363,8 @@ export default function PompeAChaleur() {
                                                 className="w-full h-auto max-h-[350px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
                                                 loading="lazy"
                                                 decoding="async"
+                                                width="1000"
+                                                height="1000"
                                             />
                                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
                                                 <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
@@ -399,8 +402,10 @@ export default function PompeAChaleur() {
                         className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 animate-fadeIn"
                         role="dialog"
                         aria-modal="true"
+                        aria-label="Aperçu de l'image du chantier"
                     >
                         <button
+                            type="button"
                             onClick={() => setSelectedImage(null)}
                             className="absolute top-6 right-6 bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-full border border-slate-700 transition-colors shadow-xl z-10 focus:outline-none focus:ring-2 focus:ring-accent"
                             aria-label="Fermer l'image"
@@ -413,6 +418,8 @@ export default function PompeAChaleur() {
                                 src={getOptimizedImageUrl(selectedImage)}
                                 alt="Détail du chantier d'installation de système thermique"
                                 className="max-w-full max-h-[85vh] object-contain rounded-2xl border border-slate-800 shadow-2xl"
+                                width="1000"
+                                height="1000"
                             />
                         </div>
                     </div>
@@ -433,25 +440,33 @@ export default function PompeAChaleur() {
                         <div className="space-y-4">
                             {faqData.map((faq, index) => {
                                 const isOpen = openFaqIndex === index;
+                                const faqId = `faq-${index}`;
                                 return (
                                     <div
                                         key={index}
                                         className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all duration-300"
                                     >
-                                        <button
-                                            onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                                            className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent hover:bg-slate-800/50 transition-colors"
-                                            aria-expanded={isOpen}
-                                        >
-                                            <h3 className="font-bold text-white text-lg pr-4">{faq.question}</h3>
-                                            <ChevronDown
-                                                className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-                                                aria-hidden="true"
-                                            />
-                                        </button>
+                                        <h3 className="m-0 p-0">
+                                            <button
+                                                type="button"
+                                                onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                                                className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent hover:bg-slate-800/50 transition-colors"
+                                                aria-expanded={isOpen}
+                                                aria-controls={`${faqId}-answer`}
+                                                id={`${faqId}-question`}
+                                            >
+                                                <span className="font-bold text-white text-lg pr-4">{faq.question}</span>
+                                                <ChevronDown
+                                                    className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                                                    aria-hidden="true"
+                                                />
+                                            </button>
+                                        </h3>
                                         <div
-                                            className={`transition-all duration-300 ease-in-out px-6 overflow-hidden ${isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'
-                                                }`}
+                                            id={`${faqId}-answer`}
+                                            role="region"
+                                            aria-labelledby={`${faqId}-question`}
+                                            className={`transition-all duration-300 ease-in-out px-6 overflow-hidden ${isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
                                             aria-hidden={!isOpen}
                                         >
                                             <p className="text-slate-300 text-sm leading-relaxed">
