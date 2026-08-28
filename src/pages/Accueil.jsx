@@ -49,6 +49,8 @@ export default function Accueil() {
                 "@id": "https://www.guedes-plomberie-chauffage.fr/#identity",
                 "name": "SARL Anthony GUEDES",
                 "url": "https://www.guedes-plomberie-chauffage.fr/",
+                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
+                "logo": "https://www.guedes-plomberie-chauffage.fr/Icone.webp",
                 "description": "Artisan plombier chauffagiste en Normandie. Intervention en urgence dans un rayon de 30 km (Bernay, Évreux) et installation/rénovation sur un large secteur de 150 km.",
                 "telephone": "+33617921004",
                 "priceRange": "€€",
