@@ -26,10 +26,11 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// --- UTILITAIRE IMAGE CLOUDINARY ---
-const getOptimizedImageUrl = (url) => {
+// --- UTILITAIRE IMAGE CLOUDINARY OPTIMISÉ ---
+// Permet de générer des images à la taille exacte requise pour éviter les pénalités de poids de Lighthouse
+const getOptimizedImageUrl = (url, width = 800) => {
     if (!url) return '';
-    return url.replace('/upload/', '/upload/c_limit,w_1000,h_1000,f_auto,q_auto/');
+    return url.replace('/upload/', `/upload/c_limit,w_${width},f_auto,q_auto/`);
 };
 
 // --- DONNÉES DE LA FAQ ---
@@ -64,7 +65,7 @@ const faqData = [
     }
 ];
 
-// --- JSON-LD ENRICHI (Sorti du composant pour éviter les re-rendus inutiles) ---
+// --- JSON-LD ENRICHI ---
 const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -169,6 +170,21 @@ export default function PompeAChaleur() {
         }
         fetchDerniersChantiers();
     }, []);
+
+    // Accessibilité : Fermeture de la modale via la touche Échap
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                setSelectedImage(null);
+            }
+        };
+        if (selectedImage) {
+            window.addEventListener('keydown', handleKeyDown);
+        }
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [selectedImage]);
 
     return (
         <main>
@@ -357,14 +373,16 @@ export default function PompeAChaleur() {
                                             aria-label={`Agrandir la photo du chantier d'installation de pompe à chaleur à ${chantier.ville}`}
                                         >
                                             <img
-                                                src={getOptimizedImageUrl(chantier.image_url)}
+                                                src={getOptimizedImageUrl(chantier.image_url, 400)}
+                                                srcSet={`${getOptimizedImageUrl(chantier.image_url, 400)} 400w, ${getOptimizedImageUrl(chantier.image_url, 800)} 800w`}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                                 alt={`Installation de pompe à chaleur et climatisation à ${chantier.ville}`}
                                                 title={`Chantier PAC et climatisation à ${chantier.ville}`}
                                                 className="w-full h-auto max-h-[350px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
                                                 loading="lazy"
                                                 decoding="async"
-                                                width="1000"
-                                                height="1000"
+                                                width="400"
+                                                height="533"
                                             />
                                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
                                                 <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
@@ -402,24 +420,28 @@ export default function PompeAChaleur() {
                         className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 animate-fadeIn"
                         role="dialog"
                         aria-modal="true"
-                        aria-label="Aperçu de l'image du chantier"
+                        aria-label="Aperçu de l'image du chantier en haute définition"
+                        tabIndex="-1"
                     >
                         <button
                             type="button"
                             onClick={() => setSelectedImage(null)}
                             className="absolute top-6 right-6 bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-full border border-slate-700 transition-colors shadow-xl z-10 focus:outline-none focus:ring-2 focus:ring-accent"
-                            aria-label="Fermer l'image"
+                            aria-label="Fermer l'aperçu de l'image"
+                            autoFocus
                         >
                             <X className="w-6 h-6" aria-hidden="true" />
                         </button>
 
                         <div className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
                             <img
-                                src={getOptimizedImageUrl(selectedImage)}
+                                src={getOptimizedImageUrl(selectedImage, 1200)}
                                 alt="Détail du chantier d'installation de système thermique"
                                 className="max-w-full max-h-[85vh] object-contain rounded-2xl border border-slate-800 shadow-2xl"
-                                width="1000"
-                                height="1000"
+                                loading="eager"
+                                decoding="async"
+                                width="1200"
+                                height="900"
                             />
                         </div>
                     </div>
