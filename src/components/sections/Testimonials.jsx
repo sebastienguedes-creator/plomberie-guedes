@@ -63,7 +63,7 @@ export default function Testimonials() {
           </div>
           {/* H2 Optimisé SEO */}
           <h2 id="temoignages-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Avis clients sur nos <span className="text-accent">interventions en plomberie</span>
+            Avis clients sur mes <span className="text-accent">interventions en plomberie</span>
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
             Découvrez les retours d'expérience de particuliers qui m'ont fait confiance pour leurs travaux de chauffage et de plomberie.

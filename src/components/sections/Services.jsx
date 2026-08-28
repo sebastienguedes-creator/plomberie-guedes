@@ -69,7 +69,7 @@ export default function Services() {
           </div>
           {/* H2 Optimisé SEO & Cohérent Normandie */}
           <h2 id="services-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Nos prestations de <span className="text-accent">plomberie et chauffage en Normandie</span>
+            Mes prestations de <span className="text-accent">plomberie et chauffage en Normandie</span>
           </h2>
           <p className="text-slate-400 text-base sm:text-lg">
             Bénéficiez d'un accompagnement professionnel de l'étude de votre projet jusqu'à la maintenance de vos équipements.

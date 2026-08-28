@@ -201,7 +201,7 @@ export default function PompeAChaleur() {
                                 </div>
 
                                 <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white">
-                                    Spécialiste en <span className="text-accent">Pompe à Chaleur</span> & <span className="text-accent">Climatisation Réversible</span> dans l'Eure (27)
+                                    Spécialiste en <span className="text-accent">Pompe à Chaleur</span> & <span className="text-accent">Climatisation Réversible</span> en Normandie
                                 </h1>
 
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">

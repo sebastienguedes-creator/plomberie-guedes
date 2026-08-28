@@ -30,7 +30,7 @@ export default function Hero() {
 
             {/* Titre principal percutant optimisé SEO Local */}
             <h1 id="hero-heading" className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
-              <span className="text-accent">Plombier-chauffagiste</span> à Bernay & Évreux (27)
+              <span className="text-accent">Plombier-chauffagiste</span> dans l'Eure et en Normandie
             </h1>
 
             {/* Description orientée bénéfice client */}
@@ -87,7 +87,7 @@ export default function Hero() {
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                   <div className="flex items-center gap-3">
                     <span className="w-3 h-3 bg-emerald-500 rounded-full animate-ping" aria-hidden="true"></span>
-                    <span className="text-sm font-semibold text-slate-200">Intervention Normandie</span>
+                    <span className="text-sm font-semibold text-slate-200">Intervention Eure et Normandie</span>
                   </div>
                   <span className="text-xs bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-full border border-accent/20">Certifié RGE QualiPAC</span>
                 </div>
@@ -98,19 +98,13 @@ export default function Hero() {
                   <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-transparent to-transparent z-10" aria-hidden="true"></div>
 
                   <img
-                    src="/Camion_SARL_Anthony_GUEDES.webp"
-                    alt="Installation Pompe à Chaleur et Plomberie en Normandie"
+                    src="/Icone.webp"
+                    alt="Installation Pompe à Chaleur et Plomberie dans l'Eure"
                     fetchPriority="high"
                     className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500"
                     onError={(e) => { e.target.style.display = 'none'; }}
                   />
 
-                  {/* Badge superposé en haut de la photo */}
-                  <div className="absolute top-4 left-0 right-0 z-25 flex justify-center px-4">
-                    <p className="text-sm font-medium text-slate-200 bg-slate-900/80 backdrop-blur-md py-2 px-4 rounded-xl border border-slate-800 shadow-lg">
-                      🔥 Installation Haute Performance
-                    </p>
-                  </div>
                 </div>
 
                 {/* Grille d'expertises visuelles */}
