@@ -84,7 +84,7 @@ export default function Testimonials() {
 
               <div>
                 {/* Étoiles de notation */}
-                <div className="flex items-center gap-1 mb-4" aria-label={`Note de ${review.rating} sur 5`}>
+                <div role="img" className="flex items-center gap-1 mb-4" aria-label={`Note de ${review.rating} sur 5`}>
                   {[...Array(review.rating)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-accent text-accent" aria-hidden="true" />
                   ))}

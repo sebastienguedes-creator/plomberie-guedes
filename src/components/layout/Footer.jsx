@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-400 border-t border-slate-900">
+    <footer className="bg-slate-950 text-slate-300 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -24,12 +24,12 @@ export default function Footer() {
                 <span className="font-bold text-base sm:text-lg tracking-wide block text-white leading-tight">
                   SARL Anthony GUEDES
                 </span>
-                <span className="text-[10px] sm:text-xs text-slate-400 font-medium tracking-wider uppercase block">
+                <span className="text-[10px] sm:text-xs text-slate-300 font-medium tracking-wider uppercase block">
                   Plombier - Chauffagiste
                 </span>
               </div>
             </Link>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed">
               Artisan plombier chauffagiste qualifié en <span>Normandie</span>.
             </p>
           </div>

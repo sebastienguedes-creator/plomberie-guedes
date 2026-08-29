@@ -63,15 +63,15 @@ export default function Hero() {
             <div className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-800/80 text-center lg:text-left">
               <div>
                 <div className="text-2xl sm:text-3xl font-bold text-white">15+</div>
-                <div className="text-xs text-slate-400">Années d'expérience</div>
+                <div className="text-xs text-slate-300">Années d'expérience</div>
               </div>
               <div>
                 <div className="text-2xl sm:text-3xl font-bold text-white">100%</div>
-                <div className="text-xs text-slate-400">Conforme normes</div>
+                <div className="text-xs text-slate-300">Conforme normes</div>
               </div>
               <div>
                 <div className="text-2xl sm:text-3xl font-bold text-white">Devis</div>
-                <div className="text-xs text-slate-400">Gratuit & Rapide</div>
+                <div className="text-xs text-slate-300">Gratuit & Rapide</div>
               </div>
             </div>
 
