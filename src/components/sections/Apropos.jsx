@@ -1,4 +1,5 @@
 import { ShieldCheck, Clock, Award, MapPin, Wrench, CheckCircle2 } from 'lucide-react';
+import photoCamion from '../../assets/Camion_SARL_Anthony_GUEDES.webp';
 
 export default function Apropos() {
     return (
@@ -8,20 +9,20 @@ export default function Apropos() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    
+
                     {/* Colonne visuelle / Image camion */}
                     <div className="lg:col-span-5 space-y-6">
                         <div className="relative rounded-3xl overflow-hidden border border-slate-800 shadow-2xl group">
-                            <img 
-                                src="/Camion_SARL_Anthony_GUEDES.webp" 
-                                alt="Camion d'intervention SARL Anthony GUEDES Plombier Chauffagiste dans l'Eure" 
+                            <img
+                                src={photoCamion}
+                                alt="Camion d'intervention SARL Anthony GUEDES Plombier Chauffagiste dans l'Eure"
                                 width="600"
                                 height="450"
                                 loading="lazy"
                                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                            
+
                             <div className="absolute bottom-6 left-6 right-6 p-4 bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-800">
                                 <div className="flex items-center gap-3">
                                     <div className="bg-accent/20 p-2.5 rounded-xl text-accent shrink-0">
@@ -64,7 +65,7 @@ export default function Apropos() {
                             <p>
                                 Fort d'une solide expérience du terrain, <strong>Anthony GUEDES</strong> met son savoir-faire artisanal au service des particuliers et des professionnels de Normandie. Implantée à <strong>Valailles (27300)</strong>, aux portes de <strong>Bernay</strong> et d'<strong>Évreux</strong>, la entreprise <strong>SARL Anthony GUEDES</strong> est votre interlocuteur unique pour tous vos travaux de plomberie, de chauffage et d'aménagement sanitaire.
                             </p>
-                            
+
                             <p>
                                 Que vous soyez confronté à une <strong>urgence de plomberie</strong> (recherche et réparation de fuite d'eau, canalisation bouchée), ou que vous souhaitiez réaliser la <strong>création ou rénovation complète de votre salle de bains sur mesure</strong>, l'entreprise vous garantit des prestations réalisées dans le respect strict des normes DTU. Spécialisé également en rénovation énergétique, votre artisan assure la pose, l'entretien et le <strong>désembouage de systèmes de chauffage</strong> performants, incluant les <strong>pompes à chaleur air-eau (PAC)</strong> et chaudières modernes.
                             </p>

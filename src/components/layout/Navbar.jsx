@@ -34,7 +34,7 @@ export default function Navbar() {
             className="flex items-center gap-3 hover:opacity-90 transition-opacity shrink-0"
           >
             <img
-              src="/Icone.png"
+              src="/Icone120.webp"
               alt="Logo SARL Anthony GUEDES"
               className="h-12 sm:h-14 w-auto object-contain"
             />
