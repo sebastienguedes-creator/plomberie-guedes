@@ -1,23 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 
-// Layouts
+// --- LAYOUTS & COMPOSANTS CRITIQUES ---
+// Chargés immédiatement pour ne pas bloquer l'affichage de l'interface principale
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 
-// Pages
+// --- PAGE D'ACCUEIL ---
+// Chargée de manière synchrone pour garantir le meilleur score LCP possible au premier atterrissage
 import Accueil from './pages/Accueil';
-import MentionsLegales from './components/MentionsLegales';
-import PolitiqueConfidentialite from './components/PolitiqueConfidentialite';
-import PompeAChaleur from './pages/PompeAChaleur';
-import SalleDeBain from './pages/SalleDeBain';
-import AdoucisseurEau from './pages/AdoucisseurEau';
-import VmcVentilation from './pages/VmcVentilation';
-import ChauffageRadiateurs from './pages/ChauffageRadiateurs';
-import ContactPage from './pages/ContactPage';
-import UrgenceDepannage from './pages/UrgenceDepannage';
-import AdminChantier from './pages/AdminChantier';
+
+// --- PAGES DIFFÉRÉES (Code Splitting avec React.lazy) ---
+// Ces pages ne seront téléchargées par le navigateur que si l'utilisateur clique dessus
+const MentionsLegales = lazy(() => import('./components/MentionsLegales'));
+const PolitiqueConfidentialite = lazy(() => import('./components/PolitiqueConfidentialite'));
+const PompeAChaleur = lazy(() => import('./pages/PompeAChaleur'));
+const SalleDeBain = lazy(() => import('./pages/SalleDeBain'));
+const AdoucisseurEau = lazy(() => import('./pages/AdoucisseurEau'));
+const VmcVentilation = lazy(() => import('./pages/VmcVentilation'));
+const ChauffageRadiateurs = lazy(() => import('./pages/ChauffageRadiateurs'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const UrgenceDepannage = lazy(() => import('./pages/UrgenceDepannage'));
+const AdminChantier = lazy(() => import('./pages/AdminChantier'));
+
+// --- COMPOSANT DE CHARGEMENT ---
+// S'affiche très brièvement pendant le téléchargement d'une nouvelle page
+const PageLoader = () => (
+  <div className="flex-grow flex items-center justify-center min-h-[50vh]">
+    <div className="w-8 h-8 border-4 border-slate-700 border-t-slate-300 rounded-full animate-spin"></div>
+  </div>
+);
 
 export default function App() {
   const location = useLocation();
@@ -40,32 +53,34 @@ export default function App() {
   const isAdminPage = location.pathname === '/admin';
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
       <ScrollToTop />
       
       {/* La Navbar s'affiche partout SAUF sur /admin */}
       {!isAdminPage && <Navbar />} 
       
-      <div className="flex-grow">
-        <Routes>
-          <Route path="/" element={<Accueil />} />
-          
-          {/* Pages SEO Métier & Locales */}
-          <Route path="/installation-pompe-a-chaleur" element={<PompeAChaleur />} />
-          <Route path="/renovation-salle-de-bain" element={<SalleDeBain />} />
-          <Route path="/installation-adoucisseur-eau" element={<AdoucisseurEau />} />
-          <Route path="/installation-vmc-ventilation" element={<VmcVentilation />} />
-          <Route path="/chauffage-central-radiateurs" element={<ChauffageRadiateurs />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/urgence-depannage-plomberie" element={<UrgenceDepannage />} />
-          
-          {/* Pages légales */}
-          <Route path="/mentions-legales" element={<MentionsLegales />} />
-          <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
+      <div className="flex-grow flex flex-col">
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Accueil />} />
+            
+            {/* Pages SEO Métier & Locales */}
+            <Route path="/installation-pompe-a-chaleur" element={<PompeAChaleur />} />
+            <Route path="/renovation-salle-de-bain" element={<SalleDeBain />} />
+            <Route path="/installation-adoucisseur-eau" element={<AdoucisseurEau />} />
+            <Route path="/installation-vmc-ventilation" element={<VmcVentilation />} />
+            <Route path="/chauffage-central-radiateurs" element={<ChauffageRadiateurs />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/urgence-depannage-plomberie" element={<UrgenceDepannage />} />
+            
+            {/* Pages légales */}
+            <Route path="/mentions-legales" element={<MentionsLegales />} />
+            <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
 
-          {/* Page Admin / Outil Chantier */}
-          <Route path="/admin" element={<AdminChantier />} />
-        </Routes>
+            {/* Page Admin / Outil Chantier */}
+            <Route path="/admin" element={<AdminChantier />} />
+          </Routes>
+        </Suspense>
       </div>
 
       {/* Le Footer s'affiche partout SAUF sur /admin */}
