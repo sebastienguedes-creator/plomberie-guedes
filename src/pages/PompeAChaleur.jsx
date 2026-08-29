@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
@@ -11,7 +11,6 @@ import {
     Euro,
     HelpCircle,
     MapPin,
-    Wrench,
     Image as ImageIcon,
     X,
     Maximize2,
@@ -19,21 +18,23 @@ import {
     ThermometerSun,
     ChevronDown 
 } from 'lucide-react';
-import ZoneInterventionMap from "../components/ZoneInterventionMap";
 
-// --- CONFIGURATION SUPABASE ---
+const ZoneInterventionMap = lazy(() => import("../components/ZoneInterventionMap"));
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// --- UTILITAIRE IMAGE CLOUDINARY OPTIMISÉ ---
-// Permet de générer des images à la taille exacte requise pour éviter les pénalités de poids de Lighthouse
-const getOptimizedImageUrl = (url, width = 800) => {
+// UTILITAIRE IMAGE CLOUDINARY OPTIMISÉ (Correction Aspect Ratio & Perf)
+const getOptimizedImageUrl = (url, width = 800, height = null, crop = 'limit') => {
     if (!url) return '';
+    // Utilisation de c_fill et g_auto pour garantir un ratio parfait sans distorsion
+    if (crop === 'fill' && height) {
+        return url.replace('/upload/', `/upload/c_fill,g_auto,w_${width},h_${height},f_auto,q_auto/`);
+    }
     return url.replace('/upload/', `/upload/c_limit,w_${width},f_auto,q_auto/`);
 };
 
-// --- DONNÉES DE LA FAQ ---
 const faqData = [
     {
         question: "Une pompe à chaleur peut-elle aussi servir de climatisation en été ?",
@@ -65,7 +66,6 @@ const faqData = [
     }
 ];
 
-// --- JSON-LD ENRICHI ---
 const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -109,7 +109,7 @@ const schemaData = {
                 "itemListElement": [
                     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Pompe à chaleur Air/Eau" } },
                     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Climatisation Réversible & PAC Air/Air" } },
-                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien et Dépannage PAC & Clim" } }
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation et Dépannage PAC & Clim" } }
                 ]
             }
         },
@@ -152,6 +152,8 @@ export default function PompeAChaleur() {
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     useEffect(() => {
+        let isMounted = true; // Prévention des fuites de mémoire (Best Practices)
+
         async function fetchDerniersChantiers() {
             try {
                 const { data, error } = await supabase
@@ -161,7 +163,7 @@ export default function PompeAChaleur() {
                     .eq('visible_sur_site', true)
                     .order('created_at', { ascending: false });
 
-                if (!error && data) {
+                if (!error && data && isMounted) {
                     setChantiers(data);
                 }
             } catch (err) {
@@ -169,9 +171,12 @@ export default function PompeAChaleur() {
             }
         }
         fetchDerniersChantiers();
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
-    // Accessibilité : Fermeture de la modale via la touche Échap
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
@@ -197,7 +202,6 @@ export default function PompeAChaleur() {
 
             <div className="bg-primary text-slate-100 min-h-screen">
 
-                {/* --- SECTION HERO --- */}
                 <section className="relative py-16 lg:py-24 border-b border-slate-800 bg-slate-950 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -235,14 +239,14 @@ export default function PompeAChaleur() {
                                     </a>
                                 </div>
 
-                                <div className="flex items-center gap-6 pt-6 text-xs text-slate-400 border-t border-slate-800">
+                                <div className="flex items-center gap-6 pt-6 text-xs text-slate-300 border-t border-slate-800">
                                     <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" aria-hidden="true" /> Devis sous 48h</span>
                                     <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" aria-hidden="true" /> Qualification RGE pour les aides</span>
                                     <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-emerald-400" aria-hidden="true" /> Garantie Décennale</span>
                                 </div>
                             </div>
 
-                            {/* Bloc latéral d'engagement */}
+                            {/* Accessibilité : h3 transformé en h2 pour respecter l'ordre d'arborescence (H1 -> H2) */}
                             <aside className="lg:col-span-5 bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl space-y-6">
                                 <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-4">
                                     Pourquoi installer une PAC Réversible en 2026 ?
@@ -267,14 +271,13 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION 2 : LES TYPES DE POMPES À CHALEUR --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-900">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <header className="text-center max-w-3xl mx-auto mb-16 space-y-4">
                             <h2 className="text-3xl font-extrabold text-white">
                                 Nos solutions de <span className="text-accent">Chauffage & Climatisation haute performance</span>
                             </h2>
-                            <p className="text-slate-400">
+                            <p className="text-slate-300">
                                 Chaque logement a ses spécificités. En tant que frigoriste et chauffagiste, nous sélectionnons le matériel le plus adapté pour chauffer vos hivers et rafraîchir vos étés avec un rendement optimal.
                             </p>
                         </header>
@@ -313,21 +316,22 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION 3 : ZONE D'INTERVENTION --- */}
                 <section className="py-16 bg-slate-950 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                         <header className="text-center space-y-4 max-w-3xl mx-auto">
                             <h2 className="text-2xl sm:text-3xl font-bold text-white">
                                 Installation, Dépannage et Entretien PAC en Normandie
                             </h2>
-                            <p className="text-slate-400 text-sm sm:text-base">
+                            <p className="text-slate-300 text-sm sm:text-base">
                                 Nous intervenons pour l'étude thermique, la pose et la maintenance de votre pompe à chaleur ou climatisation dans l'Eure, la Seine-Maritime, le Calvados et sur toute la grande Normandie pour vos projets d'envergure :
                             </p>
                         </header>
 
                         <div className="max-w-4xl mx-auto">
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
-                                <ZoneInterventionMap showEmergency={false} showProjects={true} />
+                                <Suspense fallback={<div className="h-64 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
+                                    <ZoneInterventionMap showEmergency={false} showProjects={true} />
+                                </Suspense>
 
                                 <div className="pt-4 border-t border-slate-800">
                                     <div className="flex flex-wrap justify-center gap-3">
@@ -347,7 +351,6 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- SECTION NOS RÉALISATIONS --- */}
                 {chantiers.length > 0 && (
                     <section className="py-20 bg-slate-900 border-b border-slate-800">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
@@ -358,7 +361,7 @@ export default function PompeAChaleur() {
                                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
                                     Derniers chantiers Chauffage et Climatisation
                                 </h2>
-                                <p className="text-slate-400 max-w-2xl mx-auto">
+                                <p className="text-slate-300 max-w-2xl mx-auto">
                                     Installation de systèmes thermodynamiques, remplacement de chaudières ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
                                 </p>
                             </header>
@@ -372,17 +375,18 @@ export default function PompeAChaleur() {
                                             className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
                                             aria-label={`Agrandir la photo du chantier d'installation de pompe à chaleur à ${chantier.ville}`}
                                         >
+                                            {/* Performances & Aspect Ratio Fix : c_fill depuis Cloudinary couplé à aspect-[4/3] et object-cover */}
                                             <img
-                                                src={getOptimizedImageUrl(chantier.image_url, 400)}
-                                                srcSet={`${getOptimizedImageUrl(chantier.image_url, 400)} 400w, ${getOptimizedImageUrl(chantier.image_url, 800)} 800w`}
+                                                src={getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')}
+                                                srcSet={`${getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')} 400w, ${getOptimizedImageUrl(chantier.image_url, 800, 600, 'fill')} 800w`}
                                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                                 alt={`Installation de pompe à chaleur et climatisation à ${chantier.ville}`}
                                                 title={`Chantier PAC et climatisation à ${chantier.ville}`}
-                                                className="w-full h-auto max-h-[350px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                                                className="w-full aspect-[4/3] object-cover rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
                                                 loading="lazy"
                                                 decoding="async"
                                                 width="400"
-                                                height="533"
+                                                height="300"
                                             />
                                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
                                                 <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
@@ -438,7 +442,7 @@ export default function PompeAChaleur() {
                                 src={getOptimizedImageUrl(selectedImage, 1200)}
                                 alt="Détail du chantier d'installation de système thermique"
                                 className="max-w-full max-h-[85vh] object-contain rounded-2xl border border-slate-800 shadow-2xl"
-                                loading="eager"
+                                loading="lazy"
                                 decoding="async"
                                 width="1200"
                                 height="900"
@@ -447,7 +451,6 @@ export default function PompeAChaleur() {
                     </div>
                 )}
 
-                {/* --- SECTION 4 : FAQ --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-950">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <header className="text-center space-y-4">
@@ -502,7 +505,6 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                {/* --- BANNIÈRE CTA FINAL --- */}
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">
