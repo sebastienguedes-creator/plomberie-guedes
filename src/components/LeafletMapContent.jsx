@@ -17,7 +17,7 @@ function ResetViewButton({ bounds }) {
       className="absolute top-3 right-3 z-[1000] bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700/80 px-3.5 py-2 rounded-xl shadow-xl backdrop-blur-md text-xs font-semibold flex items-center gap-2 transition-all hover:scale-105 active:scale-95 cursor-pointer"
       title="Recentrer sur la zone d'intervention"
     >
-      <LocateFixed className="w-4 h-4 text-blue-400" />
+      <LocateFixed className="w-4 h-4 text-blue-400" aria-hidden="true" />
       <span>Recentrer</span>
     </button>
   );
@@ -31,9 +31,11 @@ export default function LeafletMapContent({ showEmergency, showProjects }) {
   const mapBounds = L.latLng(centerPosition[0], centerPosition[1]).toBounds(radiusMeters);
 
   return (
-    <MapContainer 
+<MapContainer 
       bounds={mapBounds} 
       scrollWheelZoom={false}
+      zoomControl={false}        
+      attributionControl={false} 
       className="h-full w-full"
     >
       <TileLayer

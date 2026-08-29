@@ -201,7 +201,7 @@ export default function ContactPage() {
                         type="text" 
                         required 
                         placeholder="Ex : Jean Dupont" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
                       />
                     </div>
                     <div>
@@ -212,7 +212,7 @@ export default function ContactPage() {
                         type="tel" 
                         required 
                         placeholder="Ex : 06 12 34 56 78" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
                       />
                     </div>
                   </div>
@@ -226,7 +226,7 @@ export default function ContactPage() {
                         type="email" 
                         required 
                         placeholder="Ex : jean.dupont@email.com" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
                       />
                     </div>
                     <div>
@@ -254,7 +254,7 @@ export default function ContactPage() {
                       rows="4" 
                       required 
                       placeholder="Précisez votre besoin, vos équipements actuels..." 
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm resize-none"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm resize-none"
                     ></textarea>
                   </div>
 

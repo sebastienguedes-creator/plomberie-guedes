@@ -115,7 +115,7 @@ export default function Hero() {
                       to={item.link}
                       className="group flex flex-col items-center justify-center gap-2 p-3 bg-slate-950/50 hover:bg-accent border border-slate-700/50 hover:border-accent rounded-xl transition-all duration-300"
                     >
-                      <item.icon className="w-5 h-5 text-accent group-hover:text-white transition-colors" />
+                      <item.icon className="w-5 h-5 text-accent group-hover:text-white transition-colors" aria-hidden="true" />
                       <span className="text-[11px] font-semibold text-slate-300 group-hover:text-white text-center leading-tight">
                         {item.title}
                       </span>

@@ -133,7 +133,7 @@ const handleSubmit = async (e) => {
                   </div>
                 </a>
 
-                <a href="mailto:anthonyguedes.plomberie@gmail.com" className="flex items-start gap-4 group">
+                <a href="mailto:anthonyguedes.plomberie@gmail.com" aria-label="Envoyer un e-mail" className="flex items-start gap-4 group">
                   <div className="bg-slate-800 p-3 rounded-xl text-blue-400 shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
                     <Mail className="w-6 h-6" />
                   </div>
@@ -211,7 +211,7 @@ const handleSubmit = async (e) => {
                         type="text" 
                         required 
                         placeholder="Ex : Jean Dupont" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
                       />
                     </div>
                     <div>
@@ -222,7 +222,7 @@ const handleSubmit = async (e) => {
                         type="tel" 
                         required 
                         placeholder="Ex : 06 12 34 56 78" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
                       />
                     </div>
                   </div>
@@ -236,7 +236,7 @@ const handleSubmit = async (e) => {
                         type="email" 
                         required 
                         placeholder="Ex : jean.dupont@email.com" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
                       />
                     </div>
                     <div>
@@ -264,7 +264,7 @@ const handleSubmit = async (e) => {
                       rows="4" 
                       required 
                       placeholder="Précisez votre besoin, vos équipements actuels..." 
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors text-sm resize-none"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm resize-none"
                     ></textarea>
                   </div>
 
