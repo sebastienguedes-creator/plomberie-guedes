@@ -36,6 +36,8 @@ export default function Navbar() {
             <img
               src="/Icone120.webp"
               alt="Logo SARL Anthony GUEDES"
+              width="120"  
+              height="120"  
               className="h-12 sm:h-14 w-auto object-contain"
             />
             <div>
@@ -70,8 +72,8 @@ export default function Navbar() {
                   key={link.name}
                   to={link.href}
                   className={`text-xs xl:text-sm font-semibold px-2.5 py-1.5 rounded-lg transition-colors ${isActive
-                      ? 'text-accent bg-accent/10 font-bold'
-                      : 'text-slate-700 hover:text-accent hover:bg-slate-50'
+                    ? 'text-accent bg-accent/10 font-bold'
+                    : 'text-slate-700 hover:text-accent hover:bg-slate-50'
                     }`}
                 >
                   {link.name}

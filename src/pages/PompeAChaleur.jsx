@@ -1,7 +1,10 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
+/*
 import { createClient } from '@supabase/supabase-js';
+*/
+
 import {
     Flame,
     ShieldCheck,
@@ -20,10 +23,11 @@ import {
 } from 'lucide-react';
 
 const ZoneInterventionMap = lazy(() => import("../components/ZoneInterventionMap"));
-
+/*
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
+*/
 
 // UTILITAIRE IMAGE CLOUDINARY OPTIMISÉ (Correction Aspect Ratio & Perf)
 const getOptimizedImageUrl = (url, width = 800, height = null, crop = 'limit') => {
@@ -151,31 +155,39 @@ export default function PompeAChaleur() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-    useEffect(() => {
-        let isMounted = true; // Prévention des fuites de mémoire (Best Practices)
+useEffect(() => {
+    let isMounted = true;
 
-        async function fetchDerniersChantiers() {
-            try {
-                const { data, error } = await supabase
-                    .from('chantiers')
-                    .select('*')
-                    .eq('domaine', 'PAC')
-                    .eq('visible_sur_site', true)
-                    .order('created_at', { ascending: false });
+    async function fetchDerniersChantiers() {
+        try {
+            // 1. Import dynamique exclusif au moment de la requête
+            const { createClient } = await import('@supabase/supabase-js');
+            const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+            const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+            const supabase = createClient(supabaseUrl, supabaseKey);
 
-                if (!error && data && isMounted) {
-                    setChantiers(data);
-                }
-            } catch (err) {
-                console.error("Erreur lors de la récupération des chantiers :", err);
+            // 2. Requête classique
+            const { data, error } = await supabase
+                .from('chantiers')
+                .select('*')
+                .eq('domaine', 'PAC')
+                .eq('visible_sur_site', true)
+                .order('created_at', { ascending: false });
+
+            if (!error && data && isMounted) {
+                setChantiers(data);
             }
+        } catch (err) {
+            console.error("Erreur lors de la récupération des chantiers :", err);
         }
-        fetchDerniersChantiers();
+    }
 
-        return () => {
-            isMounted = false;
-        };
-    }, []);
+    fetchDerniersChantiers();
+
+    return () => {
+        isMounted = false;
+    };
+}, []);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
