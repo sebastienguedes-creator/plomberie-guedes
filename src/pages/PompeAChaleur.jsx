@@ -406,9 +406,11 @@ export default function PompeAChaleur() {
                             </p>
                         </header>
 
-                        {isLoadingChantiers ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {[1, 2, 3, 4, 5, 6].map((n) => (
+{/* ✅ CORRECTION CLS : La div 'grid' parent encadre la condition et ne disparaît plus du DOM */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {isLoadingChantiers ? (
+                                /* Skeletons de chargement */
+                                [1, 2, 3, 4, 5, 6].map((n) => (
                                     <div key={n} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] animate-pulse shadow-lg">
                                         <div className="p-4 bg-slate-950">
                                             <div className="w-full aspect-[4/3] bg-slate-800 rounded-lg"></div>
@@ -422,11 +424,10 @@ export default function PompeAChaleur() {
                                             <div className="h-6 bg-slate-800 rounded w-24"></div>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {chantiers.map((chantier) => {
+                                ))
+                            ) : (
+                                /* Affichage des vrais chantiers */
+                                chantiers.map((chantier) => {
                                     if (chantier.isEmpty) {
                                         return (
                                             <article key={chantier.id} className="bg-slate-950/40 border border-slate-800/40 border-dashed rounded-2xl overflow-hidden flex flex-col h-[520px] items-center justify-center p-6 text-center shadow-sm">
@@ -488,9 +489,9 @@ export default function PompeAChaleur() {
                                             </footer>
                                         </article>
                                     );
-                                })}
-                            </div>
-                        )}
+                                })
+                            )}
+                        </div>
                     </div>
                 </section>
 
