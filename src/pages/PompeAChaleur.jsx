@@ -195,8 +195,6 @@ export default function PompeAChaleur() {
                 if (!error && isMounted) {
                     let loadedChantiers = data || [];
                     
-                    // Si on a au moins un chantier (ou même 0), on complète jusqu'à 6 
-                    // avec des cartes placeholders vides pour garantir un espace fixe (2 lignes) et un CLS nul.
                     while (loadedChantiers.length < 6) {
                         loadedChantiers.push({
                             id: `placeholder-${loadedChantiers.length}`,
@@ -365,23 +363,25 @@ export default function PompeAChaleur() {
                         </header>
 
                         <div className="max-w-4xl mx-auto">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6 min-h-[580px]">
-                                {isMapInView ? (
-                                    <Suspense fallback={<div className="h-[450px] w-full bg-slate-800/50 rounded-xl flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
-                                        <ZoneInterventionMap showEmergency={false} showProjects={true} />
-                                    </Suspense>
-                                ) : (
-                                    <div className="h-[450px] w-full bg-slate-900 rounded-xl"></div>
-                                )}
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col justify-between h-[570px]">
+                                <div className="h-[450px] w-full overflow-hidden rounded-xl">
+                                    {isMapInView ? (
+                                        <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
+                                            <ZoneInterventionMap showEmergency={false} showProjects={true} />
+                                        </Suspense>
+                                    ) : (
+                                        <div className="h-full w-full bg-slate-900"></div>
+                                    )}
+                                </div>
 
-                                <div className="pt-4 border-t border-slate-800">
-                                    <div className="flex flex-wrap justify-center gap-3">
+                                <div className="pt-3 border-t border-slate-800">
+                                    <div className="flex flex-wrap justify-center gap-2.5">
                                         {[
                                             "Rouen", "Caen", "Le Havre", "Évreux",
                                             "Bernay", "Grand Bourgtheroulde", "Le Neubourg",
                                             "Pont-Audemer", "Lisieux", "Louviers", "Vernon"
                                         ].map((ville, i) => (
-                                            <span key={i} className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
+                                            <span key={i} className="bg-slate-950 border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
                                                 <MapPin className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> PAC & Clim {ville}
                                             </span>
                                         ))}
@@ -392,124 +392,107 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
-                <div ref={chantiersRef}>
-                    <div className="min-h-[800px] w-full bg-slate-900 border-b border-slate-800 flex flex-col">
-                        {isLoadingChantiers ? (
-                            <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px]">
-                                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-                                    <div className="text-center space-y-4">
-                                        <div className="w-36 h-7 bg-slate-800 rounded-full mx-auto animate-pulse"></div>
-                                        <div className="h-9 w-3/4 max-w-xl bg-slate-800 rounded-md mx-auto animate-pulse"></div>
-                                        <div className="h-4 w-full max-w-2xl bg-slate-800 rounded-md mx-auto animate-pulse"></div>
-                                    </div>
+                <section ref={chantiersRef} className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px]">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                        <header className="text-center space-y-4">
+                            <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-xs font-bold">
+                                <ImageIcon className="w-4 h-4" aria-hidden="true" /> Nos réalisations
+                            </div>
+                            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                                Derniers chantiers Chauffage et Climatisation
+                            </h2>
+                            <p className="text-slate-300 max-w-2xl mx-auto">
+                                Installation de systèmes thermodynamiques, remplacement de chaudière ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
+                            </p>
+                        </header>
 
-                                    {/* Squelette de chargement aligné sur 6 emplacements (2 lignes complètes) */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {[1, 2, 3, 4, 5, 6].map((n) => (
-                                            <div key={n} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] animate-pulse shadow-lg">
-                                                <div className="p-4 bg-slate-950">
-                                                    <div className="w-full aspect-[4/3] bg-slate-800 rounded-lg"></div>
+                        {isLoadingChantiers ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {[1, 2, 3, 4, 5, 6].map((n) => (
+                                    <div key={n} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] animate-pulse shadow-lg">
+                                        <div className="p-4 bg-slate-950">
+                                            <div className="w-full aspect-[4/3] bg-slate-800 rounded-lg"></div>
+                                        </div>
+                                        <div className="px-5 pb-5 space-y-3 flex-grow">
+                                            <div className="h-4 bg-slate-800 rounded w-full"></div>
+                                            <div className="h-4 bg-slate-800 rounded w-4/5"></div>
+                                        </div>
+                                        <div className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800">
+                                            <div className="h-4 bg-slate-800 rounded w-28"></div>
+                                            <div className="h-6 bg-slate-800 rounded w-24"></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {chantiers.map((chantier) => {
+                                    if (chantier.isEmpty) {
+                                        return (
+                                            <article key={chantier.id} className="bg-slate-950/40 border border-slate-800/40 border-dashed rounded-2xl overflow-hidden flex flex-col h-[520px] items-center justify-center p-6 text-center shadow-sm">
+                                                <div className="w-12 h-12 bg-slate-900/60 rounded-2xl flex items-center justify-center text-slate-600 mb-4">
+                                                    <ImageIcon className="w-6 h-6" aria-hidden="true" />
                                                 </div>
-                                                <div className="px-5 pb-5 space-y-3 flex-grow">
-                                                    <div className="h-4 bg-slate-800 rounded w-full"></div>
-                                                    <div className="h-4 bg-slate-800 rounded w-4/5"></div>
+                                                <p className="text-slate-400 text-sm font-semibold mb-1">Nouveau chantier à venir</p>
+                                                <p className="text-slate-500 text-xs max-w-[220px]">
+                                                    Nos réalisations en Normandie s'enrichissent régulièrement.
+                                                </p>
+                                            </article>
+                                        );
+                                    }
+
+                                    return (
+                                        <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                            <button
+                                                type="button"
+                                                onClick={() => setSelectedChantier(chantier)}
+                                                className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
+                                                aria-label={`Agrandir la photo et lire les détails du chantier à ${chantier.ville}`}
+                                            >
+                                                <img
+                                                    src={getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')}
+                                                    srcSet={`${getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')} 400w, ${getOptimizedImageUrl(chantier.image_url, 800, 600, 'fill')} 800w`}
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                    alt={`Installation de pompe à chaleur et climatisation à ${chantier.ville}`}
+                                                    title={`Chantier PAC et climatisation à ${chantier.ville}`}
+                                                    className="w-full aspect-[4/3] object-cover rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    width="400"
+                                                    height="300"
+                                                />
+                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
+                                                    <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
+                                                        <Maximize2 className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Agrandir & lire
+                                                    </span>
                                                 </div>
-                                                <div className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800">
-                                                    <div className="h-4 bg-slate-800 rounded w-28"></div>
-                                                    <div className="h-6 bg-slate-800 rounded w-24"></div>
+                                            </button>
+
+                                            <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
+                                                <div className="h-36 overflow-y-auto pr-1">
+                                                    <p className="text-slate-300 text-sm leading-relaxed">
+                                                        {chantier.texte}
+                                                    </p>
                                                 </div>
                                             </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </section>
-                        ) : (
-                            <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px]">
-                                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-                                    <header className="text-center space-y-4">
-                                        <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-xs font-bold">
-                                            <ImageIcon className="w-4 h-4" aria-hidden="true" /> Nos réalisations
-                                        </div>
-                                        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-                                            Derniers chantiers Chauffage et Climatisation
-                                        </h2>
-                                        <p className="text-slate-300 max-w-2xl mx-auto">
-                                            Installation de systèmes thermodynamiques, remplacement de chaudière ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
-                                        </p>
-                                    </header>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {chantiers.map((chantier) => {
-                                            // Si c'est une carte de remplissage (placeholder vide) pour stabiliser le CLS
-                                            if (chantier.isEmpty) {
-                                                return (
-                                                    <article key={chantier.id} className="bg-slate-950/40 border border-slate-800/40 border-dashed rounded-2xl overflow-hidden flex flex-col h-[520px] items-center justify-center p-6 text-center shadow-sm">
-                                                        <div className="w-12 h-12 bg-slate-900/60 rounded-2xl flex items-center justify-center text-slate-600 mb-4">
-                                                            <ImageIcon className="w-6 h-6" aria-hidden="true" />
-                                                        </div>
-                                                        <p className="text-slate-400 text-sm font-semibold mb-1">Nouveau chantier à venir</p>
-                                                        <p className="text-slate-500 text-xs max-w-[220px]">
-                                                            Nos réalisations en Normandie s'enrichissent régulièrement.
-                                                        </p>
-                                                    </article>
-                                                );
-                                            }
-
-                                            // Vraie carte de chantier
-                                            return (
-                                                <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => setSelectedChantier(chantier)}
-                                                        className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
-                                                        aria-label={`Agrandir la photo et lire les détails du chantier à ${chantier.ville}`}
-                                                    >
-                                                        <img
-                                                            src={getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')}
-                                                            srcSet={`${getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')} 400w, ${getOptimizedImageUrl(chantier.image_url, 800, 600, 'fill')} 800w`}
-                                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                            alt={`Installation de pompe à chaleur et climatisation à ${chantier.ville}`}
-                                                            title={`Chantier PAC et climatisation à ${chantier.ville}`}
-                                                            className="w-full aspect-[4/3] object-cover rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
-                                                            loading="lazy"
-                                                            decoding="async"
-                                                            width="400"
-                                                            height="300"
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
-                                                            <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
-                                                                <Maximize2 className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Agrandir & lire
-                                                            </span>
-                                                        </div>
-                                                    </button>
-
-                                                    <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
-                                                        <div className="h-[8lh] overflow-y-auto pr-1">
-                                                            <p className="text-slate-300 text-sm leading-relaxed">
-                                                                {chantier.texte}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                    <footer className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800 mt-auto">
-                                                        <span className="text-xs font-bold text-accent uppercase tracking-wider flex items-center gap-1.5 line-clamp-1">
-                                                            <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" /> {chantier.ville}
-                                                        </span>
-                                                        <span className="text-xs font-medium text-slate-400 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800 shrink-0">
-                                                            <time dateTime={chantier.created_at}>
-                                                                {new Date(chantier.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                                            </time>
-                                                        </span>
-                                                    </footer>
-                                                </article>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            </section>
+                                            <footer className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800 mt-auto">
+                                                <span className="text-xs font-bold text-accent uppercase tracking-wider flex items-center gap-1.5 line-clamp-1">
+                                                    <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" /> {chantier.ville}
+                                                </span>
+                                                <span className="text-xs font-medium text-slate-400 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800 shrink-0">
+                                                    <time dateTime={chantier.created_at}>
+                                                        {new Date(chantier.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                    </time>
+                                                </span>
+                                            </footer>
+                                        </article>
+                                    );
+                                })}
+                            </div>
                         )}
                     </div>
-                </div>
+                </section>
 
                 {/* MODALE DÉTAILLÉE : PHOTO + TEXTE COMPLET */}
                 {selectedChantier && (
