@@ -143,29 +143,26 @@ const schemaData = {
 export default function PompeAChaleur() {
     const [chantiers, setChantiers] = useState([]);
     const [isLoadingChantiers, setIsLoadingChantiers] = useState(true);
-    const [selectedChantier, setSelectedChantier] = useState(null); // Modifié ici
+    const [selectedChantier, setSelectedChantier] = useState(null);
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-    // Refs pour différer le chargement (Lazy loading manuel pour Lighthouse)
     const [isMapInView, setIsMapInView] = useState(false);
     const [isChantiersInView, setIsChantiersInView] = useState(false);
     const mapRef = useRef(null);
     const chantiersRef = useRef(null);
 
-    // Observer pour déclencher la requête Supabase uniquement au scroll
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
                 setIsChantiersInView(true);
                 observer.disconnect();
             }
-        }, { rootMargin: '300px' }); // Déclenchement 300px avant l'affichage
+        }, { rootMargin: '300px' });
 
         if (chantiersRef.current) observer.observe(chantiersRef.current);
         return () => observer.disconnect();
     }, []);
 
-    // Observer pour charger la carte Leaflet/Mapbox uniquement au scroll
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
@@ -178,7 +175,6 @@ export default function PompeAChaleur() {
         return () => observer.disconnect();
     }, []);
 
-    // Fetch Supabase conditionné à la visibilité
     useEffect(() => {
         if (!isChantiersInView) return;
 
@@ -193,10 +189,21 @@ export default function PompeAChaleur() {
                     .select('*')
                     .eq('domaine', 'PAC')
                     .eq('visible_sur_site', true)
-                    .order('created_at', { ascending: false });
+                    .order('created_at', { ascending: false })
+                    .limit(6);
 
-                if (!error && data && isMounted) {
-                    setChantiers(data);
+                if (!error && isMounted) {
+                    let loadedChantiers = data || [];
+                    
+                    // Si on a au moins un chantier (ou même 0), on complète jusqu'à 6 
+                    // avec des cartes placeholders vides pour garantir un espace fixe (2 lignes) et un CLS nul.
+                    while (loadedChantiers.length < 6) {
+                        loadedChantiers.push({
+                            id: `placeholder-${loadedChantiers.length}`,
+                            isEmpty: true
+                        });
+                    }
+                    setChantiers(loadedChantiers);
                 }
             } catch (err) {
                 console.error("Erreur :", err);
@@ -396,9 +403,10 @@ export default function PompeAChaleur() {
                                         <div className="h-4 w-full max-w-2xl bg-slate-800 rounded-md mx-auto animate-pulse"></div>
                                     </div>
 
+                                    {/* Squelette de chargement aligné sur 6 emplacements (2 lignes complètes) */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {[1, 2, 3].map((n) => (
-                                            <div key={n} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full min-h-[420px] animate-pulse shadow-lg">
+                                        {[1, 2, 3, 4, 5, 6].map((n) => (
+                                            <div key={n} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] animate-pulse shadow-lg">
                                                 <div className="p-4 bg-slate-950">
                                                     <div className="w-full aspect-[4/3] bg-slate-800 rounded-lg"></div>
                                                 </div>
@@ -416,34 +424,40 @@ export default function PompeAChaleur() {
                                 </div>
                             </section>
                         ) : (
-                            chantiers.length === 0 ? (
-                                <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px] flex flex-col items-center justify-center text-center px-4">
-                                    <div className="inline-flex items-center gap-2 bg-slate-800 text-slate-400 px-4 py-1.5 rounded-full text-xs font-bold mb-4">
-                                        <ImageIcon className="w-4 h-4" aria-hidden="true" /> Nos réalisations
-                                    </div>
-                                    <h2 className="text-2xl font-bold text-slate-300 mb-2">Aucun chantier récent à afficher</h2>
-                                    <p className="text-slate-500 max-w-md">
-                                        Nous mettons régulièrement à jour nos réalisations. Revenez bientôt pour découvrir nos dernières installations de pompes à chaleur.
-                                    </p>
-                                </section>
-                            ) : (
-                                <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px]">
-                                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-                                        <header className="text-center space-y-4">
-                                            <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-xs font-bold">
-                                                <ImageIcon className="w-4 h-4" aria-hidden="true" /> Nos réalisations
-                                            </div>
-                                            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-                                                Derniers chantiers Chauffage et Climatisation
-                                            </h2>
-                                            <p className="text-slate-300 max-w-2xl mx-auto">
-                                                Installation de systèmes thermodynamiques, remplacement de chaudière ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
-                                            </p>
-                                        </header>
+                            <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px]">
+                                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                                    <header className="text-center space-y-4">
+                                        <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-xs font-bold">
+                                            <ImageIcon className="w-4 h-4" aria-hidden="true" /> Nos réalisations
+                                        </div>
+                                        <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                                            Derniers chantiers Chauffage et Climatisation
+                                        </h2>
+                                        <p className="text-slate-300 max-w-2xl mx-auto">
+                                            Installation de systèmes thermodynamiques, remplacement de chaudière ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
+                                        </p>
+                                    </header>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                            {chantiers.map((chantier) => (
-                                                <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full min-h-[420px] hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {chantiers.map((chantier) => {
+                                            // Si c'est une carte de remplissage (placeholder vide) pour stabiliser le CLS
+                                            if (chantier.isEmpty) {
+                                                return (
+                                                    <article key={chantier.id} className="bg-slate-950/40 border border-slate-800/40 border-dashed rounded-2xl overflow-hidden flex flex-col h-[520px] items-center justify-center p-6 text-center shadow-sm">
+                                                        <div className="w-12 h-12 bg-slate-900/60 rounded-2xl flex items-center justify-center text-slate-600 mb-4">
+                                                            <ImageIcon className="w-6 h-6" aria-hidden="true" />
+                                                        </div>
+                                                        <p className="text-slate-400 text-sm font-semibold mb-1">Nouveau chantier à venir</p>
+                                                        <p className="text-slate-500 text-xs max-w-[220px]">
+                                                            Nos réalisations en Normandie s'enrichissent régulièrement.
+                                                        </p>
+                                                    </article>
+                                                );
+                                            }
+
+                                            // Vraie carte de chantier
+                                            return (
+                                                <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
                                                     <button
                                                         type="button"
                                                         onClick={() => setSelectedChantier(chantier)}
@@ -488,11 +502,11 @@ export default function PompeAChaleur() {
                                                         </span>
                                                     </footer>
                                                 </article>
-                                            ))}
-                                        </div>
+                                            );
+                                        })}
                                     </div>
-                                </section>
-                            )
+                                </div>
+                            </section>
                         )}
                     </div>
                 </div>
@@ -521,7 +535,6 @@ export default function PompeAChaleur() {
                             className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl" 
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Colonne de gauche : Grande Image */}
                             <div className="lg:w-1/2 p-6 bg-slate-950 flex items-center justify-center">
                                 <img
                                     src={getOptimizedImageUrl(selectedChantier.image_url, 1200)}
@@ -532,7 +545,6 @@ export default function PompeAChaleur() {
                                 />
                             </div>
 
-                            {/* Colonne de droite : Texte complet et infos */}
                             <div className="lg:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto max-h-[75vh] lg:max-h-[90vh]">
                                 <div className="space-y-6">
                                     <div className="flex items-center justify-between border-b border-slate-800 pb-4">
