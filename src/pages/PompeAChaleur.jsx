@@ -143,7 +143,7 @@ const schemaData = {
 export default function PompeAChaleur() {
     const [chantiers, setChantiers] = useState([]);
     const [isLoadingChantiers, setIsLoadingChantiers] = useState(true);
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedChantier, setSelectedChantier] = useState(null); // Modifié ici
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     // Refs pour différer le chargement (Lazy loading manuel pour Lighthouse)
@@ -211,16 +211,16 @@ export default function PompeAChaleur() {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
-                setSelectedImage(null);
+                setSelectedChantier(null);
             }
         };
-        if (selectedImage) {
+        if (selectedChantier) {
             window.addEventListener('keydown', handleKeyDown);
         }
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [selectedImage]);
+    }, [selectedChantier]);
 
     return (
         <main>
@@ -358,7 +358,6 @@ export default function PompeAChaleur() {
                         </header>
 
                         <div className="max-w-4xl mx-auto">
-                            {/* Hauteur minimale stricte ajoutée ici pour prévenir le CLS */}
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6 min-h-[580px]">
                                 {isMapInView ? (
                                     <Suspense fallback={<div className="h-[450px] w-full bg-slate-800/50 rounded-xl flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
@@ -387,7 +386,6 @@ export default function PompeAChaleur() {
                 </section>
 
                 <div ref={chantiersRef}>
-                    {/* SQUELETTE STRUCTUREL AVEC HAUTEUR MINIMALE STRICTE (CLS FIX) */}
                     <div className="min-h-[800px] w-full bg-slate-900 border-b border-slate-800 flex flex-col">
                         {isLoadingChantiers ? (
                             <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px]">
@@ -439,7 +437,7 @@ export default function PompeAChaleur() {
                                                 Derniers chantiers Chauffage et Climatisation
                                             </h2>
                                             <p className="text-slate-300 max-w-2xl mx-auto">
-                                                Installation de systèmes thermodynamiques, remplacement de chaudières ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
+                                                Installation de systèmes thermodynamiques, remplacement de chaudière ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
                                             </p>
                                         </header>
 
@@ -448,9 +446,9 @@ export default function PompeAChaleur() {
                                                 <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full min-h-[420px] hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
                                                     <button
                                                         type="button"
-                                                        onClick={() => setSelectedImage(chantier.image_url)}
+                                                        onClick={() => setSelectedChantier(chantier)}
                                                         className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
-                                                        aria-label={`Agrandir la photo du chantier d'installation de pompe à chaleur à ${chantier.ville}`}
+                                                        aria-label={`Agrandir la photo et lire les détails du chantier à ${chantier.ville}`}
                                                     >
                                                         <img
                                                             src={getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')}
@@ -466,15 +464,17 @@ export default function PompeAChaleur() {
                                                         />
                                                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
                                                             <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
-                                                                <Maximize2 className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Agrandir
+                                                                <Maximize2 className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Agrandir & lire
                                                             </span>
                                                         </div>
                                                     </button>
 
                                                     <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
-                                                        <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-                                                            {chantier.texte}
-                                                        </p>
+                                                        <div className="h-[8lh] overflow-y-auto pr-1">
+                                                            <p className="text-slate-300 text-sm leading-relaxed">
+                                                                {chantier.texte}
+                                                            </p>
+                                                        </div>
                                                     </div>
 
                                                     <footer className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800 mt-auto">
@@ -497,35 +497,68 @@ export default function PompeAChaleur() {
                     </div>
                 </div>
 
-                {selectedImage && (
+                {/* MODALE DÉTAILLÉE : PHOTO + TEXTE COMPLET */}
+                {selectedChantier && (
                     <div
-                        onClick={() => setSelectedImage(null)}
+                        onClick={() => setSelectedChantier(null)}
                         className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 animate-fadeIn"
                         role="dialog"
                         aria-modal="true"
-                        aria-label="Aperçu de l'image du chantier en haute définition"
+                        aria-label="Aperçu détaillé du chantier"
                         tabIndex="-1"
                     >
                         <button
                             type="button"
-                            onClick={() => setSelectedImage(null)}
-                            className="absolute top-6 right-6 bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-full border border-slate-700 transition-colors shadow-xl z-10 focus:outline-none focus:ring-2 focus:ring-accent"
-                            aria-label="Fermer l'aperçu de l'image"
+                            onClick={() => setSelectedChantier(null)}
+                            className="absolute top-6 right-6 bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-full border border-slate-700 transition-colors shadow-xl z-20 focus:outline-none focus:ring-2 focus:ring-accent"
+                            aria-label="Fermer l'aperçu"
                             autoFocus
                         >
                             <X className="w-6 h-6" aria-hidden="true" />
                         </button>
 
-                        <div className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-                            <img
-                                src={getOptimizedImageUrl(selectedImage, 1200)}
-                                alt="Détail du chantier d'installation de système thermique"
-                                className="max-w-full max-h-[85vh] object-contain rounded-2xl border border-slate-800 shadow-2xl"
-                                loading="lazy"
-                                decoding="async"
-                                width="1200"
-                                height="900"
-                            />
+                        <div 
+                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl" 
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Colonne de gauche : Grande Image */}
+                            <div className="lg:w-1/2 p-6 bg-slate-950 flex items-center justify-center">
+                                <img
+                                    src={getOptimizedImageUrl(selectedChantier.image_url, 1200)}
+                                    alt={`Installation de pompe à chaleur à ${selectedChantier.ville}`}
+                                    className="max-w-full max-h-[75vh] object-contain rounded-xl border border-slate-800"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </div>
+
+                            {/* Colonne de droite : Texte complet et infos */}
+                            <div className="lg:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto max-h-[75vh] lg:max-h-[90vh]">
+                                <div className="space-y-6">
+                                    <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                                        <span className="text-sm font-bold text-accent uppercase tracking-wider flex items-center gap-2">
+                                            <MapPin className="w-4 h-4 shrink-0" aria-hidden="true" /> {selectedChantier.ville}
+                                        </span>
+                                        <span className="text-xs font-medium text-slate-400 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">
+                                            {new Date(selectedChantier.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                        </span>
+                                    </div>
+
+                                    <div className="text-slate-200 text-base leading-relaxed whitespace-pre-wrap">
+                                        {selectedChantier.texte}
+                                    </div>
+                                </div>
+
+                                <div className="pt-6 mt-6 border-t border-slate-800 flex justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={() => setSelectedChantier(null)}
+                                        className="bg-slate-800 hover:bg-slate-700 text-white px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+                                    >
+                                        Fermer
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
