@@ -18,6 +18,8 @@ export default function Footer() {
               <img
                 src="/Icone120.webp"
                 alt="Logo SARL Anthony GUEDES"
+                width="120"
+                height="120"
                 className="h-12 sm:h-14 w-auto object-contain"
               />
               <div>

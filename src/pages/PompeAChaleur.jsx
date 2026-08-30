@@ -152,6 +152,7 @@ const schemaData = {
 
 export default function PompeAChaleur() {
     const [chantiers, setChantiers] = useState([]);
+    const [isLoadingChantiers, setIsLoadingChantiers] = useState(true)
     const [selectedImage, setSelectedImage] = useState(null);
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
@@ -160,13 +161,9 @@ useEffect(() => {
 
     async function fetchDerniersChantiers() {
         try {
-            // 1. Import dynamique exclusif au moment de la requête
             const { createClient } = await import('@supabase/supabase-js');
-            const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-            const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-            const supabase = createClient(supabaseUrl, supabaseKey);
+            const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
-            // 2. Requête classique
             const { data, error } = await supabase
                 .from('chantiers')
                 .select('*')
@@ -178,15 +175,13 @@ useEffect(() => {
                 setChantiers(data);
             }
         } catch (err) {
-            console.error("Erreur lors de la récupération des chantiers :", err);
+            console.error("Erreur :", err);
+        } finally {
+            if (isMounted) setIsLoadingChantiers(false); // ARRÊT DU CHARGEMENT
         }
     }
-
     fetchDerniersChantiers();
-
-    return () => {
-        isMounted = false;
-    };
+    return () => { isMounted = false; };
 }, []);
 
     useEffect(() => {
@@ -363,71 +358,82 @@ useEffect(() => {
                     </div>
                 </section>
 
-                {chantiers.length > 0 && (
-                    <section className="py-20 bg-slate-900 border-b border-slate-800">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-                            <header className="text-center space-y-4">
-                                <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-xs font-bold">
-                                    <ImageIcon className="w-4 h-4" aria-hidden="true" /> Nos réalisations
-                                </div>
-                                <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-                                    Derniers chantiers Chauffage et Climatisation
-                                </h2>
-                                <p className="text-slate-300 max-w-2xl mx-auto">
-                                    Installation de systèmes thermodynamiques, remplacement de chaudières ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
-                                </p>
-                            </header>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {chantiers.map((chantier) => (
-                                    <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
-                                        <button
-                                            type="button"
-                                            onClick={() => setSelectedImage(chantier.image_url)}
-                                            className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
-                                            aria-label={`Agrandir la photo du chantier d'installation de pompe à chaleur à ${chantier.ville}`}
-                                        >
-                                            {/* Performances & Aspect Ratio Fix : c_fill depuis Cloudinary couplé à aspect-[4/3] et object-cover */}
-                                            <img
-                                                src={getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')}
-                                                srcSet={`${getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')} 400w, ${getOptimizedImageUrl(chantier.image_url, 800, 600, 'fill')} 800w`}
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                                alt={`Installation de pompe à chaleur et climatisation à ${chantier.ville}`}
-                                                title={`Chantier PAC et climatisation à ${chantier.ville}`}
-                                                className="w-full aspect-[4/3] object-cover rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
-                                                loading="lazy"
-                                                decoding="async"
-                                                width="400"
-                                                height="300"
-                                            />
-                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
-                                                <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
-                                                    <Maximize2 className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Agrandir
-                                                </span>
-                                            </div>
-                                        </button>
-
-                                        <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
-                                            <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
-                                                {chantier.texte}
-                                            </p>
-                                        </div>
-
-                                        <footer className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800 mt-auto">
-                                            <span className="text-xs font-bold text-accent uppercase tracking-wider flex items-center gap-1.5 line-clamp-1">
-                                                <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" /> {chantier.ville}
-                                            </span>
-                                            <span className="text-xs font-medium text-slate-400 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800 shrink-0">
-                                                <time dateTime={chantier.created_at}>
-                                                    {new Date(chantier.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                                </time>
-                                            </span>
-                                        </footer>
-                                    </article>
-                                ))}
-                            </div>
+                {/* RÉSERVATION DE L'ESPACE PENDANT LE CHARGEMENT POUR TUER LE CLS */}
+                {isLoadingChantiers ? (
+                    <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[400px] flex flex-col items-center justify-center">
+                        <div className="animate-pulse flex flex-col items-center gap-4">
+                            <div className="w-12 h-12 bg-slate-800 rounded-full"></div>
+                            <div className="h-6 w-64 bg-slate-800 rounded-md"></div>
+                            <div className="h-4 w-48 bg-slate-800 rounded-md mt-4"></div>
                         </div>
                     </section>
+                ) : ( // ✅ CORRECTION ICI : Parenthèse au lieu de l'accolade
+                    chantiers.length > 0 && (
+                        <section className="py-20 bg-slate-900 border-b border-slate-800">
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                                <header className="text-center space-y-4">
+                                    <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-1.5 rounded-full text-xs font-bold">
+                                        <ImageIcon className="w-4 h-4" aria-hidden="true" /> Nos réalisations
+                                    </div>
+                                    <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                                        Derniers chantiers Chauffage et Climatisation
+                                    </h2>
+                                    <p className="text-slate-300 max-w-2xl mx-auto">
+                                        Installation de systèmes thermodynamiques, remplacement de chaudières ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
+                                    </p>
+                                </header>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {chantiers.map((chantier) => (
+                                        <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                            <button
+                                                type="button"
+                                                onClick={() => setSelectedImage(chantier.image_url)}
+                                                className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
+                                                aria-label={`Agrandir la photo du chantier d'installation de pompe à chaleur à ${chantier.ville}`}
+                                            >
+                                                {/* Performances & Aspect Ratio Fix : c_fill depuis Cloudinary couplé à aspect-[4/3] et object-cover */}
+                                                <img
+                                                    src={getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')}
+                                                    srcSet={`${getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')} 400w, ${getOptimizedImageUrl(chantier.image_url, 800, 600, 'fill')} 800w`}
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                    alt={`Installation de pompe à chaleur et climatisation à ${chantier.ville}`}
+                                                    title={`Chantier PAC et climatisation à ${chantier.ville}`}
+                                                    className="w-full aspect-[4/3] object-cover rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    width="400"
+                                                    height="300"
+                                                />
+                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg m-4">
+                                                    <span className="bg-slate-900/90 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700 shadow-lg">
+                                                        <Maximize2 className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Agrandir
+                                                    </span>
+                                                </div>
+                                            </button>
+
+                                            <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
+                                                <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
+                                                    {chantier.texte}
+                                                </p>
+                                            </div>
+
+                                            <footer className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800 mt-auto">
+                                                <span className="text-xs font-bold text-accent uppercase tracking-wider flex items-center gap-1.5 line-clamp-1">
+                                                    <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" /> {chantier.ville}
+                                                </span>
+                                                <span className="text-xs font-medium text-slate-400 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800 shrink-0">
+                                                    <time dateTime={chantier.created_at}>
+                                                        {new Date(chantier.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                    </time>
+                                                </span>
+                                            </footer>
+                                        </article>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )
                 )}
 
                 {selectedImage && (
