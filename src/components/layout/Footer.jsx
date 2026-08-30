@@ -20,8 +20,9 @@ export default function Footer() {
                 alt="Logo SARL Anthony GUEDES"
                 width="120"
                 height="120"
-                className="h-12 sm:h-14 w-auto object-contain"
+                className="h-12 w-12 sm:h-14 sm:w-14 aspect-square object-contain"
               />
+              
               <div>
                 <span className="font-bold text-base sm:text-lg tracking-wide block text-white leading-tight">
                   SARL Anthony GUEDES

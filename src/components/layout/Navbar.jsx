@@ -33,13 +33,13 @@ export default function Navbar() {
             aria-label="SARL Anthony GUEDES - Accueil"
             className="flex items-center gap-3 hover:opacity-90 transition-opacity shrink-0"
           >
-<img
-                src="/Icone120.webp"
-                alt="Logo SARL Anthony GUEDES"
-                width="120"
-                height="120"
-                className="h-12 w-12 sm:h-14 sm:w-14 object-contain"
-              />
+            <img
+              src="/Icone120.webp"
+              alt="Logo SARL Anthony GUEDES"
+              width="120"
+              height="120"
+              className="h-12 w-12 sm:h-14 sm:w-14 aspect-square object-contain"
+            />
             <div>
               <span className="font-bold text-base sm:text-xl tracking-wide block text-slate-900 leading-tight">
                 SARL Anthony GUEDES
