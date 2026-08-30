@@ -4,6 +4,10 @@
 <head>
   <meta charset="UTF-8" />
 
+  <!-- Preconnect aux domaines tiers (Cloudinary & Supabase) -->
+  <link rel="preconnect" href="https://res.cloudinary.com" />
+  <link rel="preconnect" href="https://votre-projet.supabase.co" crossorigin />
+
   <!-- Favicon SVG principal pour tous les navigateurs récents -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -16,19 +20,11 @@
   <!-- Balises SEO fondamentales -->
   <meta name="robots" content="index, follow" />
 
-  <!-- Référencement Géo-localisé (Valable pour toute l'activité) -->
+  <!-- Référencement Géo-localisé -->
   <meta name="geo.region" content="FR-27" />
   <meta name="geo.placename" content="Valailles" />
   <meta name="geo.position" content="49.122230;0.623763" />
   <meta name="ICBM" content="49.122230, 0.623763" />
-
-  <!-- 👇 AJOUT POUR CORRIGER LE SCORE LCP (Évite le texte invisible) 👇 -->
-  <style>
-    html * {
-      font-display: swap !important;
-    }
-  </style>
-  <!-- 👆 FIN DE L'AJOUT 👆 -->
 </head>
 
 <body class="bg-primary text-slate-100 antialiased">
