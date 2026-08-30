@@ -1,9 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
-/*
-import { createClient } from '@supabase/supabase-js';
-*/
 
 import {
     Flame,
@@ -23,16 +20,10 @@ import {
 } from 'lucide-react';
 
 const ZoneInterventionMap = lazy(() => import("../components/ZoneInterventionMap"));
-/*
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
-*/
 
 // UTILITAIRE IMAGE CLOUDINARY OPTIMISÉ (Correction Aspect Ratio & Perf)
 const getOptimizedImageUrl = (url, width = 800, height = null, crop = 'limit') => {
     if (!url) return '';
-    // Utilisation de c_fill et g_auto pour garantir un ratio parfait sans distorsion
     if (crop === 'fill' && height) {
         return url.replace('/upload/', `/upload/c_fill,g_auto,w_${width},h_${height},f_auto,q_auto/`);
     }
@@ -152,37 +143,37 @@ const schemaData = {
 
 export default function PompeAChaleur() {
     const [chantiers, setChantiers] = useState([]);
-    const [isLoadingChantiers, setIsLoadingChantiers] = useState(true)
+    const [isLoadingChantiers, setIsLoadingChantiers] = useState(true);
     const [selectedImage, setSelectedImage] = useState(null);
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-useEffect(() => {
-    let isMounted = true;
+    useEffect(() => {
+        let isMounted = true;
 
-    async function fetchDerniersChantiers() {
-        try {
-            const { createClient } = await import('@supabase/supabase-js');
-            const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
+        async function fetchDerniersChantiers() {
+            try {
+                const { createClient } = await import('@supabase/supabase-js');
+                const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
-            const { data, error } = await supabase
-                .from('chantiers')
-                .select('*')
-                .eq('domaine', 'PAC')
-                .eq('visible_sur_site', true)
-                .order('created_at', { ascending: false });
+                const { data, error } = await supabase
+                    .from('chantiers')
+                    .select('*')
+                    .eq('domaine', 'PAC')
+                    .eq('visible_sur_site', true)
+                    .order('created_at', { ascending: false });
 
-            if (!error && data && isMounted) {
-                setChantiers(data);
+                if (!error && data && isMounted) {
+                    setChantiers(data);
+                }
+            } catch (err) {
+                console.error("Erreur :", err);
+            } finally {
+                if (isMounted) setIsLoadingChantiers(false);
             }
-        } catch (err) {
-            console.error("Erreur :", err);
-        } finally {
-            if (isMounted) setIsLoadingChantiers(false); // ARRÊT DU CHARGEMENT
         }
-    }
-    fetchDerniersChantiers();
-    return () => { isMounted = false; };
-}, []);
+        fetchDerniersChantiers();
+        return () => { isMounted = false; };
+    }, []);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -223,7 +214,7 @@ useEffect(() => {
                                 </h1>
 
                                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-                                    Réussissez votre transition énergétique en remplaçant votre ancienne chaudière. La <strong>SARL Anthony GUEDES</strong>, experte en confort thermique, vous accompagne de l'étude énergétique jusqu'à la mise en service de votre système de chauffage ou de climatisation dans l'Eure, la Seine-Maritime, le Calvados et sur toute la région.
+                                    Réussissez votre transition énergétique en remplaçant votre ancienne chaudière. La <strong>SARL Anthony GUEDES</strong>, experte en confort thermique, vous accompagne de l'étude énergétique jusqu'à la mise en service de votre système de chauffage ou de climatisation dans l'Eure, la Seine-Maritime, le Calvados et sur toute la région.[cite: 2]
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
@@ -253,7 +244,6 @@ useEffect(() => {
                                 </div>
                             </div>
 
-                            {/* Accessibilité : h3 transformé en h2 pour respecter l'ordre d'arborescence (H1 -> H2) */}
                             <aside className="lg:col-span-5 bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-2xl space-y-6">
                                 <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-4">
                                     Pourquoi installer une PAC Réversible en 2026 ?
@@ -336,7 +326,7 @@ useEffect(() => {
 
                         <div className="max-w-4xl mx-auto">
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
-                                <Suspense fallback={<div className="h-64 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
+                                <Suspense fallback={<div className="h-[450px] flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
                                     <ZoneInterventionMap showEmergency={false} showProjects={true} />
                                 </Suspense>
 
@@ -358,16 +348,36 @@ useEffect(() => {
                     </div>
                 </section>
 
-                {/* RÉSERVATION DE L'ESPACE PENDANT LE CHARGEMENT POUR TUER LE CLS */}
+                {/* SQUELETTE STRUCTUREL (SKELETON) POUR ÉRADIQUER LE CLS */}
                 {isLoadingChantiers ? (
-                    <section className="py-20 bg-slate-900 border-b border-slate-800 min-h-[400px] flex flex-col items-center justify-center">
-                        <div className="animate-pulse flex flex-col items-center gap-4">
-                            <div className="w-12 h-12 bg-slate-800 rounded-full"></div>
-                            <div className="h-6 w-64 bg-slate-800 rounded-md"></div>
-                            <div className="h-4 w-48 bg-slate-800 rounded-md mt-4"></div>
+                    <section className="py-20 bg-slate-900 border-b border-slate-800">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                            <div className="text-center space-y-4">
+                                <div className="w-36 h-7 bg-slate-800 rounded-full mx-auto animate-pulse"></div>
+                                <div className="h-9 w-3/4 max-w-xl bg-slate-800 rounded-md mx-auto animate-pulse"></div>
+                                <div className="h-4 w-full max-w-2xl bg-slate-800 rounded-md mx-auto animate-pulse"></div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {[1, 2, 3].map((n) => (
+                                    <div key={n} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full animate-pulse shadow-lg">
+                                        <div className="p-4 bg-slate-950">
+                                            <div className="w-full aspect-[4/3] bg-slate-800 rounded-lg"></div>
+                                        </div>
+                                        <div className="px-5 pb-5 space-y-3 flex-grow">
+                                            <div className="h-4 bg-slate-800 rounded w-full"></div>
+                                            <div className="h-4 bg-slate-800 rounded w-4/5"></div>
+                                        </div>
+                                        <div className="p-4 flex items-center justify-between bg-slate-900/80 border-t border-slate-800">
+                                            <div className="h-4 bg-slate-800 rounded w-28"></div>
+                                            <div className="h-6 bg-slate-800 rounded w-24"></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </section>
-                ) : ( // ✅ CORRECTION ICI : Parenthèse au lieu de l'accolade
+                ) : (
                     chantiers.length > 0 && (
                         <section className="py-20 bg-slate-900 border-b border-slate-800">
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
@@ -392,7 +402,6 @@ useEffect(() => {
                                                 className="p-4 flex items-center justify-center bg-slate-950 relative group cursor-pointer w-full border-none focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
                                                 aria-label={`Agrandir la photo du chantier d'installation de pompe à chaleur à ${chantier.ville}`}
                                             >
-                                                {/* Performances & Aspect Ratio Fix : c_fill depuis Cloudinary couplé à aspect-[4/3] et object-cover */}
                                                 <img
                                                     src={getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')}
                                                     srcSet={`${getOptimizedImageUrl(chantier.image_url, 400, 300, 'fill')} 400w, ${getOptimizedImageUrl(chantier.image_url, 800, 600, 'fill')} 800w`}
