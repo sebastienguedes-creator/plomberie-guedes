@@ -18,10 +18,10 @@ import {
     ChevronDown
 } from 'lucide-react';
 
-// Chargement paresseux de la carte pour optimiser le LCP[cite: 14]
+// Chargement paresseux de la carte pour optimiser le LCP
 const ZoneInterventionMap = lazy(() => import("../components/ZoneInterventionMap"));
 
-// --- UTILITAIRE IMAGE CLOUDINARY (Optimisé pour le CLS et la performance)[cite: 14] ---
+// --- UTILITAIRE IMAGE CLOUDINARY (Optimisé pour le CLS et la performance) ---
 const getOptimizedImageUrl = (url, width = 800, height = null, crop = 'limit') => {
     if (!url) return '';
     if (crop === 'fill' && height) {
@@ -30,7 +30,7 @@ const getOptimizedImageUrl = (url, width = 800, height = null, crop = 'limit') =
     return url.replace('/upload/', `/upload/c_limit,w_${width},f_auto,q_auto/`);
 };
 
-// --- DONNÉES FAQ[cite: 14] ---
+// --- DONNÉES FAQ ---
 const faqData = [
     {
         question: "Pourquoi et quand faut-il désembouer son circuit de chauffage central ?",
@@ -78,7 +78,7 @@ const schemaData = {
                         "latitude": 49.122232,
                         "longitude": 0.623779
                     },
-                    "geoRadius": "150000" // 150 km autour de Valailles
+                    "geoRadius": "150000"
                 },
                 { "@type": "AdministrativeArea", "name": "Eure" },
                 { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
@@ -116,13 +116,11 @@ const schemaData = {
 };
 
 export default function ChauffageRadiateurs() {
-    // États
     const [chantiers, setChantiers] = useState([]);
     const [isLoadingChantiers, setIsLoadingChantiers] = useState(true);
     const [selectedChantier, setSelectedChantier] = useState(null);
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
-    // Refs pour Intersection Observer
     const [isMapInView, setIsMapInView] = useState(false);
     const [isChantiersInView, setIsChantiersInView] = useState(false);
     const mapRef = useRef(null);
@@ -154,7 +152,7 @@ export default function ChauffageRadiateurs() {
         return () => observer.disconnect();
     }, []);
 
-    // Fetch asynchrone des chantiers[cite: 14]
+    // Fetch asynchrone des chantiers
     useEffect(() => {
         if (!isChantiersInView) return;
 
@@ -175,7 +173,7 @@ export default function ChauffageRadiateurs() {
                 if (!error && isMounted) {
                     let loadedChantiers = data || [];
                     
-                    // Comble avec des placeholders pour stabiliser le layout (CLS)
+                    // Comble avec des placeholders
                     while (loadedChantiers.length < 6) {
                         loadedChantiers.push({
                             id: `placeholder-${loadedChantiers.length}`,
@@ -219,7 +217,7 @@ export default function ChauffageRadiateurs() {
             />
 
             <div className="bg-slate-950 text-slate-100 min-h-screen">
-                {/* HERO SECTION[cite: 14] */}
+                {/* HERO SECTION */}
                 <section className="relative py-16 lg:py-24 border-b border-slate-800 bg-slate-950 overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -277,7 +275,7 @@ export default function ChauffageRadiateurs() {
                     </div>
                 </section>
 
-                {/* PRESTATIONS DETAIL[cite: 14] */}
+                {/* PRESTATIONS DETAIL */}
                 <section className="py-16 bg-slate-900 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                         <header className="text-center space-y-4">
@@ -333,16 +331,16 @@ export default function ChauffageRadiateurs() {
                             </p>
                         </header>
 
-                        {/* Conteneur fixe h-[570px] pour le CLS */}
+                        {/* ✅ CORRECTION CLS & Responsive : Suppression de la hauteur fixe parent pour éviter l'écrasement sur mobile */}
                         <div className="max-w-4xl mx-auto">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col justify-between h-[570px]">
-                                <div className="h-[450px] w-full overflow-hidden rounded-xl">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col gap-4">
+                                <div className="h-[380px] sm:h-[450px] w-full overflow-hidden rounded-xl">
                                     {isMapInView ? (
                                         <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
                                             <ZoneInterventionMap showEmergency={false} showProjects={true} />
                                         </Suspense>
                                     ) : (
-                                        <div className="h-full w-full bg-slate-900"></div>
+                                        <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
                                     )}
                                 </div>
                                 
@@ -399,7 +397,7 @@ export default function ChauffageRadiateurs() {
                                     </div>
                                 ))
                             ) : (
-                                /* Affichage des vrais chantiers[cite: 14] */
+                                /* Affichage des vrais chantiers */
                                 chantiers.map((chantier) => {
                                     if (chantier.isEmpty) {
                                         return (
@@ -532,7 +530,7 @@ export default function ChauffageRadiateurs() {
                     </div>
                 )}
 
-                {/* --- SECTION FAQ (ACCORDÉON ACCESSIBLE)[cite: 14] --- */}
+                {/* --- SECTION FAQ (ACCORDÉON ACCESSIBLE) --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-950">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <header className="text-center space-y-4">
@@ -590,7 +588,7 @@ export default function ChauffageRadiateurs() {
                     </div>
                 </section>
 
-                {/* CTA FINAL[cite: 14] */}
+                {/* CTA FINAL */}
                 <section id="contact" className="py-16 bg-accent text-white text-center">
                     <div className="max-w-4xl mx-auto px-4 space-y-6">
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Un projet de chauffage central ou des radiateurs à changer ?</h2>

@@ -298,20 +298,20 @@ export default function SalleDeBain() {
                                 Intervention dans un large rayon sur la Normandie
                             </h2>
                             <p className="text-slate-400 text-sm sm:text-base">
-                                J'interviens sur la majorité du territoire normand, notamment dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
+                                J'interviens sur la majorité du territoire normand, notamment dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61)[cite: 11] :
                             </p>
                         </header>
 
-                        {/* ✅ CORRECTION CLS : Conteneur fixe h-[570px] pour éviter le saut lors du chargement de la carte */}
+                        {/* ✅ CORRECTION CLS & Responsive : Suppression de la hauteur fixe parent pour éviter l'écrasement sur mobile */}
                         <div className="max-w-4xl mx-auto">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col justify-between h-[570px]">
-                                <div className="h-[450px] w-full overflow-hidden rounded-xl">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col gap-4">
+                                <div className="h-[380px] sm:h-[450px] w-full overflow-hidden rounded-xl">
                                     {isMapInView ? (
                                         <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
                                             <ZoneInterventionMap showEmergency={false} showProjects={true} />
                                         </Suspense>
                                     ) : (
-                                        <div className="h-full w-full bg-slate-900"></div>
+                                        <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
                                     )}
                                 </div>
 
@@ -346,7 +346,7 @@ export default function SalleDeBain() {
                                 Dernières interventions en salle de bain
                             </h2>
                             <p className="text-slate-400 max-w-2xl mx-auto">
-                                Création de douche, pose de sanitaires ou rénovation complète : découvrez mes derniers chantiers réalisés.
+                                Création de douche, pose de sanitaires ou rénovation complète : découvrez mes derniers chantiers réalisés[cite: 11].
                             </p>
                         </header>
 

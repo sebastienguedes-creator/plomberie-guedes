@@ -245,21 +245,21 @@ export default function UrgenceDepannage() {
                             </p>
                         </header>
 
-                        {/* Intégration de la carte avec Lazy Loading et hauteur fixe (CLS) */}
+                        {/* ✅ CORRECTION CLS & Responsive : Suppression de la hauteur fixe parent pour éviter l'écrasement sur mobile */}
                         <div className="max-w-4xl mx-auto" ref={mapRef}>
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-6">
-                                <div className="h-[400px] w-full rounded-xl overflow-hidden bg-slate-950/50">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col gap-4">
+                                <div className="h-[380px] sm:h-[450px] w-full rounded-xl overflow-hidden bg-slate-950/50">
                                     {isMapInView ? (
                                         <Suspense fallback={<div className="w-full h-full animate-pulse bg-slate-800 rounded-xl flex items-center justify-center text-slate-400 text-sm" role="status">Chargement de la zone d'intervention...</div>}>
                                             <ZoneInterventionMap showEmergency={true} showProjects={false} />
                                         </Suspense>
                                     ) : (
-                                        <div className="w-full h-full bg-slate-800 rounded-xl" aria-hidden="true"></div>
+                                        <div className="w-full h-[380px] sm:h-[450px] bg-slate-800 rounded-xl" aria-hidden="true"></div>
                                     )}
                                 </div>
                                 
                                 {/* Liste des villes en dessous */}
-                                <div className="pt-2 border-t border-slate-800">
+                                <div className="pt-3 border-t border-slate-800">
                                     <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 text-center">
                                         Principales communes desservies en urgence :
                                     </p>

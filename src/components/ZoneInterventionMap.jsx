@@ -56,7 +56,7 @@ export default function ZoneInterventionMap({ showEmergency = false, showProject
     const centerCoords = [49.1234, 0.8234]; // Valailles / Eure
 
     return (
-        <div className="relative h-full w-full">
+        <div className="relative w-full h-[350px] sm:h-[450px] md:h-full min-h-[350px]">
             {(showEmergency || showProjects) && (
                 <div className="absolute top-4 right-4 z-[400] bg-slate-900/90 border border-slate-700 p-3 rounded-xl shadow-xl backdrop-blur-sm text-xs space-y-2 pointer-events-none">
                     {showEmergency && (
@@ -77,9 +77,9 @@ export default function ZoneInterventionMap({ showEmergency = false, showProject
             <MapContainer
                 center={centerCoords}
                 zoom={7}
-                zoomSnap={0.1} /* ESSENTIEL : Permet à Leaflet d'utiliser des zooms à virgule */
+                zoomSnap={0.1}
                 scrollWheelZoom={false}
-                style={{ height: '100%', width: '100%' }}
+                style={{ height: '100%', minHeight: '350px', width: '100%' }}
                 className="z-10 rounded-xl"
             >
                 <TileLayer

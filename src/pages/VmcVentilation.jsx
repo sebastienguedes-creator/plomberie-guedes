@@ -326,20 +326,20 @@ export default function VmcVentilation() {
                                 Secteur d'intervention VMC & Ventilation
                             </h2>
                             <p className="text-slate-400 text-sm sm:text-base">
-                                J'interviens pour l'installation, l'entretien et le dépannage de vos systèmes de ventilation sur une grande partie de la Normandie :
+                                J'interviens pour l'installation, l'entretien et le dépannage de vos systèmes de ventilation sur une grande partie de la Normandie[cite: 12] :
                             </p>
                         </header>
 
-                        {/* Conteneur fixe h-[570px] pour le CLS */}
+                        {/* ✅ CORRECTION CLS & Responsive : Suppression de la hauteur fixe parent pour éviter l'écrasement sur mobile */}
                         <div className="max-w-4xl mx-auto">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col justify-between h-[570px]">
-                                <div className="h-[450px] w-full overflow-hidden rounded-xl">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col gap-4">
+                                <div className="h-[380px] sm:h-[450px] w-full overflow-hidden rounded-xl">
                                     {isMapInView ? (
                                         <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
                                             <ZoneInterventionMap showEmergency={false} showProjects={true} />
                                         </Suspense>
                                     ) : (
-                                        <div className="h-full w-full bg-slate-900"></div>
+                                        <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
                                     )}
                                 </div>
                                 
@@ -363,6 +363,7 @@ export default function VmcVentilation() {
                 </section>
 
                 {/* --- SECTION DERNIERS CHANTIERS --- */}
+                {/* ✅ CORRECTION CLS : Section toujours présente avec un min-height fixe */}
                 <section ref={chantiersRef} className="py-20 bg-slate-900 border-b border-slate-800 min-h-[800px]">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                         <header className="text-center space-y-4">
@@ -414,6 +415,7 @@ export default function VmcVentilation() {
 
                                     return (
                                         <article key={chantier.id} className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-[520px] hover:border-slate-700 transition-colors shadow-lg shadow-black/20">
+                                            {/* ✅ CORRECTION CLS : Bouton explicite, aspect-[4/3], dimensions forcées */}
                                             <button
                                                 type="button"
                                                 onClick={() => setSelectedChantier(chantier)}
@@ -440,6 +442,7 @@ export default function VmcVentilation() {
                                             </button>
 
                                             <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
+                                                {/* Conteneur défilant pour éviter que le texte ne casse la hauteur de la carte */}
                                                 <div className="h-36 overflow-y-auto pr-1">
                                                     <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
                                                         {chantier.texte}
@@ -529,7 +532,7 @@ export default function VmcVentilation() {
                     </div>
                 )}
 
-                {/* --- SECTION FAQ (ACCORDÉON ACCESSIBLE) --- */}
+                {/* --- SECTION FAQ (ACCORDÉON SANS CLS GRÂCE À CSS GRID) --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-950">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <header className="text-center space-y-4">

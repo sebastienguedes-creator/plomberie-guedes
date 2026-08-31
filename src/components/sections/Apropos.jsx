@@ -71,7 +71,7 @@ export default function Apropos() {
                             </p>
 
                             <p>
-                                Pour répondre avec réactivité aux imprévus, un service de <strong>dépannage d'urgence</strong> intervient rapidement dans un rayon de <strong>30 km autour de Bernay</strong> (comprenant Le Neubourg, Louviers, Conches-en-Ouche et Pont-Audemer). Pour vos projets de rénovation globale et d'installation à haute efficacité énergétique, la SARL Anthony GUEDES se déplace sur l'ensemble de la <strong>Grande Normandie</strong> (Rouen, Caen, Le Havre, Lisieux).
+                                Pour répondre avec réactivité aux imprévus, <strong>Anthony GUEDES</strong> assure un service de <strong>dépannage d'urgence</strong> et intervient rapidement dans un rayon de <strong>30 km autour de Bernay</strong> (comprenant Le Neubourg, Louviers, Conches-en-Ouche et Pont-Audemer). Pour vos projets de rénovation globale et d'installation à haute efficacité énergétique, la SARL Anthony GUEDES se déplace sur l'ensemble de la <strong>Grande Normandie</strong> (Rouen, Caen, Le Havre, Lisieux).
                             </p>
                         </div>
 

@@ -328,10 +328,10 @@ export default function PompeAChaleur() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <header className="text-center max-w-3xl mx-auto mb-16 space-y-4">
                             <h2 className="text-3xl font-extrabold text-white">
-                                Nos solutions de <span className="text-accent">Chauffage & Climatisation haute performance</span>
+                                Mes solutions de <span className="text-accent">Chauffage & Climatisation haute performance</span>
                             </h2>
                             <p className="text-slate-300">
-                                Chaque logement a ses spécificités. En tant que frigoriste et chauffagiste, nous sélectionnons le matériel le plus adapté pour chauffer vos hivers et rafraîchir vos étés avec un rendement optimal.
+                                Chaque logement a ses spécificités. En tant que frigoriste et chauffagiste, je sélectionne le matériel le plus adapté pour chauffer vos hivers et rafraîchir vos étés avec un rendement optimal.
                             </p>
                         </header>
 
@@ -381,35 +381,34 @@ export default function PompeAChaleur() {
                             </p>
                         </header>
 
-                        {/* ✅ CORRECTION CLS : Conteneur fixe h-[570px] pour éviter le saut lors du chargement de la carte */}
-                        <div className="max-w-4xl mx-auto">
-                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col justify-between h-[570px]">
-                                <div className="h-[450px] w-full overflow-hidden rounded-xl">
-                                    {isMapInView ? (
-                                        <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
-                                            <ZoneInterventionMap showEmergency={false} showProjects={true} />
-                                        </Suspense>
-                                    ) : (
-                                        <div className="h-full w-full bg-slate-900"></div>
-                                    )}
-                                </div>
+<div className="max-w-4xl mx-auto">
+    <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col gap-4">
+        <div className="h-[380px] sm:h-[450px] w-full overflow-hidden rounded-xl">
+            {isMapInView ? (
+                <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
+                    <ZoneInterventionMap showEmergency={false} showProjects={true} />
+                </Suspense>
+            ) : (
+                <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
+            )}
+        </div>
 
-                                <div className="pt-3 border-t border-slate-800">
-                                    <div className="flex flex-wrap justify-center gap-2.5">
-                                        {[
-                                            "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
-                                            "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
-                                            "Caen (14)", "Lisieux (14)", "Bayeux (14)",
-                                            "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
-                                        ].map((ville, i) => (
-                                            <span key={i} className="bg-slate-950 border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
-                                                <MapPin className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> PAC & Clim {ville}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div className="pt-3 border-t border-slate-800">
+            <div className="flex flex-wrap justify-center gap-2.5">
+                {[
+                    "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
+                    "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
+                    "Caen (14)", "Lisieux (14)", "Bayeux (14)",
+                    "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
+                ].map((ville, i) => (
+                    <span key={i} className="bg-slate-950 border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
+                        <MapPin className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> PAC & Clim {ville}
+                    </span>
+                ))}
+            </div>
+        </div>
+    </div>
+</div>
                     </div>
                 </section>
 
@@ -423,7 +422,7 @@ export default function PompeAChaleur() {
                                 Derniers chantiers Chauffage et Climatisation
                             </h2>
                             <p className="text-slate-300 max-w-2xl mx-auto">
-                                Installation de systèmes thermodynamiques, remplacement de chaudière ou dépannage : découvrez nos interventions récentes chez nos clients en Normandie.
+                                Installation de systèmes thermodynamiques, remplacement de chaudière ou dépannage : découvrez mes interventions récentes chez nos clients en Normandie.
                             </p>
                         </header>
 
@@ -457,7 +456,7 @@ export default function PompeAChaleur() {
                                                 </div>
                                                 <p className="text-slate-400 text-sm font-semibold mb-1">Nouveau chantier à venir</p>
                                                 <p className="text-slate-500 text-xs max-w-[220px]">
-                                                    Nos réalisations en Normandie s'enrichissent régulièrement.
+                                                    Mes réalisations en Normandie s'enrichissent régulièrement.
                                                 </p>
                                             </article>
                                         );
