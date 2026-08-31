@@ -56,7 +56,7 @@ export default function Accueil() {
                 "priceRange": "€€",
                 "address": {
                     "@type": "PostalAddress",
-                    "streetAddress": "2A Rue du Ravin", 
+                    "streetAddress": "2A Rue du Ravin",
                     "addressLocality": "Valailles",
                     "postalCode": "27300",
                     "addressCountry": "FR"
@@ -145,7 +145,7 @@ export default function Accueil() {
 
     return (
         <main className="bg-slate-950">
-            <SEO 
+            <SEO
                 title="Plombier Chauffagiste Eure (27) | SARL Anthony GUEDES"
                 description="Artisan plombier chauffagiste dans l'Eure. Dépannage urgence 30km (Évreux, Bernay) & Projets de rénovation sur toute la Normandie."
                 canonicalUrl="https://www.guedes-plomberie-chauffage.fr/"
@@ -174,13 +174,15 @@ export default function Accueil() {
 
                     <div className="max-w-5xl mx-auto">
                         <div className="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-8">
-                            
+
                             {/* Affichage de la carte avec les deux rayons */}
-                            <ZoneInterventionMap showEmergency={true} showProjects={true} />
-                            
+                            <div className="w-full h-[350px] sm:h-[450px] rounded-2xl overflow-hidden relative z-0">
+                                <ZoneInterventionMap showEmergency={true} showProjects={true} />
+                            </div>
+
                             {/* Légende et Villes détaillées par zone */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-slate-800">
-                                
+
                                 {/* Zone 1 : URGENCES */}
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-3">
@@ -194,7 +196,7 @@ export default function Accueil() {
                                     </div>
                                     <div className="flex flex-wrap gap-2.5">
                                         {[
-                                            "Bernay", "Évreux", "Le Neubourg", 
+                                            "Bernay", "Évreux", "Le Neubourg",
                                             "Louviers", "Pont-Audemer", "Conches-en-Ouche"
                                         ].map((ville, i) => (
                                             <span key={`urg-${i}`} className="bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-1.5 hover:border-red-500/40 transition-colors">
@@ -217,7 +219,7 @@ export default function Accueil() {
                                     </div>
                                     <div className="flex flex-wrap gap-2.5">
                                         {[
-                                            "Rouen", "Caen", "Le Havre", 
+                                            "Rouen", "Caen", "Le Havre",
                                             "Lisieux", "Alençon", "Deauville"
                                         ].map((ville, i) => (
                                             <span key={`proj-${i}`} className="bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-1.5 hover:border-accent/40 transition-colors">
@@ -253,7 +255,7 @@ export default function Accueil() {
                         {faqList.map((faq, index) => {
                             const isOpen = openFaqIndex === index;
                             return (
-                                <div 
+                                <div
                                     key={`faq-${index}`}
                                     className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all duration-200 hover:border-slate-700"
                                 >

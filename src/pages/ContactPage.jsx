@@ -1,15 +1,43 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Phone, Mail, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
-import ZoneInterventionMap from "../components/ZoneInterventionMap";
+import { Phone, Mail, MapPin, Send, CheckCircle2, Clock, Loader2 } from 'lucide-react';
+
+// Chargement paresseux de la carte pour optimiser les performances (LCP/TBT)[cite: 11]
+const ZoneInterventionMap = lazy(() => import("../components/ZoneInterventionMap"));
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMapInView, setIsMapInView] = useState(false);
+  
+  const mapRef = useRef(null);
+  const successRef = useRef(null);
 
-const handleSubmit = async (e) => {
+  // Observer pour charger la carte uniquement quand elle s'approche de l'écran[cite: 11]
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsMapInView(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '300px' }); // Déclenche le chargement 300px avant que l'élément soit visible
+
+    if (mapRef.current) observer.observe(mapRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Gestion du focus pour l'accessibilité après une soumission réussie
+  useEffect(() => {
+    if (submitted && successRef.current) {
+      successRef.current.focus();
+    }
+  }, [submitted]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Récupération des données du formulaire via l'événement
+    // Récupération des données du formulaire[cite: 11]
     const formData = new FormData(e.target);
     const data = {
       user_name: formData.get('user_name'),
@@ -32,16 +60,19 @@ const handleSubmit = async (e) => {
 
       if (response.ok && result.success) {
         setSubmitted(true);
+        e.target.reset(); // Nettoie le formulaire pour la prochaine fois
       } else {
         alert("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
       }
     } catch (error) {
       console.error("Erreur réseau :", error);
       alert("Impossible de contacter le serveur. Vérifiez votre connexion.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-// Données structurées Schema.org mises à jour pour le référencement local Google (avec address, logo, image)
+  // Données structurées Schema.org[cite: 11]
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Plumber",
@@ -60,12 +91,7 @@ const handleSubmit = async (e) => {
         "addressCountry": "FR"
     },
     "areaServed": [
-      "Eure", 
-      "Seine-Maritime", 
-      "Calvados", 
-      "Orne", 
-      "Normandie", 
-      "Île-de-France"
+      "Eure", "Seine-Maritime", "Calvados", "Orne", "Normandie", "Île-de-France"
     ],
     "openingHoursSpecification": [
       {
@@ -79,12 +105,12 @@ const handleSubmit = async (e) => {
 
   return (
     <main className="py-20 lg:py-28 bg-slate-950 text-white relative overflow-hidden min-h-screen">
-      {/* Metadonnées SEO & Données structurées */}
+      {/* Metadonnées SEO & Données structurées[cite: 11] */}
       <Helmet>
         <title>Contact & Devis Gratuit | SARL Anthony Guedes - Plombier Chauffagiste</title>
         <meta 
           name="description" 
-          content="Besoin d'un devis gratuit pour une pompe à chaleur, une salle de bain ou un dépannage ? Dépannages urgents (30 km) et grands projets jusqu'à 150 km . Contactez Anthony Guedes au 06 17 92 10 04." 
+          content="Besoin d'un devis gratuit pour une pompe à chaleur, une salle de bain ou un dépannage ? Dépannages urgents (30 km) et grands projets jusqu'à 150 km. Contactez Anthony Guedes au 06 17 92 10 04." 
         />
         <link rel="canonical" href="https://www.guedes-plomberie-chauffage.fr/contact" />
         <script type="application/ld+json">
@@ -92,13 +118,13 @@ const handleSubmit = async (e) => {
         </script>
       </Helmet>
 
-      {/* Halo lumineux d'arrière-plan */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Halo lumineux d'arrière-plan[cite: 11] */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* En-tête de page */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <header className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 border border-blue-500/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
             Contact & Devis Gratuit
           </div>
@@ -108,11 +134,11 @@ const handleSubmit = async (e) => {
           <p className="text-slate-300 text-base sm:text-lg">
             Une question sur une pompe à chaleur, un projet de salle de bain ou un besoin de dépannage ? Remplissez le formulaire ou contactez-moi directement.
           </p>
-        </div>
+        </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Colonne Gauche : Coordonnées NAP & Carte interactive */}
+          {/* Colonne Gauche : Coordonnées NAP & Carte interactive[cite: 11] */}
           <div className="lg:col-span-5 space-y-8">
             <address className="not-italic bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl space-y-6">
               
@@ -121,8 +147,8 @@ const handleSubmit = async (e) => {
               </h2>
 
               <div className="space-y-6">
-                <a href="tel:+33617921004" className="flex items-start gap-4 group" aria-label="Appeler le 06 17 92 10 04">
-                  <div className="bg-blue-600/10 p-3 rounded-xl text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
+                <a href="tel:+33617921004" className="flex items-start gap-4 group rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-900" aria-label="Appeler le 06 17 92 10 04">
+                  <div className="bg-blue-600/10 p-3 rounded-xl text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0" aria-hidden="true">
                     <Phone className="w-6 h-6" />
                   </div>
                   <div>
@@ -133,8 +159,8 @@ const handleSubmit = async (e) => {
                   </div>
                 </a>
 
-                <a href="mailto:anthonyguedes.plomberie@gmail.com" aria-label="Envoyer un e-mail" className="flex items-start gap-4 group">
-                  <div className="bg-slate-800 p-3 rounded-xl text-blue-400 shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <a href="mailto:anthonyguedes.plomberie@gmail.com" className="flex items-start gap-4 group rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-900" aria-label="Envoyer un e-mail à anthonyguedes.plomberie@gmail.com">
+                  <div className="bg-slate-800 p-3 rounded-xl text-blue-400 shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all" aria-hidden="true">
                     <Mail className="w-6 h-6" />
                   </div>
                   <div>
@@ -146,7 +172,7 @@ const handleSubmit = async (e) => {
                 </a>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-slate-800 p-3 rounded-xl text-blue-400 shrink-0">
+                  <div className="bg-slate-800 p-3 rounded-xl text-blue-400 shrink-0" aria-hidden="true">
                     <MapPin className="w-6 h-6" />
                   </div>
                   <div>
@@ -159,7 +185,7 @@ const handleSubmit = async (e) => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-slate-800 p-3 rounded-xl text-blue-400 shrink-0">
+                  <div className="bg-slate-800 p-3 rounded-xl text-blue-400 shrink-0" aria-hidden="true">
                     <Clock className="w-6 h-6" />
                   </div>
                   <div>
@@ -172,19 +198,33 @@ const handleSubmit = async (e) => {
                 </div>
               </div>
 
-              {/* Carte interactive des zones d'intervention */}
-              <div className="border-t border-slate-800 pt-6">
-                <ZoneInterventionMap />
+              {/* Conteneur de carte à hauteur fixe (CLS) avec chargement paresseux[cite: 11] */}
+              <div className="border-t border-slate-800 pt-6" ref={mapRef}>
+                <div className="h-[350px] w-full rounded-xl overflow-hidden bg-slate-950/50">
+                  {isMapInView ? (
+                    <Suspense fallback={<div className="w-full h-full animate-pulse bg-slate-800 rounded-xl" aria-busy="true" aria-label="Chargement de la carte" />}>
+                      <ZoneInterventionMap showEmergency={true} showProjects={true} />
+                    </Suspense>
+                  ) : (
+                    <div className="w-full h-full bg-slate-800 rounded-xl" aria-hidden="true"></div>
+                  )}
+                </div>
               </div>
             </address>
           </div>
 
-          {/* Colonne Droite : Formulaire interactif */}
+          {/* Colonne Droite : Formulaire interactif[cite: 11] */}
           <div className="lg:col-span-7">
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-10 shadow-2xl">
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-10 shadow-2xl relative min-h-[500px] flex flex-col justify-center">
               {submitted ? (
-                <div className="py-12 text-center space-y-4">
-                  <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
+                <div 
+                  className="text-center space-y-4 animate-fadeIn"
+                  ref={successRef}
+                  tabIndex="-1" // Permet d'être focusable par JS
+                  aria-live="polite"
+                  role="status"
+                >
+                  <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto" aria-hidden="true">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className="text-2xl font-bold text-white">Message envoyé avec succès !</h3>
@@ -192,14 +232,15 @@ const handleSubmit = async (e) => {
                     Merci pour votre demande. Je reviens vers vous dans les plus brefs délais pour étudier votre projet.
                   </p>
                   <button
+                    type="button"
                     onClick={() => setSubmitted(false)}
-                    className="mt-4 bg-slate-800 hover:bg-slate-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-all border border-slate-700"
+                    className="mt-6 bg-slate-800 hover:bg-slate-700 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all border border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
                   >
                     Envoyer un autre message
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" aria-label="Formulaire de contact">
                   <h3 className="text-xl font-bold text-white mb-6">Demandez votre devis gratuit</h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -210,8 +251,10 @@ const handleSubmit = async (e) => {
                         name="user_name"
                         type="text" 
                         required 
+                        aria-required="true"
                         placeholder="Ex : Jean Dupont" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm disabled:opacity-50"
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -221,8 +264,10 @@ const handleSubmit = async (e) => {
                         name="user_phone"
                         type="tel" 
                         required 
+                        aria-required="true"
                         placeholder="Ex : 06 12 34 56 78" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm disabled:opacity-50"
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -235,8 +280,10 @@ const handleSubmit = async (e) => {
                         name="user_email"
                         type="email" 
                         required 
+                        aria-required="true"
                         placeholder="Ex : jean.dupont@email.com" 
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm disabled:opacity-50"
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -244,7 +291,9 @@ const handleSubmit = async (e) => {
                       <select 
                         id="project_type"
                         name="project_type"
-                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors text-sm"
+                        required
+                        className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm disabled:opacity-50"
+                        disabled={isSubmitting}
                       >
                         <option value="pac">Installation Pompe à Chaleur (PAC)</option>
                         <option value="vmc">VMC Double Flux</option>
@@ -263,20 +312,34 @@ const handleSubmit = async (e) => {
                       name="project_description"
                       rows="4" 
                       required 
+                      aria-required="true"
                       placeholder="Précisez votre besoin, vos équipements actuels..." 
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500 transition-colors text-sm resize-none"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm resize-none disabled:opacity-50"
+                      disabled={isSubmitting}
                     ></textarea>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02] active:scale-[0.98]"
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    <span>Envoyer ma demande de devis</span>
-                    <Send className="w-4 h-4" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
+                        <span>Envoi en cours...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Envoyer ma demande de devis</span>
+                        <Send className="w-4 h-4" aria-hidden="true" />
+                      </>
+                    )}
                   </button>
 
-                  <p className="text-xs text-slate-400 text-center">🔒 Vos données personnelles restent strictement confidentielles.</p>
+                  <p className="text-xs text-slate-400 text-center flex items-center justify-center gap-1">
+                    <span aria-hidden="true">🔒</span> Vos données personnelles restent strictement confidentielles.
+                  </p>
                 </form>
               )}
             </div>

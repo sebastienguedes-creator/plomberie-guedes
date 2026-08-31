@@ -87,14 +87,32 @@ const schemaData = {
                 }
             },
             "areaServed": [
-                { "@type": "AdministrativeArea", "name": "Normandie" },
+                {
+                    "@type": "GeoCircle",
+                    "geoMidpoint": {
+                        "@type": "GeoCoordinates",
+                        "latitude": 49.122232,
+                        "longitude": 0.623779
+                    },
+                    "geoRadius": "150000"
+                },
                 { "@type": "AdministrativeArea", "name": "Eure" },
                 { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
                 { "@type": "AdministrativeArea", "name": "Calvados" },
-                { "@type": "City", "name": "Bourgtheroulde-Infreville" },
-                { "@type": "City", "name": "Bernay" },
+                { "@type": "AdministrativeArea", "name": "Orne" },
                 { "@type": "City", "name": "Évreux" },
-                { "@type": "City", "name": "Le Neubourg" }
+                { "@type": "City", "name": "Bernay" },
+                { "@type": "City", "name": "Les Andelys" },
+                { "@type": "City", "name": "Rouen" },
+                { "@type": "City", "name": "Le Havre" },
+                { "@type": "City", "name": "Dieppe" },
+                { "@type": "City", "name": "Caen" },
+                { "@type": "City", "name": "Lisieux" },
+                { "@type": "City", "name": "Bayeux" },
+                { "@type": "City", "name": "Alençon" },
+                { "@type": "City", "name": "Argentan" },
+                { "@type": "City", "name": "Mortagne-au-Perche" },
+                { "@type": "AdministrativeArea", "name": "Normandie" }
             ],
             "description": "Artisan chauffagiste et frigoriste certifié RGE QualiPAC intervenant dans l'Eure (27) et sur toute la Normandie. Spécialiste de l'installation et de l'entretien de pompes à chaleur Air/Eau et climatisation réversible.",
             "hasOfferCatalog": {
@@ -351,17 +369,19 @@ export default function PompeAChaleur() {
                     </div>
                 </section>
 
+                {/* --- SECTION 3 : ZONE D'INTERVENTION LOCALE (MAP + VILLES) --- */}
                 <section ref={mapRef} className="py-16 bg-slate-950 border-b border-slate-800">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                         <header className="text-center space-y-4 max-w-3xl mx-auto">
                             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                                Installation, Dépannage et Entretien PAC en Normandie
+                                Intervention dans un large rayon sur la Normandie
                             </h2>
-                            <p className="text-slate-300 text-sm sm:text-base">
-                                Nous intervenons pour l'étude thermique, la pose et la maintenance de votre pompe à chaleur ou climatisation dans l'Eure, la Seine-Maritime, le Calvados et sur toute la grande Normandie pour vos projets d'envergure :
+                            <p className="text-slate-400 text-sm sm:text-base">
+                                J'interviens sur la majorité du territoire normand, notamment dans l'Eure (27), la Seine-Maritime (76), le Calvados (14) et l'Orne (61) :
                             </p>
                         </header>
 
+                        {/* ✅ CORRECTION CLS : Conteneur fixe h-[570px] pour éviter le saut lors du chargement de la carte */}
                         <div className="max-w-4xl mx-auto">
                             <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col justify-between h-[570px]">
                                 <div className="h-[450px] w-full overflow-hidden rounded-xl">
@@ -377,9 +397,10 @@ export default function PompeAChaleur() {
                                 <div className="pt-3 border-t border-slate-800">
                                     <div className="flex flex-wrap justify-center gap-2.5">
                                         {[
-                                            "Rouen", "Caen", "Le Havre", "Évreux",
-                                            "Bernay", "Grand Bourgtheroulde", "Le Neubourg",
-                                            "Pont-Audemer", "Lisieux", "Louviers", "Vernon"
+                                            "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
+                                            "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
+                                            "Caen (14)", "Lisieux (14)", "Bayeux (14)",
+                                            "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
                                         ].map((ville, i) => (
                                             <span key={i} className="bg-slate-950 border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
                                                 <MapPin className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> PAC & Clim {ville}
@@ -406,7 +427,7 @@ export default function PompeAChaleur() {
                             </p>
                         </header>
 
-{/* ✅ CORRECTION CLS : La div 'grid' parent encadre la condition et ne disparaît plus du DOM */}
+                        {/* ✅ CORRECTION CLS : La div 'grid' parent encadre la condition et ne disparaît plus du DOM */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {isLoadingChantiers ? (
                                 /* Skeletons de chargement */
@@ -471,7 +492,7 @@ export default function PompeAChaleur() {
 
                                             <div className="px-5 pb-5 flex-grow flex flex-col justify-start">
                                                 <div className="h-36 overflow-y-auto pr-1">
-                                                    <p className="text-slate-300 text-sm leading-relaxed">
+                                                    <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap">
                                                         {chantier.texte}
                                                     </p>
                                                 </div>
@@ -559,6 +580,7 @@ export default function PompeAChaleur() {
                     </div>
                 )}
 
+                {/* --- SECTION FAQ (ACCORDÉON SANS CLS GRÂCE À CSS GRID) --- */}
                 <section className="py-20 border-b border-slate-800 bg-slate-950">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                         <header className="text-center space-y-4">
@@ -577,34 +599,37 @@ export default function PompeAChaleur() {
                                 return (
                                     <div
                                         key={index}
-                                        className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all duration-300"
+                                        className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors hover:border-slate-700"
                                     >
                                         <h3 className="m-0 p-0">
                                             <button
                                                 type="button"
                                                 onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                                                className="w-full flex items-center justify-between p-6 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent hover:bg-slate-800/50 transition-colors"
+                                                className="w-full flex items-center justify-between p-6 text-left hover:bg-slate-800/50 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent"
                                                 aria-expanded={isOpen}
                                                 aria-controls={`${faqId}-answer`}
                                                 id={`${faqId}-question`}
                                             >
-                                                <span className="font-bold text-white text-lg pr-4">{faq.question}</span>
+                                                <span className="font-bold text-white text-lg pr-8">{faq.question}</span>
                                                 <ChevronDown
-                                                    className={`w-5 h-5 text-accent shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                                                    className={`w-6 h-6 text-accent shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
                                                     aria-hidden="true"
                                                 />
                                             </button>
                                         </h3>
+                                        
                                         <div
                                             id={`${faqId}-answer`}
                                             role="region"
                                             aria-labelledby={`${faqId}-question`}
-                                            className={`transition-all duration-300 ease-in-out px-6 overflow-hidden ${isOpen ? 'max-h-[500px] pb-6 opacity-100' : 'max-h-0 opacity-0'}`}
+                                            className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
                                             aria-hidden={!isOpen}
                                         >
-                                            <p className="text-slate-300 text-sm leading-relaxed">
-                                                {faq.answer}
-                                            </p>
+                                            <div className="overflow-hidden">
+                                                <p className="px-6 pb-6 text-slate-300 text-sm leading-relaxed">
+                                                    {faq.answer}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 );
