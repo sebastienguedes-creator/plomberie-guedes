@@ -56,27 +56,87 @@ const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
         {
+            "@type": ["LocalBusiness", "Plumber", "HVACBusiness"],
+            "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness",
+            "name": "SARL Anthony GUEDES",
+            "url": "https://www.guedes-plomberie-chauffage.fr",
+            "telephone": "+33617921004",
+            "email": "anthonyguedes.plomberie@gmail.com",
+            "priceRange": "€€",
+            "logo": {
+                "@type": "ImageObject",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#logo",
+                "url": "https://www.guedes-plomberie-chauffage.fr/Logo.webp"
+            },
+            "image": {
+                "@type": "ImageObject",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#image",
+                "url": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2A Rue du Ravin",
+                "addressLocality": "Valailles",
+                "postalCode": "27300",
+                "addressRegion": "Normandie",
+                "addressCountry": "FR"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 49.122232,
+                "longitude": 0.623779
+            },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "08:00",
+                    "closes": "19:00"
+                }
+            ]
+        },
+        {
+            "@type": "WebPage",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#webpage",
+            "url": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain",
+            "name": "Rénovation Salle de Bain Normandie : Clé en main | GUEDES",
+            "inLanguage": "fr-FR",
+            "description": "Artisan spécialiste en rénovation de salle de bain en Normandie (Eure, Seine-Maritime, Calvados, Orne). Douche à l'italienne, aménagement PMR.",
+            "about": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#service"
+            }
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#breadcrumb",
+            "isPartOf": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#webpage"
+            },
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Accueil",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Rénovation Salle de Bain",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain"
+                }
+            ]
+        },
+        {
             "@type": "Service",
             "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#service",
             "name": "Rénovation et Aménagement de Salle de Bain Clé en Main",
+            "description": "Rénovation complète de salle de bain, création de douche à l'italienne, aménagement PMR et travaux de plomberie sur un large secteur normand.",
+            "serviceType": "Rénovation de salle de bain",
             "provider": {
-                "@type": "Plumber",
-                "name": "SARL Anthony GUEDES",
-                "telephone": "+33617921004",
-                "email": "anthonyguedes.plomberie@gmail.com",
-                "url": "https://www.guedes-plomberie-chauffage.fr",
-                "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
-                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
-                "priceRange": "€€",
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "2A Rue du Ravin",
-                    "addressLocality": "Valailles",
-                    "postalCode": "27300",
-                    "addressCountry": "FR"
-                },
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness"
             },
-            "areaServed": [
+"areaServed": [
                 {
                     "@type": "GeoCircle",
                     "geoMidpoint": {
@@ -86,25 +146,39 @@ const schemaData = {
                     },
                     "geoRadius": "150000"
                 },
-                { "@type": "AdministrativeArea", "name": "Eure" },
-                { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
-                { "@type": "AdministrativeArea", "name": "Calvados" },
-                { "@type": "AdministrativeArea", "name": "Orne" },
-                { "@type": "City", "name": "Évreux" },
-                { "@type": "City", "name": "Bernay" },
-                { "@type": "City", "name": "Les Andelys" },
-                { "@type": "City", "name": "Rouen" },
-                { "@type": "City", "name": "Le Havre" },
-                { "@type": "City", "name": "Dieppe" },
-                { "@type": "City", "name": "Caen" },
-                { "@type": "City", "name": "Lisieux" },
-                { "@type": "City", "name": "Bayeux" },
-                { "@type": "City", "name": "Alençon" },
-                { "@type": "City", "name": "Argentan" },
-                { "@type": "City", "name": "Mortagne-au-Perche" },
-                { "@type": "AdministrativeArea", "name": "Normandie" }
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "Normandie"
+                },
+                {
+                    "@type": "City",
+                    "name": "Évreux"
+                },
+                {
+                    "@type": "City",
+                    "name": "Rouen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Le Havre"
+                },
+                {
+                    "@type": "City",
+                    "name": "Caen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Alençon"
+                },
+                {
+                    "@type": "City",
+                    "name": "Chartres"
+                },
+                {
+                    "@type": "City",
+                    "name": "Mantes-la-Jolie"
+                }
             ],
-            "description": "Rénovation complète de salle de bain, création de douche à l'italienne, aménagement PMR et travaux de plomberie sur un large secteur normand.",
             "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Services Salle de Bain",
@@ -118,6 +192,9 @@ const schemaData = {
         {
             "@type": "FAQPage",
             "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#faq",
+            "isPartOf": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/renovation-salle-de-bain#webpage"
+            },
             "mainEntity": faqData.map(faq => ({
                 "@type": "Question",
                 "name": faq.question,
@@ -188,7 +265,7 @@ export default function SalleDeBain() {
 
                 if (!error && isMounted) {
                     let loadedChantiers = data || [];
-                    
+
                     // Comble avec des placeholders si moins de 6 chantiers pour garantir la stabilité de la grille (CLS)
                     while (loadedChantiers.length < 6) {
                         loadedChantiers.push({
@@ -460,8 +537,8 @@ export default function SalleDeBain() {
                             <X className="w-6 h-6" aria-hidden="true" />
                         </button>
 
-                        <div 
-                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl" 
+                        <div
+                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="lg:w-1/2 p-6 bg-slate-950 flex items-center justify-center">
@@ -541,7 +618,7 @@ export default function SalleDeBain() {
                                                 />
                                             </button>
                                         </h3>
-                                        
+
                                         <div
                                             id={`${faqId}-answer`}
                                             role="region"
@@ -568,14 +645,14 @@ export default function SalleDeBain() {
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Un projet de salle de bain en tête ?</h2>
                         <p className="text-slate-100 text-base">Discutons de votre aménagement et obtenez une estimation rapide de vos travaux sur une grande partie de la Normandie.</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
-                            <a 
-                                href="tel:+33617921004" 
+                            <a
+                                href="tel:+33617921004"
                                 className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all focus:ring-4 focus:ring-slate-900/50"
                             >
                                 06 17 92 10 04
                             </a>
-                            <Link 
-                                to="/" 
+                            <Link
+                                to="/"
                                 className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg transition-all focus:ring-4 focus:ring-white/50"
                             >
                                 Retour à l'accueil

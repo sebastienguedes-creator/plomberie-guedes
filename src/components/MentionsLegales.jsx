@@ -40,6 +40,7 @@ export default function MentionsLegales() {
               <h2 className="text-xl font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">2. Nous contacter</h2>
               <ul className="mt-3 space-y-2 list-disc pl-5">
                 <li><strong>Téléphone :</strong> 06 17 92 10 04</li>
+                <li><strong>Email :</strong> anthonyguedes.plomberie@gmail.com</li>
               </ul>
             </section>
 

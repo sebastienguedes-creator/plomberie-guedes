@@ -57,60 +57,113 @@ export default function UrgenceDepannage() {
         "@context": "https://schema.org",
         "@graph": [
             {
-                "@type": "EmergencyService",
-                "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#service",
-                "name": "Urgence et Dépannage Plomberie Chauffage - SARL Anthony GUEDES",
-                "provider": {
-                    "@type": "Plumber",
-                    "name": "SARL Anthony GUEDES",
-                    "telephone": "+33617921004",
-                    "email": "anthonyguedes.plomberie@gmail.com",
-                    "url": "https://www.guedes-plomberie-chauffage.fr",
-                    "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
-                    "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
-                    "priceRange": "€€",
-                    "address": {
-                        "@type": "PostalAddress",
-                        "streetAddress": "2A Rue du Ravin",
-                        "addressLocality": "Valailles",
-                        "postalCode": "27300",
-                        "addressCountry": "FR"
-                    },
+                "@type": ["LocalBusiness", "Plumber", "HVACBusiness"],
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness",
+                "name": "SARL Anthony GUEDES",
+                "url": "https://www.guedes-plomberie-chauffage.fr",
+                "telephone": "+33617921004",
+                "email": "anthonyguedes.plomberie@gmail.com",
+                "priceRange": "€€",
+                "logo": { "@id": "https://www.guedes-plomberie-chauffage.fr/#logo" },
+                "image": { "@id": "https://www.guedes-plomberie-chauffage.fr/#image" },
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "2A Rue du Ravin",
+                    "addressLocality": "Valailles",
+                    "postalCode": "27300",
+                    "addressRegion": "Normandie",
+                    "addressCountry": "FR"
                 },
-                "areaServed": [
+                "geo": { "@type": "GeoCoordinates", "latitude": 49.122232, "longitude": 0.623779 },
+                "openingHoursSpecification": [
                     {
-                        "@type": "GeoCircle",
-                        "geoMidpoint": {
-                            "@type": "GeoCoordinates",
-                            "latitude": 49.122232,
-                            "longitude": 0.623779
-                        },
-                        "geoRadius": "30000" // 30 km autour de Valailles pour l'urgence[cite: 12]
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                        "opens": "08:00",
+                        "closes": "19:00"
+                    }
+                ]
+            },
+            {
+                "@type": "Service",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#service",
+                "name": "Dépannage & Urgence Plomberie Chauffage",
+                "description": "Dépannage d'urgence plomberie et chauffage. Fuite d'eau, panne de chauffage, canalisation bouchée, ballon d'eau chaude HS dans un rayon de 30 km.",
+                "provider": { "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness" },
+"areaServed": [
+                {
+                    "@type": "GeoCircle",
+                    "geoMidpoint": {
+                        "@type": "GeoCoordinates",
+                        "latitude": 49.122232,
+                        "longitude": 0.623779
                     },
-                    { "@type": "AdministrativeArea", "name": "Eure" },
-                    { "@type": "City", "name": "Bernay" },
-                    { "@type": "City", "name": "Évreux" },
-                    { "@type": "City", "name": "Lisieux" },
-                    { "@type": "City", "name": "Elbeuf" },
-                    { "@type": "City", "name": "Louviers" },
-                    { "@type": "City", "name": "Pont-Audemer" },
-                    { "@type": "City", "name": "Brionne" },
-                    { "@type": "City", "name": "Beaumont-le-Roger" },
-                    { "@type": "City", "name": "Conches-en-Ouche" },
-                    { "@type": "City", "name": "Le Neubourg" }
-                ],
-                "description": "Dépannage d'urgence plomberie et chauffage. Fuite d'eau, panne de chauffage, canalisation bouchée, ballon d'eau chaude HS dans un rayon de 30 km."
+                    "geoRadius": "30000"
+                },
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "Eure"
+                },
+                {
+                    "@type": "City",
+                    "name": "Bernay"
+                },
+                {
+                    "@type": "City",
+                    "name": "Évreux"
+                },
+                {
+                    "@type": "City",
+                    "name": "Lisieux"
+                },
+                {
+                    "@type": "City",
+                    "name": "Louviers"
+                },
+                {
+                    "@type": "City",
+                    "name": "Elbeuf"
+                },
+                {
+                    "@type": "City",
+                    "name": "Pont-Audemer"
+                }
+            ],
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Prestations de dépannage immédiat",
+                    "itemListElement": [
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Recherche et réparation de fuites" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dépannage de Chauffage / PAC" } },
+                        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Débouchage & Engorgement" } }
+                    ]
+                }
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#webpage",
+                "url": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie",
+                "name": "Urgence Plombier Chauffagiste : Dépannage Rapide | SARL Anthony GUEDES",
+                "inLanguage": "fr-FR",
+                "about": { "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#service" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#breadcrumb",
+                "isPartOf": { "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#webpage" },
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.guedes-plomberie-chauffage.fr/" },
+                    { "@type": "ListItem", "position": 2, "name": "Dépannage", "item": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie" }
+                ]
             },
             {
                 "@type": "FAQPage",
                 "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#faq",
+                "isPartOf": { "@id": "https://www.guedes-plomberie-chauffage.fr/urgence-depannage-plomberie#webpage" },
                 "mainEntity": faqData.map((faq) => ({
                     "@type": "Question",
                     "name": faq.question,
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": faq.answer
-                    }
+                    "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
                 }))
             }
         ]
@@ -257,7 +310,7 @@ export default function UrgenceDepannage() {
                                         <div className="w-full h-[380px] sm:h-[450px] bg-slate-800 rounded-xl" aria-hidden="true"></div>
                                     )}
                                 </div>
-                                
+
                                 {/* Liste des villes en dessous */}
                                 <div className="pt-3 border-t border-slate-800">
                                     <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 text-center">
@@ -310,23 +363,21 @@ export default function UrgenceDepannage() {
                                                 <span className="font-bold text-white text-lg pr-8">
                                                     {faq.question}
                                                 </span>
-                                                <ChevronDown 
-                                                    className={`w-6 h-6 text-red-500 shrink-0 transition-transform duration-300 ${
-                                                        isOpen ? "rotate-180" : ""
-                                                    }`} 
+                                                <ChevronDown
+                                                    className={`w-6 h-6 text-red-500 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""
+                                                        }`}
                                                     aria-hidden="true"
                                                 />
                                             </button>
                                         </h3>
-                                        
+
                                         {/* Transition fluide via CSS Grid pour la hauteur automatique */}
-                                        <div 
+                                        <div
                                             id={`${faqId}-answer`}
                                             role="region"
                                             aria-labelledby={`${faqId}-question`}
-                                            className={`grid transition-all duration-300 ease-in-out ${
-                                                isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                                            }`}
+                                            className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                                                }`}
                                             aria-hidden={!isOpen}
                                         >
                                             <div className="overflow-hidden">
@@ -348,15 +399,15 @@ export default function UrgenceDepannage() {
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Une urgence ? Ne laissez pas la situation s'aggraver.</h2>
                         <p className="text-red-100 text-lg">Contactez-moi immédiatement pour une mise en sécurité et un dépannage rapide dans un rayon de 30 km.</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
-                            <a 
-                                href="tel:+33617921004" 
+                            <a
+                                href="tel:+33617921004"
                                 aria-label="Appeler immédiatement le 06 17 92 10 04"
                                 className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg flex items-center justify-center gap-2 focus-visible:ring-4 focus-visible:ring-slate-900/50 outline-none transition-colors"
                             >
                                 <PhoneCall className="w-5 h-5" aria-hidden="true" /> 06 17 92 10 04
                             </a>
-                            <Link 
-                                to="/" 
+                            <Link
+                                to="/"
                                 className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors focus-visible:ring-4 focus-visible:ring-white/50 outline-none"
                             >
                                 Retour à l'accueil

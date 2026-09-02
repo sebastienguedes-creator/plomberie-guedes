@@ -29,7 +29,7 @@ const getOptimizedImageUrl = (url, width = 800, height = null, crop = 'limit') =
     return url.replace('/upload/', `/upload/c_limit,w_${width},f_auto,q_auto/`);
 };
 
-// --- DONNÉES FAQ ---
+// --- DONNÉES FAQ (Inchangées, elles étaient parfaites) ---
 const faqData = [
     {
         question: "Comment savoir si l'eau de ma maison est trop calcaire ?",
@@ -49,27 +49,87 @@ const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
         {
+            "@type": ["LocalBusiness", "Plumber", "HVACBusiness"],
+            "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness",
+            "name": "SARL Anthony GUEDES",
+            "url": "https://www.guedes-plomberie-chauffage.fr",
+            "telephone": "+33617921004",
+            "email": "anthonyguedes.plomberie@gmail.com",
+            "priceRange": "€€",
+            "logo": {
+                "@type": "ImageObject",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#logo",
+                "url": "https://www.guedes-plomberie-chauffage.fr/Logo.webp"
+            },
+            "image": {
+                "@type": "ImageObject",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#image",
+                "url": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2A Rue du Ravin",
+                "addressLocality": "Valailles",
+                "postalCode": "27300",
+                "addressRegion": "Normandie",
+                "addressCountry": "FR"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 49.122232,
+                "longitude": 0.623779
+            },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "08:00",
+                    "closes": "19:00"
+                }
+            ]
+        },
+        {
+            "@type": "WebPage",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#webpage",
+            "url": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau",
+            "name": "Installation Adoucisseur d'Eau Normandie : Départements & Villes",
+            "description": "Pose et entretien d'adoucisseur d'eau en Normandie (Eure, Seine-Maritime, Calvados, Orne). J'interviens dans un large rayon autour de Valailles pour vos projets.",
+            "inLanguage": "fr-FR",
+            "about": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#service"
+            }
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#breadcrumb",
+            "isPartOf": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#webpage"
+            },
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Accueil",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Installation Adoucisseur d'Eau",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau"
+                }
+            ]
+        },
+        {
             "@type": "Service",
             "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#service",
             "name": "Installation et Entretien d'Adoucisseur d'Eau",
+            "serviceType": "Traitement de l'eau, Installation d'adoucisseur",
+            "description": "Installation, réglage et entretien d'adoucisseurs d'eau et systèmes anti-calcaire sur un large secteur normand. J'interviens pour protéger vos canalisations et vos équipements.",
             "provider": {
-                "@type": "Plumber",
-                "name": "SARL Anthony GUEDES",
-                "telephone": "+33617921004",
-                "email": "anthonyguedes.plomberie@gmail.com",
-                "url": "https://www.guedes-plomberie-chauffage.fr",
-                "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
-                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
-                "priceRange": "€€",
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "2A Rue du Ravin",
-                    "addressLocality": "Valailles",
-                    "postalCode": "27300",
-                    "addressCountry": "FR"
-                },
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness"
             },
-            "areaServed": [
+"areaServed": [
                 {
                     "@type": "GeoCircle",
                     "geoMidpoint": {
@@ -77,31 +137,57 @@ const schemaData = {
                         "latitude": 49.122232,
                         "longitude": 0.623779
                     },
-                    "geoRadius": "150000" // 150 km autour de Valailles
+                    "geoRadius": "150000"
                 },
-                { "@type": "AdministrativeArea", "name": "Eure" },
-                { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
-                { "@type": "AdministrativeArea", "name": "Calvados" },
-                { "@type": "AdministrativeArea", "name": "Orne" },
-                { "@type": "City", "name": "Évreux" },
-                { "@type": "City", "name": "Bernay" },
-                { "@type": "City", "name": "Les Andelys" },
-                { "@type": "City", "name": "Rouen" },
-                { "@type": "City", "name": "Le Havre" },
-                { "@type": "City", "name": "Dieppe" },
-                { "@type": "City", "name": "Caen" },
-                { "@type": "City", "name": "Lisieux" },
-                { "@type": "City", "name": "Bayeux" },
-                { "@type": "City", "name": "Alençon" },
-                { "@type": "City", "name": "Argentan" },
-                { "@type": "City", "name": "Mortagne-au-Perche" },
-                { "@type": "AdministrativeArea", "name": "Normandie" }
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "Normandie"
+                },
+                {
+                    "@type": "City",
+                    "name": "Évreux"
+                },
+                {
+                    "@type": "City",
+                    "name": "Rouen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Le Havre"
+                },
+                {
+                    "@type": "City",
+                    "name": "Caen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Alençon"
+                },
+                {
+                    "@type": "City",
+                    "name": "Chartres"
+                },
+                {
+                    "@type": "City",
+                    "name": "Mantes-la-Jolie"
+                }
             ],
-            "description": "Installation, réglage et entretien d'adoucisseurs d'eau et systèmes anti-calcaire sur un large secteur normand. J'interviens pour protéger vos canalisations et vos équipements."
+            
+            "offers": {
+                "@type": "Offer",
+                "url": "https://www.guedes-plomberie-chauffage.fr/contact",
+                "priceCurrency": "EUR",
+                "price": "0",
+                "description": "Devis gratuit sur demande",
+                "availability": "https://schema.org/InStock"
+            }
         },
         {
             "@type": "FAQPage",
             "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#faq",
+            "isPartOf": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/installation-adoucisseur-eau#webpage"
+            },
             "mainEntity": faqData.map(faq => ({
                 "@type": "Question",
                 "name": faq.question,
@@ -172,7 +258,7 @@ export default function AdoucisseurEau() {
 
                 if (!error && isMounted) {
                     let loadedChantiers = data || [];
-                    
+
                     // Comble avec des placeholders si moins de 6 chantiers pour garantir la stabilité de la grille (CLS)
                     while (loadedChantiers.length < 6) {
                         loadedChantiers.push({
@@ -298,7 +384,7 @@ export default function AdoucisseurEau() {
                                         <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
                                     )}
                                 </div>
-                                
+
                                 <div className="pt-3 border-t border-slate-800">
                                     <div className="flex flex-wrap justify-center gap-2.5">
                                         {[
@@ -444,8 +530,8 @@ export default function AdoucisseurEau() {
                             <X className="w-6 h-6" aria-hidden="true" />
                         </button>
 
-                        <div 
-                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl" 
+                        <div
+                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="lg:w-1/2 p-6 bg-slate-950 flex items-center justify-center">
@@ -525,7 +611,7 @@ export default function AdoucisseurEau() {
                                                 />
                                             </button>
                                         </h3>
-                                        
+
                                         <div
                                             id={`${faqId}-answer`}
                                             role="region"
@@ -552,14 +638,14 @@ export default function AdoucisseurEau() {
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Marre du calcaire dans votre eau ?</h2>
                         <p className="text-slate-100 text-base">Contactez-moi pour obtenir une analyse rapide de la dureté de votre eau et un devis personnalisé sur une grande partie de la Normandie.</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
-                            <a 
-                                href="tel:+33617921004" 
+                            <a
+                                href="tel:+33617921004"
                                 className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all focus:ring-4 focus:ring-slate-900/50"
                             >
                                 06 17 92 10 04
                             </a>
-                            <Link 
-                                to="/" 
+                            <Link
+                                to="/"
                                 className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg transition-all focus:ring-4 focus:ring-white/50"
                             >
                                 Retour à l'accueil

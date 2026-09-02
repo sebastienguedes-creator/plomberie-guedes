@@ -64,29 +64,40 @@ const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
         {
+            "@type": ["LocalBusiness", "Plumber", "HVACBusiness"],
+            "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness",
+            "name": "SARL Anthony GUEDES",
+            "url": "https://www.guedes-plomberie-chauffage.fr",
+            "telephone": "+33617921004",
+            "email": "anthonyguedes.plomberie@gmail.com",
+            "priceRange": "€€",
+            "logo": { "@id": "https://www.guedes-plomberie-chauffage.fr/#logo" },
+            "image": { "@id": "https://www.guedes-plomberie-chauffage.fr/#image" },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2A Rue du Ravin",
+                "addressLocality": "Valailles",
+                "postalCode": "27300",
+                "addressRegion": "Normandie",
+                "addressCountry": "FR"
+            },
+            "geo": { "@type": "GeoCoordinates", "latitude": 49.122232, "longitude": 0.623779 },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "08:00",
+                    "closes": "19:00"
+                }
+            ]
+        },
+        {
             "@type": "Service",
             "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#service",
             "name": "Installation, Entretien de Pompe à Chaleur & Climatisation Réversible",
-            "provider": {
-                "@type": ["Plumber", "HVACBusiness", "LocalBusiness"],
-                "@id": "https://www.guedes-plomberie-chauffage.fr/#organization",
-                "name": "SARL Anthony GUEDES",
-                "telephone": "+33617921004",
-                "email": "anthonyguedes.plomberie@gmail.com",
-                "url": "https://www.guedes-plomberie-chauffage.fr",
-                "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
-                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
-                "priceRange": "€€",
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "2A Rue du Ravin",
-                    "addressLocality": "Valailles",
-                    "postalCode": "27300",
-                    "addressRegion": "Normandie",
-                    "addressCountry": "FR"
-                }
-            },
-            "areaServed": [
+            "serviceType": "Chauffage, Pompe à Chaleur et Climatisation",
+            "provider": { "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness" },
+"areaServed": [
                 {
                     "@type": "GeoCircle",
                     "geoMidpoint": {
@@ -96,64 +107,75 @@ const schemaData = {
                     },
                     "geoRadius": "150000"
                 },
-                { "@type": "AdministrativeArea", "name": "Eure" },
-                { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
-                { "@type": "AdministrativeArea", "name": "Calvados" },
-                { "@type": "AdministrativeArea", "name": "Orne" },
-                { "@type": "City", "name": "Évreux" },
-                { "@type": "City", "name": "Bernay" },
-                { "@type": "City", "name": "Les Andelys" },
-                { "@type": "City", "name": "Rouen" },
-                { "@type": "City", "name": "Le Havre" },
-                { "@type": "City", "name": "Dieppe" },
-                { "@type": "City", "name": "Caen" },
-                { "@type": "City", "name": "Lisieux" },
-                { "@type": "City", "name": "Bayeux" },
-                { "@type": "City", "name": "Alençon" },
-                { "@type": "City", "name": "Argentan" },
-                { "@type": "City", "name": "Mortagne-au-Perche" },
-                { "@type": "AdministrativeArea", "name": "Normandie" }
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "Normandie"
+                },
+                {
+                    "@type": "City",
+                    "name": "Évreux"
+                },
+                {
+                    "@type": "City",
+                    "name": "Rouen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Le Havre"
+                },
+                {
+                    "@type": "City",
+                    "name": "Caen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Alençon"
+                },
+                {
+                    "@type": "City",
+                    "name": "Chartres"
+                },
+                {
+                    "@type": "City",
+                    "name": "Mantes-la-Jolie"
+                }
             ],
-            "description": "Artisan chauffagiste et frigoriste certifié RGE QualiPAC intervenant dans l'Eure (27) et sur toute la Normandie. Spécialiste de l'installation et de l'entretien de pompes à chaleur Air/Eau et climatisation réversible.",
             "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Services Pompe à Chaleur et Climatisation",
                 "itemListElement": [
                     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Pompe à chaleur Air/Eau" } },
                     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Climatisation Réversible & PAC Air/Air" } },
-                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation et Dépannage PAC & Clim" } }
+                    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Entretien, Dépannage PAC & Clim" } }
                 ]
             }
         },
         {
-            "@type": "FAQPage",
-            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#faq",
-            "mainEntity": faqData.map(faq => ({
-                "@type": "Question",
-                "name": faq.question,
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": faq.answer
-                }
-            }))
+            "@type": "WebPage",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#webpage",
+            "url": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur",
+            "name": "Installation Pompe à Chaleur Normandie & Eure (27) | A. GUEDES",
+            "inLanguage": "fr-FR",
+            "about": { "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#service" }
         },
         {
             "@type": "BreadcrumbList",
             "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#breadcrumb",
+            "isPartOf": { "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#webpage" },
             "itemListElement": [
-                {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Accueil",
-                    "item": "https://www.guedes-plomberie-chauffage.fr/"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Pompe à Chaleur & Climatisation",
-                    "item": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur"
-                }
+                { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.guedes-plomberie-chauffage.fr/" },
+                { "@type": "ListItem", "position": 2, "name": "Pompe à Chaleur & Climatisation", "item": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur" }
             ]
+        },
+        {
+            "@type": "FAQPage",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#faq",
+            "isPartOf": { "@id": "https://www.guedes-plomberie-chauffage.fr/installation-pompe-a-chaleur#webpage" },
+            "mainEntity": faqData.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
+            }))
         }
     ]
 };
@@ -212,7 +234,7 @@ export default function PompeAChaleur() {
 
                 if (!error && isMounted) {
                     let loadedChantiers = data || [];
-                    
+
                     while (loadedChantiers.length < 6) {
                         loadedChantiers.push({
                             id: `placeholder-${loadedChantiers.length}`,
@@ -381,34 +403,34 @@ export default function PompeAChaleur() {
                             </p>
                         </header>
 
-<div className="max-w-4xl mx-auto">
-    <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col gap-4">
-        <div className="h-[380px] sm:h-[450px] w-full overflow-hidden rounded-xl">
-            {isMapInView ? (
-                <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
-                    <ZoneInterventionMap showEmergency={false} showProjects={true} />
-                </Suspense>
-            ) : (
-                <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
-            )}
-        </div>
+                        <div className="max-w-4xl mx-auto">
+                            <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-2xl flex flex-col gap-4">
+                                <div className="h-[380px] sm:h-[450px] w-full overflow-hidden rounded-xl">
+                                    {isMapInView ? (
+                                        <Suspense fallback={<div className="h-full w-full bg-slate-800/50 flex items-center justify-center text-slate-400 text-sm animate-pulse" role="status">Chargement de la zone d'intervention...</div>}>
+                                            <ZoneInterventionMap showEmergency={false} showProjects={true} />
+                                        </Suspense>
+                                    ) : (
+                                        <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
+                                    )}
+                                </div>
 
-        <div className="pt-3 border-t border-slate-800">
-            <div className="flex flex-wrap justify-center gap-2.5">
-                {[
-                    "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
-                    "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
-                    "Caen (14)", "Lisieux (14)", "Bayeux (14)",
-                    "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
-                ].map((ville, i) => (
-                    <span key={i} className="bg-slate-950 border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
-                        <MapPin className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> PAC & Clim {ville}
-                    </span>
-                ))}
-            </div>
-        </div>
-    </div>
-</div>
+                                <div className="pt-3 border-t border-slate-800">
+                                    <div className="flex flex-wrap justify-center gap-2.5">
+                                        {[
+                                            "Évreux (27)", "Bernay (27)", "Les Andelys (27)",
+                                            "Rouen (76)", "Le Havre (76)", "Dieppe (76)",
+                                            "Caen (14)", "Lisieux (14)", "Bayeux (14)",
+                                            "Alençon (61)", "Argentan (61)", "Mortagne-au-Perche (61)"
+                                        ].map((ville, i) => (
+                                            <span key={i} className="bg-slate-950 border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-300 flex items-center gap-2 hover:border-accent/40 transition-colors">
+                                                <MapPin className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> PAC & Clim {ville}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -535,8 +557,8 @@ export default function PompeAChaleur() {
                             <X className="w-6 h-6" aria-hidden="true" />
                         </button>
 
-                        <div 
-                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl" 
+                        <div
+                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="lg:w-1/2 p-6 bg-slate-950 flex items-center justify-center">
@@ -616,7 +638,7 @@ export default function PompeAChaleur() {
                                                 />
                                             </button>
                                         </h3>
-                                        
+
                                         <div
                                             id={`${faqId}-answer`}
                                             role="region"

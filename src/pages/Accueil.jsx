@@ -40,25 +40,53 @@ export default function Accueil() {
         }
     ];
 
-    // --- SCHEMA.ORG : Séparation claire des zones + FAQPage ---
+    // --- SCHEMA.ORG : Séparation claire des zones + FAQPage (OPTIMISÉ SEO) ---
     const schemaData = {
         "@context": "https://schema.org",
         "@graph": [
             {
-                "@type": ["Plumber", "HeatingContractor", "HVACBusiness"],
-                "@id": "https://www.guedes-plomberie-chauffage.fr/#identity",
-                "name": "SARL Anthony GUEDES",
+                "@type": "WebSite",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#website",
                 "url": "https://www.guedes-plomberie-chauffage.fr/",
-                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
-                "logo": "https://www.guedes-plomberie-chauffage.fr/Icone.webp",
-                "description": "Artisan plombier chauffagiste en Normandie. Intervention en urgence dans un rayon de 30 km (Bernay, Évreux) et installation/rénovation sur un large secteur de 150 km.",
+                "name": "SARL Anthony GUEDES",
+                "description": "Artisan plombier chauffagiste dans l'Eure. Dépannage urgence 30km (Évreux, Bernay) & Projets de rénovation sur toute la Normandie.",
+                "inLanguage": "fr-FR"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#webpage",
+                "url": "https://www.guedes-plomberie-chauffage.fr/",
+                "name": "Plombier Chauffagiste Eure (27) | SARL Anthony GUEDES",
+                "description": "Artisan plombier chauffagiste dans l'Eure. Dépannage urgence 30km (Évreux, Bernay) & Projets de rénovation sur toute la Normandie.",
+                "isPartOf": { "@id": "https://www.guedes-plomberie-chauffage.fr/#website" },
+                "about": { "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness" }
+            },
+            {
+                "@type": ["LocalBusiness", "Plumber", "HVACBusiness"],
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness",
+                "name": "SARL Anthony GUEDES",
+                "legalName": "SARL Anthony GUEDES",
+                "url": "https://www.guedes-plomberie-chauffage.fr/",
                 "telephone": "+33617921004",
+                "email": "anthonyguedes.plomberie@gmail.com",
                 "priceRange": "€€",
+                "description": "Artisan plombier chauffagiste en Normandie. Intervention en urgence dans un rayon de 30 km (Bernay, Évreux) et installation/rénovation sur un large secteur de 150 km.",
+                "logo": {
+                    "@type": "ImageObject",
+                    "@id": "https://www.guedes-plomberie-chauffage.fr/#logo",
+                    "url": "https://www.guedes-plomberie-chauffage.fr/Logo.webp"
+                },
+                "image": {
+                    "@type": "ImageObject",
+                    "@id": "https://www.guedes-plomberie-chauffage.fr/#image",
+                    "url": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp"
+                },
                 "address": {
                     "@type": "PostalAddress",
                     "streetAddress": "2A Rue du Ravin",
                     "addressLocality": "Valailles",
                     "postalCode": "27300",
+                    "addressRegion": "Normandie",
                     "addressCountry": "FR"
                 },
                 "geo": {
@@ -66,78 +94,94 @@ export default function Accueil() {
                     "latitude": 49.122232,
                     "longitude": 0.623779
                 },
-                "openingHoursSpecification": {
-                    "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                    "opens": "08:00",
-                    "closes": "19:00"
+                "openingHoursSpecification": [
+                    {
+                        "@type": "OpeningHoursSpecification",
+                        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                        "opens": "08:00",
+                        "closes": "19:00"
+                    }
+                ],
+                "areaServed": [
+                    {
+                        "@type": "GeoCircle",
+                        "geoMidpoint": {
+                            "@type": "GeoCoordinates",
+                            "latitude": 49.122232,
+                            "longitude": 0.623779
+                        },
+                        "geoRadius": "30000"
+                    },
+                    {
+                        "@type": "GeoCircle",
+                        "geoMidpoint": {
+                            "@type": "GeoCoordinates",
+                            "latitude": 49.122232,
+                            "longitude": 0.623779
+                        },
+                        "geoRadius": "150000"
+                    },
+                    {
+                        "@type": "AdministrativeArea",
+                        "name": "Normandie"
+                    },
+                    {
+                        "@type": "City",
+                        "name": "Bernay"
+                    },
+                    {
+                        "@type": "City",
+                        "name": "Évreux"
+                    },
+                    {
+                        "@type": "City",
+                        "name": "Rouen"
+                    },
+                    {
+                        "@type": "City",
+                        "name": "Lisieux"
+                    },
+                    {
+                        "@type": "City",
+                        "name": "Le Havre"
+                    },
+                    {
+                        "@type": "City",
+                        "name": "Caen"
+                    }
+                ],
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "Prestations Plomberie et Chauffage",
+                    "itemListElement": [
+                        {
+                            "@type": "OfferCatalog",
+                            "name": "Dépannage d'urgence",
+                            "itemListElement": [
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dépannage Plomberie et Chauffage (Urgence 30km)" } }
+                            ]
+                        },
+                        {
+                            "@type": "OfferCatalog",
+                            "name": "Installation et Rénovation",
+                            "itemListElement": [
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Pompe à Chaleur (PAC)" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Création et Rénovation de Salles de Bain sur-mesure" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation Adoucisseur d'eau et Traitement" } },
+                                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Installation VMC Double Flux" } }
+                            ]
+                        }
+                    ]
                 }
             },
-            // Service 1 : URGENCES (Zone 30 km)
-            {
-                "@type": "Service",
-                "name": "Dépannage et Urgence Plomberie Chauffage",
-                "provider": { "@id": "https://www.guedes-plomberie-chauffage.fr/#identity" },
-                "areaServed": [
-                    {
-                        "@type": "GeoCircle",
-                        "geoMidpoint": {
-                            "@type": "GeoCoordinates",
-                            "latitude": 49.122232,
-                            "longitude": 0.623779
-                        },
-                        "geoRadius": "30000" // 30 km
-                    },
-                    { "@type": "City", "name": "Bernay" },
-                    { "@type": "City", "name": "Évreux" },
-                    { "@type": "City", "name": "Le Neubourg" },
-                    { "@type": "City", "name": "Louviers" },
-                    { "@type": "City", "name": "Pont-Audemer" }
-                ]
-            },
-            // Service 2 : PROJETS & INSTALLATIONS (Zone 150 km)
-            {
-                "@type": "Service",
-                "name": "Installation et Rénovation Plomberie, Chauffage et Sanitaire",
-                "provider": { "@id": "https://www.guedes-plomberie-chauffage.fr/#identity" },
-                "areaServed": [
-                    {
-                        "@type": "GeoCircle",
-                        "geoMidpoint": {
-                            "@type": "GeoCoordinates",
-                            "latitude": 49.122232,
-                            "longitude": 0.623779
-                        },
-                        "geoRadius": "150000" // 150 km
-                    },
-                    { "@type": "AdministrativeArea", "name": "Normandie" },
-                    { "@type": "AdministrativeArea", "name": "Eure" },
-                    { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
-                    { "@type": "AdministrativeArea", "name": "Calvados" },
-                    { "@type": "City", "name": "Rouen" },
-                    { "@type": "City", "name": "Caen" },
-                    { "@type": "City", "name": "Le Havre" },
-                    { "@type": "City", "name": "Lisieux" }
-                ]
-            },
-            // Service 3 : POMPES À CHALEUR & CHAUFFAGE
-            {
-                "@type": "Service",
-                "name": "Installation, Entretien et Désembouage de Pompe à Chaleur (PAC)",
-                "provider": { "@id": "https://www.guedes-plomberie-chauffage.fr/#identity" },
-                "serviceType": "HeatingInstallation"
-            },
-            // --- SCHEMA FAQPAGE DÉDIÉ ---
             {
                 "@type": "FAQPage",
                 "@id": "https://www.guedes-plomberie-chauffage.fr/#faq",
+                "isPartOf": { "@id": "https://www.guedes-plomberie-chauffage.fr/#webpage" },
                 "mainEntity": faqList.map((faq) => ({
                     "@type": "Question",
                     "name": faq.question,
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": faq.answer
-                    }
+                    "acceptedAnswer": { "@type": "Answer", "text": faq.answer }
                 }))
             }
         ]

@@ -49,27 +49,91 @@ const schemaData = {
     "@context": "https://schema.org",
     "@graph": [
         {
-            "@type": "Service",
-            "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation#service",
-            "name": "Installation et Entretien VMC Ventilation - SARL Anthony GUEDES",
-            "provider": {
-                "@type": "Plumber",
-                "name": "SARL Anthony GUEDES",
-                "telephone": "+33617921004",
-                "email": "anthonyguedes.plomberie@gmail.com",
-                "url": "https://www.guedes-plomberie-chauffage.fr",
-                "logo": "https://www.guedes-plomberie-chauffage.fr/Logo.webp",
-                "image": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp",
-                "priceRange": "€€",
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "2A Rue du Ravin",
-                    "addressLocality": "Valailles",
-                    "postalCode": "27300",
-                    "addressCountry": "FR"
-                },
+            "@type": ["LocalBusiness", "Plumber", "HVACBusiness"],
+            "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness",
+            "name": "SARL Anthony GUEDES",
+            "url": "https://www.guedes-plomberie-chauffage.fr",
+            "telephone": "+33617921004",
+            "email": "anthonyguedes.plomberie@gmail.com",
+            "priceRange": "€€",
+            "logo": {
+                "@type": "ImageObject",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#logo",
+                "url": "https://www.guedes-plomberie-chauffage.fr/Logo.webp"
             },
-            "areaServed": [
+            "image": {
+                "@type": "ImageObject",
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#image",
+                "url": "https://www.guedes-plomberie-chauffage.fr/Camion_SARL_Anthony_GUEDES.webp"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "2A Rue du Ravin",
+                "addressLocality": "Valailles",
+                "postalCode": "27300",
+                "addressRegion": "Normandie",
+                "addressCountry": "FR"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 49.122232,
+                "longitude": 0.623779
+            },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "08:00",
+                    "closes": "19:00"
+                }
+            ]
+        },
+        {
+            "@type": "WebPage",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation/#webpage",
+            "url": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation",
+            "name": "Installation & Entretien VMC Ventilation | GUEDES",
+            "description": "Améliorez la qualité de votre air intérieur. Installation et entretien de VMC simple flux et double flux par la SARL Anthony GUEDES en Normandie.",
+            "inLanguage": "fr-FR",
+            "about": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation/#service"
+            },
+            "primaryImageOfPage": {
+                "@type": "ImageObject",
+                "url": "https://www.guedes-plomberie-chauffage.fr/Logo.webp"
+            }
+        },
+        {
+            "@type": "BreadcrumbList",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation/#breadcrumb",
+            "isPartOf": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation/#webpage"
+            },
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Accueil",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "VMC & Ventilation",
+                    "item": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation"
+                }
+            ]
+        },
+        {
+            "@type": "Service",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation/#service",
+            "name": "Installation et Entretien VMC Ventilation",
+            "serviceType": "Installation, Entretien et Dépannage de Ventilation Mécanique Contrôlée (VMC Simple et Double Flux)",
+            "description": "Amélioration de la qualité de l'air intérieur : installation complète, maintenance et dépannage de VMC simple flux et double flux pour les particuliers et professionnels.",
+            "provider": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/#localbusiness"
+            },
+"areaServed": [
                 {
                     "@type": "GeoCircle",
                     "geoMidpoint": {
@@ -79,29 +143,46 @@ const schemaData = {
                     },
                     "geoRadius": "150000"
                 },
-                { "@type": "AdministrativeArea", "name": "Eure" },
-                { "@type": "AdministrativeArea", "name": "Seine-Maritime" },
-                { "@type": "AdministrativeArea", "name": "Calvados" },
-                { "@type": "AdministrativeArea", "name": "Orne" },
-                { "@type": "City", "name": "Évreux" },
-                { "@type": "City", "name": "Bernay" },
-                { "@type": "City", "name": "Les Andelys" },
-                { "@type": "City", "name": "Rouen" },
-                { "@type": "City", "name": "Le Havre" },
-                { "@type": "City", "name": "Dieppe" },
-                { "@type": "City", "name": "Caen" },
-                { "@type": "City", "name": "Lisieux" },
-                { "@type": "City", "name": "Bayeux" },
-                { "@type": "City", "name": "Alençon" },
-                { "@type": "City", "name": "Argentan" },
-                { "@type": "City", "name": "Mortagne-au-Perche" },
-                { "@type": "AdministrativeArea", "name": "Normandie" }
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "Normandie"
+                },
+                {
+                    "@type": "City",
+                    "name": "Évreux"
+                },
+                {
+                    "@type": "City",
+                    "name": "Rouen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Le Havre"
+                },
+                {
+                    "@type": "City",
+                    "name": "Caen"
+                },
+                {
+                    "@type": "City",
+                    "name": "Alençon"
+                },
+                {
+                    "@type": "City",
+                    "name": "Chartres"
+                },
+                {
+                    "@type": "City",
+                    "name": "Mantes-la-Jolie"
+                }
             ],
-            "description": "Installation, entretien et dépannage de VMC (Simple flux, Double flux) et systèmes de ventilation sur un large secteur normand."
         },
         {
             "@type": "FAQPage",
-            "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation#faq",
+            "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation/#faq",
+            "isPartOf": {
+                "@id": "https://www.guedes-plomberie-chauffage.fr/vmc-ventilation/#webpage"
+            },
             "mainEntity": faqData.map(faq => ({
                 "@type": "Question",
                 "name": faq.question,
@@ -171,7 +252,7 @@ export default function VmcVentilation() {
 
                 if (!error && isMounted) {
                     let loadedChantiers = data || [];
-                    
+
                     // Comble avec des placeholders
                     while (loadedChantiers.length < 6) {
                         loadedChantiers.push({
@@ -342,7 +423,7 @@ export default function VmcVentilation() {
                                         <div className="h-[380px] sm:h-[450px] w-full bg-slate-900"></div>
                                     )}
                                 </div>
-                                
+
                                 <div className="pt-3 border-t border-slate-800">
                                     <div className="flex flex-wrap justify-center gap-2.5">
                                         {[
@@ -488,8 +569,8 @@ export default function VmcVentilation() {
                             <X className="w-6 h-6" aria-hidden="true" />
                         </button>
 
-                        <div 
-                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl" 
+                        <div
+                            className="relative max-w-5xl max-h-[90vh] w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col lg:flex-row shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="lg:w-1/2 p-6 bg-slate-950 flex items-center justify-center">
@@ -569,7 +650,7 @@ export default function VmcVentilation() {
                                                 />
                                             </button>
                                         </h3>
-                                        
+
                                         <div
                                             id={`${faqId}-answer`}
                                             role="region"
@@ -596,14 +677,14 @@ export default function VmcVentilation() {
                         <h2 className="text-3xl sm:text-4xl font-extrabold">Besoin d'améliorer la ventilation de votre maison ?</h2>
                         <p className="text-slate-100 text-base">Contactez-moi pour discuter de votre projet d'installation ou d'entretien de VMC sur une grande partie de la Normandie.</p>
                         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
-                            <a 
-                                href="tel:+33617921004" 
+                            <a
+                                href="tel:+33617921004"
                                 className="bg-slate-950 hover:bg-slate-900 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all focus:ring-4 focus:ring-slate-900/50"
                             >
                                 06 17 92 10 04
                             </a>
-                            <Link 
-                                to="/" 
+                            <Link
+                                to="/"
                                 className="bg-white hover:bg-slate-100 text-slate-950 font-bold px-8 py-4 rounded-xl text-lg transition-all focus:ring-4 focus:ring-white/50"
                             >
                                 Retour à l'accueil
